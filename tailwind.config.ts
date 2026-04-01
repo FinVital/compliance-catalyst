@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
+        display: ["Inter", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
       colors: {
@@ -84,12 +84,33 @@ export default {
           "0%, 100%": { borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" },
           "50%": { borderRadius: "30% 60% 70% 40% / 50% 60% 30% 60%" },
         },
+        drift: {
+          "0%": { transform: "translate(0, 0) rotate(0deg)" },
+          "25%": { transform: "translate(40px, -30px) rotate(5deg)" },
+          "50%": { transform: "translate(-20px, -60px) rotate(-3deg)" },
+          "75%": { transform: "translate(-50px, -20px) rotate(4deg)" },
+          "100%": { transform: "translate(0, 0) rotate(0deg)" },
+        },
+        "scan-line": {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "10%": { opacity: "0.6" },
+          "90%": { opacity: "0.6" },
+          "100%": { transform: "translateY(100vh)", opacity: "0" },
+        },
+        "pulse-ring": {
+          "0%": { transform: "scale(0.8)", opacity: "0.5" },
+          "50%": { transform: "scale(1.2)", opacity: "0.15" },
+          "100%": { transform: "scale(0.8)", opacity: "0.5" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 6s ease-in-out infinite",
         blob: "blob 7s ease-in-out infinite",
+        drift: "drift 12s ease-in-out infinite",
+        "scan-line": "scan-line 8s linear infinite",
+        "pulse-ring": "pulse-ring 4s ease-in-out infinite",
       },
     },
   },
