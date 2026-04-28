@@ -8,7 +8,11 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  onBooking: () => void;
+}
+
+const Navbar = ({ onBooking }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,12 +25,12 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <a
-            href="https://regulattice-pro.vercel.app/"
+          <button
+            onClick={onBooking}
             className="bg-hero text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 transition-all"
           >
             Start Free Trial
-          </a>
+          </button>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden p-2">
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -39,9 +43,12 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <a href="https://regulattice-pro.vercel.app/" className="block bg-hero text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-lg text-center">
+          <button
+            onClick={() => { setOpen(false); onBooking(); }}
+            className="block w-full bg-hero text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-lg text-center"
+          >
             Start Free Trial
-          </a>
+          </button>
         </div>
       )}
     </nav>

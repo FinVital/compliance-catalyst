@@ -1,91 +1,168 @@
-import { motion } from "framer-motion";
-import { Shield, Zap, BookOpen, BarChart3, Lock, CheckCircle, FileCheck, ShieldCheck } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Shield, Lock, FileCheck, ShieldCheck } from "lucide-react";
 
-const Hero = () => (
-  <section className="relative min-h-[90vh] bg-hero overflow-hidden flex items-center">
-    {/* Animated grid background */}
-    <div
-      className="absolute inset-0 pointer-events-none"
-      style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-        backgroundSize: "60px 60px",
-        animation: "grid-fade 6s ease-in-out infinite",
-      }}
-    />
+const images = [
+  "/images/dashboard/dash-1.png",
+  "/images/dashboard/dash-2.png",
+  "/images/dashboard/dash-3.png",
+];
 
-    {/* Scanning line */}
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-foreground/30 to-transparent animate-scan-line" />
-      <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-foreground/20 to-transparent animate-scan-line" style={{ animationDelay: "4s" }} />
-    </div>
+interface HeroProps {
+  onBooking: () => void;
+  onContact: () => void;
+}
 
-    {/* Animated blobs */}
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary-foreground/10 animate-blob" />
-      <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-primary-foreground/5 animate-blob" style={{ animationDelay: "2s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-foreground/5 animate-blob" style={{ animationDelay: "4s" }} />
-    </div>
+const Hero = ({ onBooking, onContact }: HeroProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    {/* Pulsing compliance rings */}
-    <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full border border-primary-foreground/10 animate-pulse-ring" />
-      <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full border border-primary-foreground/10 animate-pulse-ring" style={{ animationDelay: "2s" }} />
-      <div className="absolute top-1/3 right-1/3 w-32 h-32 rounded-full border border-primary-foreground/5 animate-pulse-ring" style={{ animationDelay: "1s" }} />
-    </div>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
-    <div className="container mx-auto px-6 relative z-10 py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-3xl mx-auto text-center"
-      >
-        <h1 className="text-4xl md:text-6xl font-extrabold text-primary-foreground leading-tight mb-6">
-          Turn Compliance into Contracts.{" "}
-          <span className="opacity-90">Master ISO 27001 with AI.</span>
-        </h1>
-        <p className="text-lg md:text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
-          ReguLattice transforms your security posture from an operational burden into a revenue-driving asset. Automate ISO 27001 readiness, calculate real-time compliance scores, and conquer complex security questionnaires instantly.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="https://regulattice-pro.vercel.app/"
-            className="inline-flex items-center justify-center rounded-lg bg-primary-foreground text-foreground font-semibold px-8 py-4 text-lg hover:shadow-glow transition-all hover:scale-105"
-          >
-            Start Your 5-Day Free Trial
-          </a>
-          <a
-            href="https://calendly.com/moazzamwaheed/15min"
-            className="inline-flex items-center justify-center rounded-lg border-2 border-primary-foreground/40 text-primary-foreground font-semibold px-8 py-4 text-lg hover:bg-primary-foreground/10 transition-all"
-          >
-            Book a Demo
-          </a>
-        </div>
-      </motion.div>
+  return (
+    <section className="relative min-h-[95vh] bg-slate-900 overflow-hidden flex items-center pt-24 pb-12">
+      {/* Animated grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+          animation: "grid-fade 6s ease-in-out infinite",
+        }}
+      />
 
-      {/* Floating compliance-themed icons */}
-      <div className="hidden lg:block">
-        {[
-          { Icon: Shield, cls: "top-20 left-10", delay: 0 },
-          { Icon: Lock, cls: "top-32 right-20", delay: 1 },
-          { Icon: CheckCircle, cls: "bottom-20 left-20", delay: 2 },
-          { Icon: FileCheck, cls: "bottom-32 right-10", delay: 3 },
-          { Icon: ShieldCheck, cls: "top-1/2 left-[5%]", delay: 1.5 },
-          { Icon: BarChart3, cls: "top-1/3 right-[8%]", delay: 2.5 },
-          { Icon: BookOpen, cls: "bottom-40 left-[15%]", delay: 0.5 },
-          { Icon: Zap, cls: "bottom-24 right-[15%]", delay: 3.5 },
-        ].map(({ Icon, cls, delay }) => (
-          <div
-            key={cls}
-            className={`absolute ${cls} bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-4 animate-drift`}
-            style={{ animationDelay: `${delay}s` }}
-          >
-            <Icon className="w-7 h-7 text-primary-foreground/60" />
-          </div>
-        ))}
+      {/* Scanning line */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent animate-scan-line" />
       </div>
-    </div>
-  </section>
-);
+
+      {/* Animated blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-teal-600/10 rounded-full blur-[100px] animate-blob" />
+        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[100px] animate-blob" style={{ animationDelay: "2s" }} />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+          
+          {/* Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="w-full lg:w-1/2 text-center lg:text-left pt-10 lg:pt-0"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20 text-sm font-medium mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+              </span>
+              Next-Gen Compliance OS
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6">
+              The AI Agentic Platform for{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">Continuous Compliance.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Automate evidence collection, generate policies autonomously, and achieve ISO 27001 & global compliance in weeks, not months.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <button
+                onClick={onBooking}
+                className="inline-flex items-center justify-center rounded-lg bg-teal-600 text-white font-semibold px-8 py-4 text-lg hover:bg-teal-500 hover:shadow-[0_0_20px_rgba(13,148,136,0.4)] transition-all hover:-translate-y-0.5 cursor-pointer"
+              >
+                Start Free 5-Day Trial
+              </button>
+              <button
+                onClick={onContact}
+                className="inline-flex items-center justify-center rounded-lg border-2 border-slate-700 text-slate-300 font-semibold px-8 py-4 text-lg hover:bg-slate-800 hover:text-white transition-all cursor-pointer"
+              >
+                Watch Demo Video
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Floating Glassmorphic Mockup */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full lg:w-1/2 relative hidden md:block"
+          >
+            {/* Pulsing rings behind mockup */}
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
+              <div className="w-[120%] h-[120%] rounded-full border border-teal-500/5 animate-pulse-ring" />
+              <div className="w-[100%] h-[100%] rounded-full border border-teal-500/10 animate-pulse-ring" style={{ animationDelay: "1.5s" }} />
+            </div>
+
+            <div className="relative z-10 w-full aspect-[4/3] rounded-2xl border border-slate-700/50 bg-slate-800/40 backdrop-blur-xl shadow-2xl p-2 overflow-hidden ring-1 ring-white/10 flex flex-col">
+              {/* Fake Window Header */}
+              <div className="h-8 flex items-center px-4 gap-2 border-b border-slate-700/50 bg-slate-900/50 rounded-t-xl shrink-0">
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                <div className="mx-auto text-[10px] text-slate-500 font-mono tracking-wider font-semibold">REGULATTICE_OS</div>
+              </div>
+
+              {/* Dashboard Screenshots */}
+              <div className="relative w-full h-full bg-slate-50 rounded-b-xl overflow-hidden flex-1">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentImageIndex}
+                    src={images[currentImageIndex]}
+                    alt="ReguLattice Dashboard"
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="absolute inset-0 w-full h-full object-cover object-top rounded-b-xl"
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_15px_rgba(0,0,0,0.08)] rounded-b-xl" />
+              </div>
+            </div>
+
+            {/* Floating Badges */}
+            <motion.div 
+              className="absolute -top-6 -right-6 bg-slate-800/90 backdrop-blur border border-teal-500/30 text-white rounded-xl p-4 shadow-xl z-20 flex items-center gap-3"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5 text-teal-400" />
+              </div>
+              <div>
+                <div className="text-xs text-slate-400 font-medium">Compliance Score</div>
+                <div className="text-lg font-bold text-emerald-400">94% Audit Ready</div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -bottom-8 -left-8 bg-slate-800/90 backdrop-blur border border-indigo-500/30 text-white rounded-xl p-4 shadow-xl z-20 flex items-center gap-3"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
+            >
+              <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                <FileCheck className="w-5 h-5 text-indigo-400" />
+              </div>
+              <div>
+                <div className="text-xs text-slate-400 font-medium">AI Agent</div>
+                <div className="text-lg font-bold text-white">Policy Generated</div>
+              </div>
+            </motion.div>
+
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Hero;

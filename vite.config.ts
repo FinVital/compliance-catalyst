@@ -11,6 +11,14 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      "/api/mailjet": {
+        target: "https://api.mailjet.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/mailjet/, ""),
+        secure: true,
+      },
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {

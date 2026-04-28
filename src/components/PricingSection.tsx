@@ -5,27 +5,57 @@ const plans = [
   {
     name: "Starter",
     price: "$79",
-    desc: "The essential toolkit for growing teams to map compliance.",
-    features: ["Up to 5 team members", "Unlimited AI mapping", "Basic reports", "Email support"],
+    desc: "Essential compliance mapping for growing teams starting their certification journey.",
+    features: [
+      "Up to 5 team members",
+      "ISO 27001 compliance mapping",
+      "Compliance Graph dashboard",
+      "Evidence Summary & Gap Reports",
+      "Audit Readiness Checklist",
+      "AI-powered control mapping",
+      "Email support",
+    ],
     popular: false,
   },
   {
     name: "Pro",
     price: "$219",
-    desc: "Advanced AI workflows and multilingual support to accelerate sales.",
-    features: ["Unlimited team members", "Contract-Win Mode", "Urdu & Arabic training videos", "Priority support", "Clean report exports"],
+    desc: "Full AI automation with multi-framework support and autonomous remediation.",
+    features: [
+      "Unlimited team members",
+      "ISO 27001 + SECP + ISO 20022 + ISO 27701",
+      "11 AI-generated audit reports",
+      "Auto-Remediate Suggestions",
+      "AI Priorities & Protection Gap analysis",
+      "Privacy Compliance Dashboard",
+      "Contract-Win Mode",
+      "Urdu & Arabic language support",
+      "Priority support",
+    ],
     popular: true,
   },
   {
     name: "Enterprise",
     price: "$349",
-    desc: "Tailored compliance infrastructure and dedicated consulting.",
-    features: ["Custom API access", "Dedicated account manager", "On-site audit prep", "Custom training content"],
+    desc: "Tailored compliance infrastructure with dedicated consulting and API access.",
+    features: [
+      "Everything in Pro",
+      "Custom API & SSO integration",
+      "Dedicated account manager",
+      "Risk Treatment Plan automation",
+      "On-site audit preparation",
+      "Custom training & onboarding",
+      "SLA-backed support",
+    ],
     popular: false,
   },
 ];
 
-const PricingSection = () => (
+interface PricingSectionProps {
+  onBooking: () => void;
+}
+
+const PricingSection = ({ onBooking }: PricingSectionProps) => (
   <section className="py-24 relative overflow-hidden">
     {/* Animated background */}
     <div className="absolute inset-0 pointer-events-none">
@@ -101,16 +131,16 @@ const PricingSection = () => (
                 </li>
               ))}
             </ul>
-            <a
-              href="https://regulattice-pro.vercel.app/"
-              className={`inline-flex items-center justify-center rounded-lg font-semibold px-6 py-3 transition-all text-center ${
+            <button
+              onClick={onBooking}
+              className={`inline-flex items-center justify-center rounded-lg font-semibold px-6 py-3 transition-all text-center cursor-pointer ${
                 p.popular
                   ? "bg-hero text-primary-foreground hover:opacity-90"
                   : "bg-accent text-accent-foreground hover:bg-primary hover:text-primary-foreground"
               }`}
             >
               Get Started
-            </a>
+            </button>
           </motion.div>
         ))}
       </div>
