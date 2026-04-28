@@ -12,11 +12,17 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
-      "/api/mailjet": {
+      "/api/contact": {
         target: "https://api.mailjet.com",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/mailjet/, ""),
+        rewrite: () => "/v3.1/send",
         secure: true,
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq) => {
+            const auth = Buffer.from("f2e0ab5af468c23789f8ef1bedfa2e59:36fa567993ccd2023deb25df5ab198ee").toString("base64");
+            proxyReq.setHeader("Authorization", `Basic ${auth}`);
+          });
+        },
       },
     },
   },

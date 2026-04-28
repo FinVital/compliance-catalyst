@@ -70,7 +70,7 @@ const Hero = ({ onBooking, onContact }: HeroProps) => {
             </h1>
             
             <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Automate evidence collection, generate policies autonomously, and achieve ISO 27001 & global compliance in weeks, not months.
+              Automate evidence collection, generate policies autonomously, and turn ISO 27001 & global compliance from a bottleneck into your competitive edge.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">

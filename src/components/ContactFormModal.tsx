@@ -9,9 +9,6 @@ interface ContactFormModalProps {
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
-const MJ_API_KEY = "f2e0ab5af468c23789f8ef1bedfa2e59";
-const MJ_SECRET_KEY = "36fa567993ccd2023deb25df5ab198ee";
-
 const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -83,11 +80,10 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
     `;
 
     try {
-      const response = await fetch("/api/mailjet/v3.1/send", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Basic " + btoa(`${MJ_API_KEY}:${MJ_SECRET_KEY}`),
         },
         body: JSON.stringify({
           Messages: [
