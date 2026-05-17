@@ -102,6 +102,10 @@ export default {
           "50%": { transform: "scale(1.2)", opacity: "0.15" },
           "100%": { transform: "scale(0.8)", opacity: "0.5" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(calc(-50% - 1.5rem))" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -111,6 +115,7 @@ export default {
         drift: "drift 12s ease-in-out infinite",
         "scan-line": "scan-line 8s linear infinite",
         "pulse-ring": "pulse-ring 4s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },

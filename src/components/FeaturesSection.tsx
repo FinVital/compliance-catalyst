@@ -1,137 +1,166 @@
-import { motion } from "framer-motion";
-import { Gauge, Shield, Lock, Brain, FileCheck, Radar } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Map, Activity, Wrench, FileText, ShieldCheck } from "lucide-react";
 
-const FeaturesSection = () => (
-  <section className="py-24 relative overflow-hidden bg-white">
-    <div className="container mx-auto px-6 relative z-10">
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900 tracking-tight">
-          Everything You Need to Pass Your Next Audit
-        </h2>
-        <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto">
-          Stop managing complex regulatory requirements in spreadsheets. ReguLattice transforms compliance from a manual burden into an automated, continuous process.
-        </p>
-      </motion.div>
+const tabs = [
+  {
+    id: "map",
+    label: "Map Controls",
+    icon: Map,
+    title: "Intelligent Control Mapping",
+    description:
+      "AI agents automatically map your existing infrastructure against ISO 27001, ISO 42001, NIST CSF 2.0, SOC 2, SAMA, and SECP controls. No spreadsheets, no guesswork — just precise, gap-aware mapping across 10 frameworks simultaneously.",
+    highlights: ["Auto-detect controls across 10 frameworks", "Multi-framework parallel mapping", "Real-time gap identification"],
+  },
+  {
+    id: "monitor",
+    label: "Monitor",
+    icon: Activity,
+    title: "Continuous Compliance Monitoring",
+    description:
+      "The Compliance Graph gives you a live pulse on your security posture. Track structural readiness, AI-adjusted scores, coverage percentages, and vendor compliance — all updating in real time as your organization evolves.",
+    highlights: ["Live Compliance Graph dashboard", "AI-adjusted risk scoring", "Vendor & asset tracking"],
+  },
+  {
+    id: "remediate",
+    label: "Auto-Remediate",
+    icon: Wrench,
+    title: "AI-Powered Auto-Remediation",
+    description:
+      "Stop triaging manually. Our AI agents surface prioritized actions, identify protection gaps, and suggest one-click fixes. From drafting access control policies to configuring AWS CloudTrail — remediation happens autonomously.",
+    highlights: ["AI Priorities & Protection Gaps", "One-click remediation actions", "Auto-generated policy drafts"],
+  },
+  {
+    id: "report",
+    label: "Generate Reports",
+    icon: FileText,
+    title: "AI-Generated Audit Reports",
+    description:
+      "From Evidence Summaries to Privacy Impact Assessments, generate comprehensive audit-ready reports with a single click. Each report is mapped to your active standards and exportable for auditor review.",
+    highlights: ["Risk & Gap Analysis reports", "Executive Compliance Summary", "Data Transfer Impact reports"],
+  },
+  {
+    id: "audit",
+    label: "Audit Ready",
+    icon: ShieldCheck,
+    title: "Always Audit-Ready",
+    description:
+      "Mock audits simulate real auditor interviews. The Audit Readiness Checklist ensures documentation, evidence, and team preparedness are always current. When the auditor arrives, you're already done.",
+    highlights: ["AI Mock Audit simulations", "Evidence confidence scoring", "Certification readiness tracker"],
+  },
+];
 
-      {/* Bento Box Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        
-        {/* Large Feature 1: Pre-Enforced Governance */}
+const FeaturesSection = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  return (
+    <section className="py-28 bg-slate-900 relative overflow-hidden">
+      {/* Subtle grid */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-30"
+        style={{
+          backgroundImage: `radial-gradient(circle, rgba(13,148,136,0.04) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="md:col-span-2 md:row-span-2 rounded-3xl border border-slate-200 bg-slate-50 p-8 flex flex-col justify-between hover:shadow-xl transition-shadow overflow-hidden relative group"
+          className="text-center mb-16"
         >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-teal-100 rounded-full blur-[80px] -mr-20 -mt-20 transition-all group-hover:bg-teal-200" />
-          
-          <div className="relative z-10">
-            <div className="w-14 h-14 rounded-2xl bg-teal-600 flex items-center justify-center mb-6 shadow-lg">
-              <Lock className="w-7 h-7 text-white" />
-            </div>
-            <p className="text-sm font-bold text-teal-600 uppercase tracking-wider mb-2">Policy-Based AI Control</p>
-            <h3 className="text-3xl font-bold text-slate-900 mb-4">Pre-Enforced System Governance</h3>
-            <p className="text-slate-600 text-lg leading-relaxed max-w-md">
-              True system-level governance. Configure AI confidence thresholds, mandate auditor approvals for high-risk actions, and lock down your compliance state before an audit. AI decisions don't just sit in a dashboard—they are governed by strict policy.
-            </p>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20 text-xs font-semibold uppercase tracking-widest mb-4">
+            Platform Capabilities
           </div>
-          
-          <div className="mt-8 relative z-10 rounded-xl border border-slate-200 bg-white shadow-sm p-4 w-full md:w-3/4 max-w-md transform translate-y-4 group-hover:-translate-y-1 transition-transform">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-slate-700">AWS Evidence Auto-Mapping</span>
-              <span className="text-xs px-2 py-1 bg-amber-100 text-amber-700 rounded-full font-bold">Pending Approval</span>
-            </div>
-            <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-              <div className="bg-teal-500 h-full w-[85%]" />
-            </div>
-            <p className="text-xs text-slate-500 mt-2">Confidence Score: 85% — Requires Auditor Review</p>
-          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            Your Entire Compliance Lifecycle.{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">
+              Automated.
+            </span>
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Five core pillars that take you from zero to audit-ready with autonomous AI agents.
+          </p>
         </motion.div>
 
-        {/* Feature 2: Continuous Monitoring */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="rounded-3xl border border-slate-200 bg-slate-50 p-8 flex flex-col hover:shadow-xl transition-shadow relative overflow-hidden group"
-        >
-          <div className="absolute top-0 left-0 w-32 h-32 bg-indigo-100 rounded-full blur-[40px] -ml-10 -mt-10" />
-          <div className="relative z-10">
-            <div className="w-12 h-12 rounded-xl bg-indigo-600 flex items-center justify-center mb-4">
-              <Radar className="w-6 h-6 text-white" />
-            </div>
-            <p className="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-1">Connect & Collect</p>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Continuous Monitoring</h3>
-            <p className="text-slate-600">
-              Connect your stack and let ReguLattice pull evidence automatically. Watch your compliance pulse update in real-time.
-            </p>
-          </div>
-        </motion.div>
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {tabs.map((tab, i) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(i)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                activeTab === i
+                  ? "bg-teal-600 text-white shadow-[0_0_20px_rgba(13,148,136,0.3)]"
+                  : "bg-slate-800/60 text-slate-400 border border-slate-700/50 hover:bg-slate-800 hover:text-slate-300"
+              }`}
+            >
+              <tab.icon className="w-4 h-4" />
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-        {/* Feature 3: RAG Mapping */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="rounded-3xl border border-slate-200 bg-slate-50 p-8 flex flex-col hover:shadow-xl transition-shadow relative overflow-hidden"
-        >
-          <div className="relative z-10">
-            <div className="w-12 h-12 rounded-xl bg-emerald-600 flex items-center justify-center mb-4">
-              <Brain className="w-6 h-6 text-white" />
-            </div>
-            <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider mb-1">Generative Compliance</p>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Autonomous AI Agents</h3>
-            <p className="text-slate-600">
-              Our LLMs don't just advise—they actively draft policies, map controls via RAG, and remediate risks on your behalf.
-            </p>
-          </div>
-        </motion.div>
+        {/* Tab Content */}
+        <div className="max-w-5xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-2xl border border-slate-700/50 bg-slate-800/40 backdrop-blur-xl p-8 md:p-12"
+            >
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                {/* Icon */}
+                <div className="w-16 h-16 rounded-2xl bg-teal-600/15 border border-teal-500/20 flex items-center justify-center shrink-0">
+                  {(() => {
+                    const Icon = tabs[activeTab].icon;
+                    return <Icon className="w-8 h-8 text-teal-400" />;
+                  })()}
+                </div>
 
-        {/* Feature 4: Audit Reporting */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="md:col-span-3 rounded-3xl border border-slate-200 bg-slate-900 p-8 flex flex-col md:flex-row items-center justify-between hover:shadow-xl transition-shadow relative overflow-hidden"
-        >
-          {/* Subtle background pattern */}
-          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-          
-          <div className="relative z-10 md:w-1/2 mb-6 md:mb-0">
-            <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center mb-4">
-              <FileCheck className="w-6 h-6 text-teal-400" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">Board-Ready Reporting in Seconds</h3>
-            <p className="text-slate-400">
-              Generate Statements of Applicability (SoA), Executive Summaries, and Gap Analysis reports instantly. Your official documentation dynamically adapts to your active standards.
-            </p>
-          </div>
-          
-          <div className="relative z-10 w-full md:w-auto flex gap-4">
-            <div className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex flex-col items-center justify-center min-w-[120px]">
-              <span className="text-3xl font-bold text-white mb-1">SoA</span>
-              <span className="text-xs text-slate-400 uppercase tracking-wide">Generated</span>
-            </div>
-            <div className="bg-slate-800 rounded-xl p-4 border border-slate-700 flex flex-col items-center justify-center min-w-[120px]">
-              <span className="text-3xl font-bold text-teal-400 mb-1">100%</span>
-              <span className="text-xs text-slate-400 uppercase tracking-wide">Audit Ready</span>
-            </div>
-          </div>
-        </motion.div>
+                {/* Content */}
+                <div className="flex-1">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                    {tabs[activeTab].title}
+                  </h3>
+                  <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                    {tabs[activeTab].description}
+                  </p>
+                  <ul className="space-y-3">
+                    {tabs[activeTab].highlights.map((h, i) => (
+                      <li key={i} className="flex items-center gap-3 text-slate-300">
+                        <div className="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
+                        <span className="text-sm font-medium">{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
+        {/* Tab indicators */}
+        <div className="flex justify-center gap-2 mt-6">
+          {tabs.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveTab(i)}
+              className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                activeTab === i ? "bg-teal-400 w-6" : "bg-slate-700"
+              }`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default FeaturesSection;

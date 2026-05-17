@@ -34,26 +34,26 @@ const Index = () => {
   const openContact = () => setContactOpen(true);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-900">
       <Navbar onBooking={openBooking} />
       <Hero onBooking={openBooking} onContact={openContact} />
       <IntegrationStrip />
-      <FounderSection />
       <div id="features">
         <FeaturesSection />
       </div>
-      <FrameworksSection />
       <div id="how-it-works">
         <HowItWorks />
       </div>
+      <div id="frameworks">
+        <FrameworksSection />
+      </div>
+      <FounderSection />
       <UseCasesSection />
       <div id="pricing">
         <PricingSection onBooking={openBooking} />
       </div>
       <BottomCTA onBooking={openBooking} onContact={openContact} />
-      <div id="contact">
-        <Footer />
-      </div>
+      <Footer />
 
       <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
     </div>

@@ -5,14 +5,14 @@ const plans = [
   {
     name: "Starter",
     price: "$79",
-    desc: "Essential compliance mapping for growing teams starting their certification journey.",
+    desc: "Essential compliance mapping for growing teams starting their core security journey.",
     features: [
       "Up to 5 team members",
-      "ISO 27001 compliance mapping",
+      "ISO 27001 & SECP compliance mapping",
+      "AI-powered control mapping",
       "Compliance Graph dashboard",
       "Evidence Summary & Gap Reports",
       "Audit Readiness Checklist",
-      "AI-powered control mapping",
       "Email support",
     ],
     popular: false,
@@ -20,32 +20,32 @@ const plans = [
   {
     name: "Pro",
     price: "$219",
-    desc: "Full AI automation with multi-framework support and autonomous remediation.",
+    desc: "Full GRC automation with multi-framework coverage and continuous auto-remediation.",
     features: [
       "Unlimited team members",
-      "ISO 27001 + SECP + ISO 20022 + ISO 27701",
-      "11 AI-generated audit reports",
-      "Auto-Remediate Suggestions",
-      "AI Priorities & Protection Gap analysis",
-      "Privacy Compliance Dashboard",
-      "Contract-Win Mode",
+      "All 10 Global & Regional Frameworks",
+      "AI Governance (ISO 42001) & NIST CSF 2.0",
+      "Financial Standards: ISO 20022 & GLBA",
+      "Payments & Healthcare: PCI-DSS & HIPAA",
+      "11 AI-generated audit-ready reports",
       "Urdu & Arabic language support",
-      "Priority support",
+      "Priority 24/7 support",
     ],
     popular: true,
   },
   {
     name: "Enterprise",
     price: "$349",
-    desc: "Tailored compliance infrastructure with dedicated consulting and API access.",
+    desc: "Tailored compliance infrastructure with custom frameworks, dedicated GRC experts, and full scale.",
     features: [
-      "Everything in Pro",
-      "Custom API & SSO integration",
+      "Unlimited Global & Custom Frameworks",
+      "Custom GRC Framework Builder",
+      "Full White-Label platform & reports",
+      "Multi-entity parallel mapping",
+      "SSO & Custom API integration",
       "Dedicated account manager",
       "Risk Treatment Plan automation",
-      "On-site audit preparation",
-      "Custom training & onboarding",
-      "SLA-backed support",
+      "SLA-backed priority support",
     ],
     popular: false,
   },
@@ -90,8 +90,11 @@ const PricingSection = ({ onBooking }: PricingSectionProps) => (
         viewport={{ once: true }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          Choose Your <span className="text-gradient">Plan</span>
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          Choose Your{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-teal-400">
+            Plan
+          </span>
         </h2>
         <p className="text-muted-foreground text-lg">
           Every account begins with a <strong>5-day free trial</strong> so you can map your compliance with zero risk.

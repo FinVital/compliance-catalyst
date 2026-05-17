@@ -1,57 +1,40 @@
-import { motion } from "framer-motion";
-
-const integrations = [
-  { name: "AWS", logo: "AWS" },
-  { name: "Google Cloud", logo: "GCP" },
-  { name: "Microsoft Azure", logo: "Azure" },
-  { name: "Jira", logo: "Jira" },
-  { name: "GitHub", logo: "GitHub" },
-  // Duplicate for seamless scroll
-  { name: "AWS", logo: "AWS" },
-  { name: "Google Cloud", logo: "GCP" },
-  { name: "Microsoft Azure", logo: "Azure" },
-  { name: "Jira", logo: "Jira" },
-  { name: "GitHub", logo: "GitHub" },
+const logos = [
+  "AWS", "Google Cloud", "Azure", "Jira", "GitHub",
+  "Slack", "Okta", "Cloudflare", "Datadog", "PagerDuty",
 ];
 
-const IntegrationStrip = () => {
-  return (
-    <section className="py-12 border-y border-border bg-card/30 overflow-hidden relative">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+const IntegrationStrip = () => (
+  <section className="py-24 bg-slate-900 overflow-hidden relative">
+    <div className="container mx-auto px-6 mb-12 relative z-20">
+      <p className="text-center text-sm font-bold uppercase tracking-[0.2em] text-slate-500">
+        Connects With Your Entire Stack
+      </p>
+    </div>
+    <div className="relative -mx-8">
+      {/* Straight container */}
+      <div className="relative flex overflow-hidden border-y border-slate-800/50 bg-slate-900/50 backdrop-blur-sm py-4">
+        
+        {/* Fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none" />
 
-      <div className="container mx-auto px-6 mb-6 text-center">
-        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
-          Connect once. Monitor continuously.
-        </p>
-      </div>
-
-      <div className="flex relative overflow-hidden">
-        <motion.div
-          className="flex gap-16 min-w-max items-center px-16"
-          animate={{ x: [0, "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: 20,
-          }}
-        >
-          {integrations.map((item, idx) => (
+        {/* Marquee Track */}
+        <div className="flex animate-marquee gap-12 items-center whitespace-nowrap w-max">
+          {[...logos, ...logos, ...logos].map((logo, i) => (
             <div
-              key={idx}
-              className="flex items-center gap-3 text-2xl font-bold text-muted-foreground/60 hover:text-primary transition-colors cursor-default"
+              key={i}
+              className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-800/60 border border-slate-700/50 shadow-lg shrink-0 hover:bg-slate-700/60 transition-colors"
             >
-              <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                <span className="text-sm">{item.logo[0]}</span>
+              <div className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-xs font-bold text-teal-400 border border-teal-500/20">
+                {logo.charAt(0)}
               </div>
-              {item.name}
+              <span className="text-base font-bold text-slate-300">{logo}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default IntegrationStrip;
