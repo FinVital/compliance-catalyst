@@ -62,15 +62,38 @@ export default defineConfig(({ mode }) => ({
             // ----------------------------------------------------
             if (pathname === "/api/visit") {
               try {
+                // Ensure visitor_logs table exists
+                await dbClient.execute(`
+                  CREATE TABLE IF NOT EXISTS visitor_logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    page_path TEXT NOT NULL,
+                    ip TEXT,
+                    location TEXT,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                  )
+                `);
+
                 let page = "home";
+                let ip = null;
+                let location = null;
+
                 if (req.method === "POST") {
                   const body = await getBody();
                   page = body.page || "home";
+                  ip = body.ip || null;
+                  location = body.location || null;
                 } else {
                   page = searchParams.get("page") || "home";
                 }
 
                 if (req.method === "POST") {
+                  // Log individual visit with IP & Location
+                  await dbClient.execute({
+                    sql: "INSERT INTO visitor_logs (page_path, ip, location) VALUES (?, ?, ?)",
+                    args: [page, ip, location],
+                  });
+
+                  // Increment aggregated count (UPSERT)
                   await dbClient.execute({
                     sql: `
                       INSERT INTO visitor_stats (page_path, views, last_visit)

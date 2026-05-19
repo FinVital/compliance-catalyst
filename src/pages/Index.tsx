@@ -26,12 +26,33 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Record page visit in Turso DB
-    fetch("/api/visit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page: "home" }),
-    }).catch((err) => console.error("Failed to track visit:", err));
+    // Fetch visitor IP and location client-side
+    fetch("https://ipapi.co/json/")
+      .then((res) => res.json())
+      .then((data) => {
+        const { ip, city, region, country_name } = data;
+        const location = `${city || ""}, ${region || ""}, ${country_name || ""}`.trim().replace(/^,|,$/g, "");
+        
+        // Record page visit in Turso DB with IP and Location
+        fetch("/api/visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            page: "home", 
+            ip: ip || "Unknown", 
+            location: location || "Unknown" 
+          }),
+        }).catch((err) => console.error("Failed to track visit:", err));
+      })
+      .catch((err) => {
+        console.error("Failed to get geo info:", err);
+        // Fallback without geo info
+        fetch("/api/visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ page: "home" }),
+        }).catch((err) => console.error("Failed to track visit:", err));
+      });
   }, []);
 
   const openBooking = () => {

@@ -76,6 +76,18 @@ async function initDb() {
     `);
     console.log("✅ Table 'visitor_stats' created/verified.");
 
+    // 4. Visitor Logs table
+    await dbClient.execute(`
+      CREATE TABLE IF NOT EXISTS visitor_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        page_path TEXT NOT NULL,
+        ip TEXT,
+        location TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    console.log("✅ Table 'visitor_logs' created/verified.");
+
     console.log("\n🎉 All Turso tables have been successfully initialized!");
   } catch (err) {
     console.error("❌ Failed to initialize database:", err);

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   });
 
   try {
-    // 1. Ensure table exists
+    // 1. Ensure tables exist
     await dbClient.execute(`
       CREATE TABLE IF NOT EXISTS visitor_stats (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,10 +17,26 @@ export default async function handler(req, res) {
       )
     `);
 
-    if (req.method === "POST") {
-      const { page = "home" } = req.body || {};
+    await dbClient.execute(`
+      CREATE TABLE IF NOT EXISTS visitor_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        page_path TEXT NOT NULL,
+        ip TEXT,
+        location TEXT,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
 
-      // 2. Increment visitor count (UPSERT)
+    if (req.method === "POST") {
+      const { page = "home", ip = null, location = null } = req.body || {};
+
+      // 2. Log individual visit with IP & Location
+      await dbClient.execute({
+        sql: "INSERT INTO visitor_logs (page_path, ip, location) VALUES (?, ?, ?)",
+        args: [page, ip, location],
+      });
+
+      // 3. Increment aggregated visitor count (UPSERT)
       await dbClient.execute({
         sql: `
           INSERT INTO visitor_stats (page_path, views, last_visit)
