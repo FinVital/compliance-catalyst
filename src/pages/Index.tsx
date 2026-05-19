@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
@@ -24,6 +24,15 @@ declare global {
 const Index = () => {
   const [contactOpen, setContactOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Record page visit in Turso DB
+    fetch("/api/visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: "home" }),
+    }).catch((err) => console.error("Failed to track visit:", err));
+  }, []);
 
   const openBooking = () => {
     if (window.Calendly) {

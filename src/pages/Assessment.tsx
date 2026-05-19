@@ -89,13 +89,28 @@ const Assessment = () => {
     setIsSubmitting(true);
     
     const finalScore = calculateScore();
-    const message = `Completed Compliance Assessment. Calculated Score: ${finalScore}/100`;
+    const detailedAnswers = questions.map((q, idx) => {
+      const selectedScore = answers[idx];
+      const selectedOption = q.options.find(opt => opt.score === selectedScore)?.text || "N/A";
+      return {
+        question: q.question,
+        answer: selectedOption,
+        score: selectedScore
+      };
+    });
 
     try {
-      await fetch("/api/contact", {
+      await fetch("/api/assessment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, company, phone, message }),
+        body: JSON.stringify({ 
+          name, 
+          email, 
+          company, 
+          phone, 
+          score: finalScore, 
+          answers: detailedAnswers 
+        }),
       });
       setCurrentState("results");
     } catch (err) {
