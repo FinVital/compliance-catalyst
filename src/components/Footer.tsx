@@ -1,6 +1,10 @@
 import { Linkedin } from "lucide-react";
 
-const Footer = () => (
+interface FooterProps {
+  onContact: () => void;
+}
+
+const Footer = ({ onContact }: FooterProps) => (
   <footer className="bg-slate-950 border-t border-slate-800/50 py-12">
     <div className="container mx-auto px-6">
       <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -13,7 +17,13 @@ const Footer = () => (
         <div className="flex items-center gap-8 text-sm text-slate-500">
           <a href="#features" className="hover:text-slate-300 transition-colors">Platform</a>
           <a href="#pricing" className="hover:text-slate-300 transition-colors">Pricing</a>
-          <a href="mailto:info@regulattice.com" className="hover:text-slate-300 transition-colors">Contact</a>
+          <a 
+            href="#" 
+            onClick={(e) => { e.preventDefault(); onContact(); }} 
+            className="hover:text-slate-300 transition-colors"
+          >
+            Contact
+          </a>
           <a href="#" className="hover:text-slate-300 transition-colors">Privacy</a>
           <a href="https://www.linkedin.com/company/regulattice/" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors flex items-center gap-2">
             <Linkedin className="w-4 h-4" />

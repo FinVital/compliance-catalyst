@@ -65,7 +65,7 @@ const Index = () => {
         <PricingSection onBooking={openBooking} />
       </div>
       <BottomCTA onBooking={openAssessment} onContact={openContact} />
-      <Footer />
+      <Footer onContact={openContact} />
 
       <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
     </div>

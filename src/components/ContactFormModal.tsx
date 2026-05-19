@@ -240,12 +240,12 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
                       {status === "sending" ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin" />
-                          Sending...
+                          Submitting...
                         </>
                       ) : (
                         <>
                           <Send className="w-4 h-4" />
-                          Send Message
+                          Submit
                         </>
                       )}
                     </button>
