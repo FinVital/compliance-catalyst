@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import IntegrationStrip from "@/components/IntegrationStrip";
@@ -22,6 +23,7 @@ declare global {
 
 const Index = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openBooking = () => {
     if (window.Calendly) {
@@ -32,11 +34,12 @@ const Index = () => {
   };
 
   const openContact = () => setContactOpen(true);
+  const openAssessment = () => navigate("/assessment");
 
   return (
     <div className="min-h-screen bg-slate-900">
       <Navbar onBooking={openBooking} />
-      <Hero onBooking={openBooking} onContact={openContact} />
+      <Hero onBooking={openAssessment} onContact={openContact} />
       <IntegrationStrip />
       <div id="features">
         <FeaturesSection />
@@ -52,7 +55,7 @@ const Index = () => {
       <div id="pricing">
         <PricingSection onBooking={openBooking} />
       </div>
-      <BottomCTA onBooking={openBooking} onContact={openContact} />
+      <BottomCTA onBooking={openAssessment} onContact={openContact} />
       <Footer />
 
       <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />

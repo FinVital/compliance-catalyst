@@ -1,3 +1,5 @@
+import { Linkedin } from "lucide-react";
+
 const Footer = () => (
   <footer className="bg-slate-950 border-t border-slate-800/50 py-12">
     <div className="container mx-auto px-6">
@@ -13,6 +15,10 @@ const Footer = () => (
           <a href="#pricing" className="hover:text-slate-300 transition-colors">Pricing</a>
           <a href="mailto:info@regulattice.com" className="hover:text-slate-300 transition-colors">Contact</a>
           <a href="#" className="hover:text-slate-300 transition-colors">Privacy</a>
+          <a href="https://www.linkedin.com/company/regulattice/" target="_blank" rel="noopener noreferrer" className="hover:text-teal-400 transition-colors flex items-center gap-2">
+            <Linkedin className="w-4 h-4" />
+            <span className="hidden sm:inline">LinkedIn</span>
+          </a>
         </div>
         <p className="text-xs text-slate-600">
           © {new Date().getFullYear()} ReguLattice. All rights reserved.

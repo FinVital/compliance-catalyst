@@ -46,72 +46,13 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
     e.preventDefault();
     setStatus("sending");
 
-    const htmlBody = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding: 24px; border-radius: 12px 12px 0 0;">
-          <h2 style="color: #2dd4bf; margin: 0; font-size: 22px;">🚀 New Expert Consultation Request</h2>
-          <p style="color: #94a3b8; margin: 8px 0 0 0; font-size: 14px;">via ReguLattice Website</p>
-        </div>
-        <div style="background: #f8fafc; padding: 24px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 12px 12px;">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px; width: 120px; vertical-align: top;"><strong>Name</strong></td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #0f172a; font-size: 14px;">${name}</td>
-            </tr>
-            <tr>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px; vertical-align: top;"><strong>Email</strong></td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #0f172a; font-size: 14px;"><a href="mailto:${email}" style="color: #0d9488;">${email}</a></td>
-            </tr>
-            <tr>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px; vertical-align: top;"><strong>Company</strong></td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #0f172a; font-size: 14px;">${company || "Not specified"}</td>
-            </tr>
-            <tr>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 14px; vertical-align: top;"><strong>Phone / WhatsApp</strong></td>
-              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; color: #0f172a; font-size: 14px;">${phone || "Not provided"}</td>
-            </tr>
-            <tr>
-              <td style="padding: 12px 0; color: #64748b; font-size: 14px; vertical-align: top;"><strong>Message</strong></td>
-              <td style="padding: 12px 0; color: #0f172a; font-size: 14px; white-space: pre-wrap;">${message}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    `;
-
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Messages: [
-            {
-              From: {
-                Email: "info@regulattice.com",
-                Name: "ReguLattice Website",
-              },
-              To: [
-                {
-                  Email: "info@regulattice.com",
-                  Name: "ReguLattice",
-                },
-                {
-                  Email: "moazzamwaheed@gmail.com",
-                  Name: "Moazzam Waheed",
-                },
-              ],
-              Subject: `Expert Consultation Request from ${name}`,
-              TextPart: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nPhone/WhatsApp: ${phone}\nMessage: ${message}`,
-              HTMLPart: htmlBody,
-              ReplyTo: {
-                Email: email,
-                Name: name,
-              },
-            },
-          ],
-        }),
+        body: JSON.stringify({ name, email, company, phone, message }),
       });
 
       const data = await response.json();

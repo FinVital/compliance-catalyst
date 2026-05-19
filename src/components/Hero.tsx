@@ -86,7 +86,7 @@ const Hero = ({ onBooking, onContact }: HeroProps) => {
               onClick={onBooking}
               className="inline-flex items-center justify-center rounded-xl bg-teal-600 text-white font-semibold px-10 py-4 text-lg hover:bg-teal-500 hover:shadow-[0_0_30px_rgba(13,148,136,0.4)] transition-all hover:-translate-y-0.5 cursor-pointer"
             >
-              Start Free 5-Day Trial
+              Free Assessment
             </button>
             <button
               onClick={onContact}

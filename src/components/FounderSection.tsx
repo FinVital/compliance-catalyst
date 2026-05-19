@@ -26,7 +26,7 @@ const FounderSection = () => (
             <blockquote className="text-muted-foreground text-lg leading-relaxed italic">
               "As the Founder & CEO of ReguLattice, I bring over 16 years of hands-on expertise in Software Engineering and Artificial Intelligence. Having witnessed firsthand the immense friction companies face when proving their security posture to close enterprise deals, I realized the compliance industry needed a paradigm shift.
               <br /><br />
-              ReguLattice was engineered to actively synthesize your data, evaluate your evidence, and generate high-confidence RFP responses. Our mission is to make ISO 27001 an accelerator for your business growth, not a roadblock."
+              ReguLattice was engineered as a 100% air-gapped, sovereign Autonomous GRC Engine. It acts as your ultimate vCISO force multiplier—continuously mapping evidence, validating controls with our localized AI architecture, and keeping you audit-ready across multiple global frameworks. Our mission is to make compliance an automated accelerator for your business growth, not a roadblock."
             </blockquote>
             <p className="mt-6 font-display font-bold text-foreground text-lg">
               — Moazzam Waheed, <span className="text-primary">Founder & CEO</span>

@@ -39,7 +39,7 @@ const Navbar = ({ onBooking }: NavbarProps) => {
             onClick={onBooking}
             className="bg-teal-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-teal-500 hover:shadow-[0_0_20px_rgba(13,148,136,0.3)] transition-all cursor-pointer"
           >
-            Get a Demo
+            Book a Call
           </button>
         </div>
 
@@ -64,7 +64,7 @@ const Navbar = ({ onBooking }: NavbarProps) => {
             onClick={() => { setOpen(false); onBooking(); }}
             className="block w-full bg-teal-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl text-center cursor-pointer"
           >
-            Get a Demo
+            Book a Call
           </button>
         </div>
       )}
