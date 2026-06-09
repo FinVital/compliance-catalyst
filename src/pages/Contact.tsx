@@ -14,6 +14,8 @@ type FormStatus = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Talk to an Expert");
+  const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -24,14 +26,13 @@ export default function Contact() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "Contact ReguLattice | RegTech Pakistan & AI Powered Compliance Support";
   }, []);
 
   const openBooking = () => {
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: "https://calendly.com/moazzamwaheed/15min",
-      });
-    }
+    setModalTitle("Book a Live Demo");
+    setModalDesc("We will response within an hour.");
+    setContactModalOpen(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -603,7 +604,7 @@ export default function Contact() {
       </section>
 
       <Footer onContact={() => setContactModalOpen(true)} />
-      <ContactFormModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+      <ContactFormModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} title={modalTitle} description={modalDesc} />
     </div>
   );
 }

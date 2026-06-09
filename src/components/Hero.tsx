@@ -60,7 +60,7 @@ export default function Hero({ onBooking }: HeroProps) {
             className="font-black text-white leading-[1.08] mb-6"
             style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)", letterSpacing: "-0.035em" }}
           >
-            GRC compliance
+            GRC Compliance
             <br />
             re-engineered for
             <br />
@@ -133,66 +133,48 @@ export default function Hero({ onBooking }: HeroProps) {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.6 }}
-          className="relative mt-16 mx-auto max-w-5xl"
+          className="relative mt-16 mx-auto max-w-3xl"
         >
+          {/* Ambient corner glows behind the dashboard */}
+          <div 
+            className="absolute -top-12 -left-12 w-72 h-72 rounded-full blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%)" }}
+          />
+          <div 
+            className="absolute -bottom-12 -right-12 w-72 h-72 rounded-full blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%)" }}
+          />
+
           {/* Gradient fade at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 z-10 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #141927)" }} />
+          <div className="absolute bottom-0 left-0 right-0 h-24 z-10 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #141927)" }} />
 
           <div
-            className="rounded-t-2xl overflow-hidden"
-            style={{ border: "1px solid rgba(62,207,178,0.15)", borderBottom: "none", background: "#0d111c" }}
+            className="rounded-2xl overflow-hidden relative"
+            style={{ 
+              border: "1px solid rgba(255, 255, 255, 0.08)", 
+              background: "#0d111c",
+              boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px -10px rgba(62, 207, 178, 0.15)"
+            }}
           >
             {/* Window bar */}
-            <div className="h-10 flex items-center px-4 gap-2 border-b" style={{ background: "#141927", borderColor: "rgba(62,207,178,0.1)" }}>
+            <div className="h-10 flex items-center px-4 gap-2 border-b" style={{ background: "#141927", borderColor: "rgba(255,255,255,0.05)" }}>
               <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
               <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }} />
               <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }} />
               <span className="mx-auto text-[10px] font-mono tracking-widest" style={{ color: "#4a5568" }}>
-                REGULATTICE — COMPLIANCE COMMAND CENTER
+                ReguLattice - Controls Auto Mapping
               </span>
             </div>
 
-            {/* Placeholder dashboard area */}
-            <div className="aspect-[16/9] relative" style={{ background: "linear-gradient(135deg, #0d111c 0%, #141927 100%)" }}>
-              {/* Stat cards row */}
-              <div className="absolute top-8 left-8 right-8 grid grid-cols-4 gap-4">
-                {[
-                  { label: "Compliance Score", value: "94%", delta: "+3% this week", color: "#3ecfb2" },
-                  { label: "Controls Mapped", value: "847", delta: "Across 10 frameworks", color: "#f5a623" },
-                  { label: "Open Gaps", value: "12", delta: "↓ 8 from last month", color: "#60a5fa" },
-                  { label: "Audit Readiness", value: "Ready", delta: "ISO 27001 ✓", color: "#a78bfa" },
-                ].map(stat => (
-                  <div key={stat.label} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div className="text-xs mb-1" style={{ color: "#4a5568" }}>{stat.label}</div>
-                    <div className="text-2xl font-black mb-1" style={{ color: stat.color }}>{stat.value}</div>
-                    <div className="text-[10px]" style={{ color: "#8b9ab0" }}>{stat.delta}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Compliance bar */}
-              <div className="absolute top-44 left-8 right-8 rounded-xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-semibold text-white">Framework Compliance Overview</span>
-                  <span className="text-xs" style={{ color: "#3ecfb2" }}>10 frameworks active</span>
-                </div>
-                <div className="space-y-2">
-                  {[
-                    { name: "ISO 27001", pct: 94 },
-                    { name: "SOC 2", pct: 87 },
-                    { name: "NIST CSF 2.0", pct: 79 },
-                    { name: "SAMA", pct: 91 },
-                  ].map(fw => (
-                    <div key={fw.name} className="flex items-center gap-3">
-                      <span className="text-xs w-24 shrink-0" style={{ color: "#8b9ab0" }}>{fw.name}</span>
-                      <div className="flex-1 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
-                        <div className="h-full rounded-full" style={{ width: `${fw.pct}%`, background: "linear-gradient(90deg, #3ecfb2, #f5a623)" }} />
-                      </div>
-                      <span className="text-xs font-semibold" style={{ color: "#3ecfb2" }}>{fw.pct}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Dashboard area displaying the real dashboard screenshot */}
+            <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
+              <iframe 
+                src="https://drive.google.com/file/d/1UDmW6XV_er51UIV9ZXbXtoxRVyYorDkt/preview" 
+                className="absolute inset-0 w-full h-full border-0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                title="ReguLattice Compliance Dashboard Demo"
+              />
             </div>
           </div>
         </motion.div>

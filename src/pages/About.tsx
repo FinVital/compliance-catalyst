@@ -8,22 +8,24 @@ import { Sparkles, Award, ArrowRight, CheckCircle2, Target, Eye, Heart, Globe, L
 
 export default function About() {
   const [contactOpen, setContactOpen] = useState(false);
-
+  const [modalTitle, setModalTitle] = useState("Talk to an Expert");
+  const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
   const [activeLifecycleStep, setActiveLifecycleStep] = useState<number>(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "About ReguLattice | Leading AI Compliance & RegTech Solution in Pakistan";
   }, []);
 
   const openBooking = () => {
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: "https://calendly.com/moazzamwaheed/15min",
-      });
-    }
+    setModalTitle("Book a Live Demo");
+    setModalDesc("We will response within an hour.");
+    setContactOpen(true);
   };
 
   const openContact = () => {
+    setModalTitle("Talk to an Expert");
+    setModalDesc("We'll get back to you within 24 hours.");
     setContactOpen(true);
   };
 
@@ -923,7 +925,7 @@ export default function About() {
       </section>
 
       <Footer onContact={openContact} />
-      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} title={modalTitle} description={modalDesc} />
     </div>
   );
 }

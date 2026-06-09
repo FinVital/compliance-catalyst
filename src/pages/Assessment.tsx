@@ -76,6 +76,7 @@ const Assessment = () => {
 
     initGA();
     trackGAPageview();
+    document.title = "Free Compliance Assessment | ReguLattice GRC Platform";
   }, []);
 
   const handleOptionSelect = (score: number) => {

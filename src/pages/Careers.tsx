@@ -5,20 +5,23 @@ import ContactFormModal from "@/components/ContactFormModal";
 
 export default function Careers() {
   const [contactOpen, setContactOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Talk to an Expert");
+  const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "Careers at ReguLattice | Join the Next-Gen AI GRC Platform Team";
   }, []);
 
   const openBooking = () => {
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: "https://calendly.com/moazzamwaheed/15min",
-      });
-    }
+    setModalTitle("Book a Live Demo");
+    setModalDesc("We will response within an hour.");
+    setContactOpen(true);
   };
 
   const openContact = () => {
+    setModalTitle("Talk to an Expert");
+    setModalDesc("We'll get back to you within 24 hours.");
     setContactOpen(true);
   };
 
@@ -47,7 +50,7 @@ export default function Careers() {
       </main>
 
       <Footer onContact={openContact} />
-      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} title={modalTitle} description={modalDesc} />
     </div>
   );
 }

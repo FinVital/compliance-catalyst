@@ -27,6 +27,8 @@ declare global {
 
 const Index = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Talk to an Expert");
+  const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
   const [geoData, setGeoData] = useState<{ ip: string | null; location: string | null }>({
     ip: null,
     location: null,
@@ -76,16 +78,16 @@ const Index = () => {
   const openBooking = () => {
     trackPixelEvent("ClickCTA", { label: "Book Call", location: "Pricing Section" });
     trackGAEvent("click_cta", { label: "Book Call", location: "Pricing Section" });
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: "https://calendly.com/moazzamwaheed/15min",
-      });
-    }
+    setModalTitle("Book a Live Demo");
+    setModalDesc("We will response within an hour.");
+    setContactOpen(true);
   };
 
   const openContact = () => {
     trackPixelEvent("ClickCTA", { label: "Talk to Expert" });
     trackGAEvent("click_cta", { label: "Talk to Expert" });
+    setModalTitle("Talk to an Expert");
+    setModalDesc("We'll get back to you within 24 hours.");
     setContactOpen(true);
   };
 
@@ -100,7 +102,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Navbar onBooking={openBooking} onContact={openContact} />
       {/* Hero — dark navy */}
-      <Hero onBooking={openAssessment} onContact={openContact} />
+      <Hero onBooking={openBooking} onContact={openContact} />
       {/* Integration strip — white */}
       <IntegrationStrip />
       {/* Features — white */}
@@ -128,7 +130,7 @@ const Index = () => {
       {/* Footer — dark */}
       <Footer onContact={openContact} />
 
-      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} title={modalTitle} description={modalDesc} />
       
       {/* Lead Capture & Retention Components */}
       <LeadCapturePopup geoData={geoData} />

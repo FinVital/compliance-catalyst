@@ -7,11 +7,13 @@ import { trackGAEvent } from "@/lib/google-analytics";
 interface ContactFormModalProps {
   isOpen: boolean;
   onClose: () => void;
+  title?: string;
+  description?: string;
 }
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
-const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
+const ContactFormModal = ({ isOpen, onClose, title, description }: ContactFormModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -103,8 +105,8 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
                     <MessageSquare className="w-5 h-5 text-teal-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white">Talk to an Expert</h3>
-                    <p className="text-sm text-slate-400">We'll get back to you within 24 hours.</p>
+                    <h3 className="text-lg font-bold text-white">{title || "Talk to an Expert"}</h3>
+                    <p className="text-sm text-slate-400">{description || "We'll get back to you within 24 hours."}</p>
                   </div>
                 </div>
                 <button

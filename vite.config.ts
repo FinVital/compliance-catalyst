@@ -160,7 +160,7 @@ const apiMiddlewarePlugin = {
       res.setHeader("Content-Type", "application/json");
 
       const { dbUrl, dbToken } = readEnv();
-      const db = createClient({ url: dbUrl, authToken: dbToken });
+      const db = createClient({ url: dbUrl || "file:local.db", authToken: dbToken });
 
       try {
         await ensureTables(db);

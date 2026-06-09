@@ -330,7 +330,7 @@ export default function Navbar({ onBooking }: NavbarProps) {
                     {col.links.map((link) => (
                       <li key={link.label}>
                         <a
-                          href="#features"
+                          href="/#features"
                           onClick={() => setActiveMenu(null)}
                           className="flex items-start gap-3 group"
                         >
@@ -364,7 +364,7 @@ export default function Navbar({ onBooking }: NavbarProps) {
                   <ul className="space-y-3">
                     {col.links.map((link) => (
                       <li key={link.label}>
-                        <a href={link.href} onClick={() => setActiveMenu(null)} className="flex items-center gap-3 group">
+                        <a href="/" onClick={() => setActiveMenu(null)} className="flex items-center gap-3 group">
                           <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(62,207,178,0.1)" }}>
                             <link.icon className="w-4 h-4" style={{ color: "#3ecfb2" }} />
                           </div>
