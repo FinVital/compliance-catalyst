@@ -1,18 +1,17 @@
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { ShieldCheck, FileCheck, BarChart3, Globe, Cpu } from "lucide-react";
 
-const images = [
-  "/images/dashboard/dash-1.png",
-  "/images/dashboard/dash-2.png",
-  "/images/dashboard/dash-3.png",
+const rotatingPhrases = [
+  "the age of AI.",
+  "regulatory confidence.",
+  "zero manual effort.",
+  "global frameworks.",
+  "autonomous audits.",
 ];
 
-  const stats = [
-  { icon: Globe, label: "Frameworks", value: "10" },
-  { icon: FileCheck, label: "AI Reports", value: "11" },
-  { icon: Cpu, label: "AI Agents", value: "24/7" },
-  { icon: BarChart3, label: "Faster Audits", value: "10×" },
+const clientLogos = [
+  "SAMA", "ISO 27001", "SOC 2", "NIST CSF", "PCI-DSS",
+  "HIPAA", "ISO 42001", "GLBA", "ISO 20022", "SECP",
 ];
 
 interface HeroProps {
@@ -20,174 +19,184 @@ interface HeroProps {
   onContact: () => void;
 }
 
-const Hero = ({ onBooking, onContact }: HeroProps) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+export default function Hero({ onBooking }: HeroProps) {
+  const [phraseIdx, setPhraseIdx] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
+      setPhraseIdx(p => (p + 1) % rotatingPhrases.length);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative bg-slate-900 overflow-hidden pt-28 pb-0">
-      {/* Animated grid background */}
+    <section
+      className="relative pt-32 pb-0 overflow-hidden"
+      style={{ background: "#141927", minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
+    >
+      {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
+          backgroundImage: `linear-gradient(rgba(62,207,178,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(62,207,178,0.03) 1px, transparent 1px)`,
+          backgroundSize: "80px 80px",
         }}
       />
 
-      {/* Gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-teal-600/8 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-[100px]" />
-      </div>
+      {/* Glow orb */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at center, rgba(62,207,178,0.06) 0%, transparent 70%)" }}
+      />
 
-      {/* Scanning line */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent animate-scan-line" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Center-Aligned Hero Text */}
+      <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
+        {/* Main heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
+          transition={{ duration: 0.7 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/10 text-teal-400 border border-teal-500/20 text-sm font-medium mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-            </span>
-            10 Frameworks. One Autonomous Engine.
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] mb-6 tracking-tight">
-            ReguLattice is an{" "}
-            <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-teal-400">
-              Autonomous GRC Engine
+          <h1
+            className="font-black text-white leading-[1.08] mb-6"
+            style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)", letterSpacing: "-0.035em" }}
+          >
+            GRC compliance
+            <br />
+            re-engineered for
+            <br />
+            <span className="relative inline-block overflow-hidden" style={{ minWidth: "8ch", minHeight: "1.1em" }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={phraseIdx}
+                  className="text-teal-gradient block"
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -40, opacity: 0 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                >
+                  {rotatingPhrases[phraseIdx]}
+                </motion.span>
+              </AnimatePresence>
             </span>
           </h1>
-          
-          <p className="text-lg md:text-2xl text-slate-300 mb-10 max-w-4xl mx-auto leading-relaxed">
-            that maps your evidence, monitors your risk, and keeps you audit-ready — continuously, across every framework your business operates under.
+
+          <p
+            className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
+            style={{ color: "#8b9ab0" }}
+          >
+            The AI-native GRC platform with autonomous agents that map evidence, remediate gaps, and keep you audit-ready across 10 global compliance frameworks.
           </p>
-          
+
+          {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onBooking}
-              className="inline-flex items-center justify-center rounded-xl bg-teal-600 text-white font-semibold px-10 py-4 text-lg hover:bg-teal-500 hover:shadow-[0_0_30px_rgba(13,148,136,0.4)] transition-all hover:-translate-y-0.5 cursor-pointer"
-            >
-              Free Assessment
+            <button onClick={onBooking} className="btn-amber text-base px-8 py-4 gap-2 justify-center">
+              Get a demo
             </button>
-            <button
-              onClick={onContact}
-              className="inline-flex items-center justify-center rounded-xl border border-slate-600 text-slate-300 font-semibold px-10 py-4 text-lg hover:bg-slate-800/80 hover:text-white hover:border-slate-500 transition-all cursor-pointer"
+            <a
+              href="#how-it-works"
+              className="btn-dark-outline text-base px-8 py-4 justify-center"
             >
-              Talk to an Expert
-            </button>
+              See how it works
+            </a>
           </div>
         </motion.div>
 
-        {/* Stats Bar */}
+        {/* Trust strip */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-6 md:gap-12 mt-14 mb-12"
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="mt-16 mb-0"
         >
-          {stats.map((s, i) => (
-            <div key={i} className="flex items-center gap-3 text-center">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700/50 flex items-center justify-center">
-                <s.icon className="w-5 h-5 text-teal-400" />
-              </div>
-              <div className="text-left">
-                <div className="text-xl font-bold text-white">{s.value}</div>
-                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">{s.label}</div>
-              </div>
-            </div>
-          ))}
+          <p className="text-xs uppercase tracking-widest font-semibold mb-6" style={{ color: "#4a5568" }}>
+            Covering all frameworks your business needs
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {clientLogos.map(logo => (
+              <span
+                key={logo}
+                className="text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider transition-colors"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  color: "#8b9ab0",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                }}
+              >
+                {logo}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Full-Width Dashboard Showcase */}
+        {/* Dashboard preview fade in from below */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="relative max-w-6xl mx-auto"
+          transition={{ duration: 0.9, delay: 0.6 }}
+          className="relative mt-16 mx-auto max-w-5xl"
         >
-          {/* Glow behind mockup */}
-          <div className="absolute -inset-4 bg-gradient-to-t from-teal-500/10 via-transparent to-transparent rounded-3xl blur-2xl pointer-events-none" />
-          
-          <div className="relative rounded-2xl border border-slate-700/60 bg-slate-800/50 backdrop-blur-xl shadow-2xl overflow-hidden ring-1 ring-white/5">
-            {/* Window Header */}
-            <div className="h-10 flex items-center px-5 gap-2 border-b border-slate-700/50 bg-slate-900/60">
-              <div className="w-3 h-3 rounded-full bg-red-500/70" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-              <div className="w-3 h-3 rounded-full bg-green-500/70" />
-              <div className="mx-auto text-[11px] text-slate-500 font-mono tracking-widest font-semibold">REGULATTICE_OS</div>
+          {/* Gradient fade at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 z-10 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #141927)" }} />
+
+          <div
+            className="rounded-t-2xl overflow-hidden"
+            style={{ border: "1px solid rgba(62,207,178,0.15)", borderBottom: "none", background: "#0d111c" }}
+          >
+            {/* Window bar */}
+            <div className="h-10 flex items-center px-4 gap-2 border-b" style={{ background: "#141927", borderColor: "rgba(62,207,178,0.1)" }}>
+              <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.15)" }} />
+              <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }} />
+              <div className="w-3 h-3 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }} />
+              <span className="mx-auto text-[10px] font-mono tracking-widest" style={{ color: "#4a5568" }}>
+                REGULATTICE — COMPLIANCE COMMAND CENTER
+              </span>
             </div>
 
-            {/* Screenshot */}
-            <div className="relative aspect-[16/10] bg-slate-950 overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentImageIndex}
-                  src={images[currentImageIndex]}
-                  alt="ReguLattice Dashboard"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute inset-0 w-full h-full object-cover object-top"
-                />
-              </AnimatePresence>
+            {/* Placeholder dashboard area */}
+            <div className="aspect-[16/9] relative" style={{ background: "linear-gradient(135deg, #0d111c 0%, #141927 100%)" }}>
+              {/* Stat cards row */}
+              <div className="absolute top-8 left-8 right-8 grid grid-cols-4 gap-4">
+                {[
+                  { label: "Compliance Score", value: "94%", delta: "+3% this week", color: "#3ecfb2" },
+                  { label: "Controls Mapped", value: "847", delta: "Across 10 frameworks", color: "#f5a623" },
+                  { label: "Open Gaps", value: "12", delta: "↓ 8 from last month", color: "#60a5fa" },
+                  { label: "Audit Readiness", value: "Ready", delta: "ISO 27001 ✓", color: "#a78bfa" },
+                ].map(stat => (
+                  <div key={stat.label} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="text-xs mb-1" style={{ color: "#4a5568" }}>{stat.label}</div>
+                    <div className="text-2xl font-black mb-1" style={{ color: stat.color }}>{stat.value}</div>
+                    <div className="text-[10px]" style={{ color: "#8b9ab0" }}>{stat.delta}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Compliance bar */}
+              <div className="absolute top-44 left-8 right-8 rounded-xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-sm font-semibold text-white">Framework Compliance Overview</span>
+                  <span className="text-xs" style={{ color: "#3ecfb2" }}>10 frameworks active</span>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { name: "ISO 27001", pct: 94 },
+                    { name: "SOC 2", pct: 87 },
+                    { name: "NIST CSF 2.0", pct: 79 },
+                    { name: "SAMA", pct: 91 },
+                  ].map(fw => (
+                    <div key={fw.name} className="flex items-center gap-3">
+                      <span className="text-xs w-24 shrink-0" style={{ color: "#8b9ab0" }}>{fw.name}</span>
+                      <div className="flex-1 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+                        <div className="h-full rounded-full" style={{ width: `${fw.pct}%`, background: "linear-gradient(90deg, #3ecfb2, #f5a623)" }} />
+                      </div>
+                      <span className="text-xs font-semibold" style={{ color: "#3ecfb2" }}>{fw.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Floating badges */}
-          <motion.div 
-            className="absolute -top-4 -right-4 md:right-8 bg-slate-800/95 backdrop-blur border border-teal-500/30 text-white rounded-xl p-3 shadow-xl z-20 flex items-center gap-3 hidden md:flex"
-            animate={{ y: [0, -8, 0] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-          >
-            <div className="w-9 h-9 rounded-lg bg-teal-500/20 flex items-center justify-center">
-              <ShieldCheck className="w-4 h-4 text-teal-400" />
-            </div>
-            <div>
-              <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Compliance Score</div>
-              <div className="text-sm font-bold text-emerald-400">94% Audit Ready</div>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="absolute -bottom-4 -left-4 md:left-8 bg-slate-800/95 backdrop-blur border border-indigo-500/30 text-white rounded-xl p-3 shadow-xl z-20 flex items-center gap-3 hidden md:flex"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-          >
-            <div className="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center">
-              <FileCheck className="w-4 h-4 text-indigo-400" />
-            </div>
-            <div>
-              <div className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">AI Agent</div>
-              <div className="text-sm font-bold text-white">Policy Generated ✓</div>
-            </div>
-          </motion.div>
         </motion.div>
-
-        {/* Fade-to-next-section gradient */}
-        <div className="h-24 bg-gradient-to-b from-transparent to-slate-900" />
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Star, FileCheck, Shield } from "lucide-react";
+import { Check, Star } from "lucide-react";
 
 const plans = [
   {
@@ -16,6 +16,7 @@ const plans = [
       "Email support",
     ],
     popular: false,
+    cta: "Get Started Free",
   },
   {
     name: "Pro",
@@ -32,11 +33,12 @@ const plans = [
       "Priority 24/7 support",
     ],
     popular: true,
+    cta: "Start Pro Trial",
   },
   {
     name: "Enterprise",
     price: "$349",
-    desc: "Tailored compliance infrastructure with custom frameworks, dedicated GRC experts, and full scale.",
+    desc: "Tailored compliance infrastructure with custom frameworks, dedicated GRC experts.",
     features: [
       "Unlimited Global & Custom Frameworks",
       "Custom GRC Framework Builder",
@@ -48,6 +50,7 @@ const plans = [
       "SLA-backed priority support",
     ],
     popular: false,
+    cta: "Contact Sales",
   },
 ];
 
@@ -56,32 +59,15 @@ interface PricingSectionProps {
 }
 
 const PricingSection = ({ onBooking }: PricingSectionProps) => (
-  <section className="py-24 relative overflow-hidden">
-    {/* Animated background */}
-    <div className="absolute inset-0 pointer-events-none">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `radial-gradient(circle at 70% 80%, hsl(160 84% 39% / 0.03) 0%, transparent 40%), radial-gradient(circle at 30% 20%, hsl(210 100% 56% / 0.03) 0%, transparent 40%)`,
-        }}
-      />
-      {/* Animated dots grid */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `radial-gradient(circle, hsl(160 84% 39% / 0.05) 1px, transparent 1px)`,
-          backgroundSize: "50px 50px",
-        }}
-      />
-      <div className="absolute top-16 left-[5%] opacity-[0.03] animate-drift" style={{ animationDelay: "2s" }}>
-        <FileCheck className="w-36 h-36 text-primary" />
-      </div>
-      <div className="absolute bottom-16 right-[5%] opacity-[0.03] animate-drift" style={{ animationDelay: "5s" }}>
-        <Shield className="w-28 h-28 text-secondary" />
-      </div>
-      {/* Pulse rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-primary/[0.03] animate-pulse-ring" />
-    </div>
+  <section className="py-28 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #111625 0%, #181e30 100%)" }}>
+    {/* Grid */}
+    <div
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+        backgroundSize: "50px 50px",
+      }}
+    />
 
     <div className="container mx-auto px-6 relative z-10">
       <motion.div
@@ -90,18 +76,24 @@ const PricingSection = ({ onBooking }: PricingSectionProps) => (
         viewport={{ once: true }}
         className="text-center mb-16"
       >
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold uppercase tracking-widest mb-4" style={{ background: "rgba(37,99,235,0.1)", borderColor: "rgba(37,99,235,0.2)", color: "#93c5fd" }}>
+          Transparent Pricing
+        </div>
         <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
           Choose Your{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-emerald-300 to-teal-400">
+          <span
+            className="text-transparent bg-clip-text"
+            style={{ backgroundImage: "linear-gradient(90deg, #60a5fa, #818cf8)" }}
+          >
             Plan
           </span>
         </h2>
-        <p className="text-muted-foreground text-lg">
-          Every account begins with a <strong>5-day free trial</strong> so you can map your compliance with zero risk.
+        <p className="text-slate-400 text-lg">
+          Every account begins with a <strong className="text-white">5-day free trial</strong> — no credit card required.
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-start">
         {plans.map((p, i) => (
           <motion.div
             key={p.name}
@@ -109,41 +101,63 @@ const PricingSection = ({ onBooking }: PricingSectionProps) => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className={`relative rounded-2xl border p-8 flex flex-col backdrop-blur-sm ${
+            className={`relative rounded-3xl border flex flex-col transition-all ${
               p.popular
-                ? "border-primary bg-card/90 shadow-glow scale-105"
-                : "border-border bg-card/80"
+                ? "shadow-2xl"
+                : "hover:shadow-xl"
             }`}
+            style={
+              p.popular
+                ? { background: "white", borderColor: "#1e40af", borderWidth: "2px", boxShadow: "0 10px 30px rgba(30,64,175,0.15)" }
+                : { background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.08)" }
+            }
           >
             {p.popular && (
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-hero rounded-full px-4 py-1 text-sm font-semibold text-primary-foreground flex items-center gap-1">
-                <Star className="w-3.5 h-3.5" /> Most Popular
+              <div
+                className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full px-4 py-1.5 text-sm font-semibold text-white flex items-center gap-1.5 shadow-lg"
+                style={{ background: "#1e40af" }}
+              >
+                <Star className="w-3.5 h-3.5 fill-current" /> Most Popular
               </div>
             )}
-            <h3 className="text-xl font-bold mb-1">{p.name}</h3>
-            <div className="mb-3">
-              <span className="text-4xl font-bold text-gradient">{p.price}</span>
-              <span className="text-muted-foreground"> / month</span>
+
+            <div className="p-8 flex flex-col flex-1">
+              <h3 className={`text-xl font-bold mb-1 ${p.popular ? "text-slate-900" : "text-white"}`}>
+                {p.name}
+              </h3>
+              <div className="mb-3">
+                <span
+                  className={`text-4xl font-black ${p.popular ? "text-blue-600" : "text-white"}`}
+                >
+                  {p.price}
+                </span>
+                <span className={p.popular ? "text-slate-500" : "text-slate-400"}> / month</span>
+              </div>
+              <p className={`text-sm mb-6 leading-relaxed ${p.popular ? "text-slate-500" : "text-slate-400"}`}>{p.desc}</p>
+
+              <ul className="space-y-3 mb-8 flex-1">
+                {p.features.map((f) => (
+                  <li key={f} className={`flex items-start gap-2.5 text-sm ${p.popular ? "text-slate-700" : "text-slate-300"}`}>
+                    <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${p.popular ? "bg-blue-100" : "bg-blue-900/40"}`}>
+                      <Check className="w-3 h-3 text-blue-600" />
+                    </div>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={onBooking}
+                className={`w-full rounded-xl font-semibold py-3 transition-all text-center cursor-pointer ${
+                  p.popular
+                    ? "text-white hover:opacity-90 hover:shadow-lg hover:shadow-blue-600/20"
+                    : "text-white border border-white/10 hover:bg-white/10"
+                }`}
+                style={p.popular ? { background: "#1e40af" } : {}}
+              >
+                {p.cta}
+              </button>
             </div>
-            <p className="text-muted-foreground text-sm mb-6">{p.desc}</p>
-            <ul className="space-y-3 mb-8 flex-1">
-              {p.features.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm">
-                  <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={onBooking}
-              className={`inline-flex items-center justify-center rounded-lg font-semibold px-6 py-3 transition-all text-center cursor-pointer ${
-                p.popular
-                  ? "bg-hero text-primary-foreground hover:opacity-90"
-                  : "bg-accent text-accent-foreground hover:bg-primary hover:text-primary-foreground"
-              }`}
-            >
-              Get Started
-            </button>
           </motion.div>
         ))}
       </div>

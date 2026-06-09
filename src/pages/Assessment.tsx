@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2, Clock, Activity, ShieldAlert, Users, Loader2 } from "lucide-react";
+import { initPixel, trackPageview, trackPixelEvent } from "@/lib/pixels";
+import { initGA, trackGAPageview, trackGAEvent } from "@/lib/google-analytics";
 
 type AssessmentState = "landing" | "questions" | "lead-form" | "results";
 
@@ -68,11 +70,21 @@ const Assessment = () => {
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    initPixel();
+    trackPageview();
+
+    initGA();
+    trackGAPageview();
+  }, []);
+
   const handleOptionSelect = (score: number) => {
     setAnswers({ ...answers, [currentQuestionIndex]: score });
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
+      trackPixelEvent("LeadFormReached");
+      trackGAEvent("lead_form_reached");
       setCurrentState("lead-form");
     }
   };
@@ -112,6 +124,10 @@ const Assessment = () => {
           answers: detailedAnswers 
         }),
       });
+      trackPixelEvent("Lead", { type: "Assessment", company, email });
+      trackPixelEvent("CompleteRegistration", { score: finalScore });
+      trackGAEvent("generate_lead", { type: "Assessment", company });
+      trackGAEvent("complete_registration", { score: finalScore });
       setCurrentState("results");
     } catch (err) {
       console.error("Submission failed:", err);
@@ -121,6 +137,7 @@ const Assessment = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-teal-500/30">
@@ -160,7 +177,11 @@ const Assessment = () => {
                   5 questions. 4 key dimensions. 2 minutes. Get your Compliance Readiness Score and a personalized action plan instantly.
                 </p>
                 <button
-                  onClick={() => setCurrentState("questions")}
+                  onClick={() => {
+                    trackPixelEvent("StartAssessment");
+                    trackGAEvent("start_assessment");
+                    setCurrentState("questions");
+                  }}
                   className="inline-flex items-center gap-2 px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-xl shadow-teal-600/20"
                 >
                   Start Assessment <ArrowRight className="w-5 h-5" />

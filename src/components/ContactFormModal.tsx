@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, User, Mail, Building2, Phone, MessageSquare, CheckCircle2, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { trackPixelEvent } from "@/lib/pixels";
+import { trackGAEvent } from "@/lib/google-analytics";
 
 interface ContactFormModalProps {
   isOpen: boolean;
@@ -56,16 +58,17 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
       });
 
       const data = await response.json();
-      console.log("Mailjet response:", data);
 
-      if (response.ok && data?.Messages?.[0]?.Status === "success") {
+      if (response.ok && data?.success === true) {
+        trackPixelEvent("Lead", { type: "Contact Form", company, email });
+        trackGAEvent("generate_lead", { type: "Contact Form", company });
         setStatus("success");
       } else {
-        console.error("Mailjet error:", data);
+        console.error("Contact save error:", data);
         setStatus("error");
       }
     } catch (err) {
-      console.error("Send failed:", err);
+      console.error("Submit failed:", err);
       setStatus("error");
     }
   };
@@ -123,9 +126,9 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
                     <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center mx-auto mb-4">
                       <CheckCircle2 className="w-8 h-8 text-teal-600" />
                     </div>
-                    <h4 className="text-xl font-bold text-slate-900 mb-2">Message Sent!</h4>
+                    <h4 className="text-xl font-bold text-slate-900 mb-2">We've Got Your Details!</h4>
                     <p className="text-slate-500 mb-6">
-                      Thanks for reaching out, {name}. Our compliance experts will be in touch shortly.
+                      Thanks for reaching out, {name}! Our compliance experts will review your message and get back to you within 24 hours.
                     </p>
                     <button
                       onClick={onClose}
@@ -224,10 +227,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
                     {/* Error message */}
                     {status === "error" && (
                       <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
-                        Something went wrong. Please try again or email us directly at{" "}
-                        <a href="mailto:moazzamwaheed@gmail.com" className="underline font-semibold">
-                          moazzamwaheed@gmail.com
-                        </a>
+                        Something went wrong. Please try again in a moment.
                       </div>
                     )}
 

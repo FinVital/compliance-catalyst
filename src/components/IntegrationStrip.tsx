@@ -1,34 +1,34 @@
 const logos = [
-  "AWS", "Google Cloud", "Azure", "Jira", "GitHub",
-  "Slack", "Okta", "Cloudflare", "Datadog", "PagerDuty",
+  { name: "AWS", color: "#FF9900" },
+  { name: "Google Cloud", color: "#4285F4" },
+  { name: "Azure", color: "#0078D4" },
+  { name: "Jira", color: "#0052CC" },
+  { name: "GitHub", color: "#ffffff" },
+  { name: "Slack", color: "#4A154B" },
+  { name: "Okta", color: "#007DC1" },
+  { name: "Cloudflare", color: "#F38020" },
+  { name: "Datadog", color: "#7B4FFF" },
+  { name: "PagerDuty", color: "#06AC38" },
 ];
 
 const IntegrationStrip = () => (
-  <section className="py-24 bg-slate-900 overflow-hidden relative">
-    <div className="container mx-auto px-6 mb-12 relative z-20">
-      <p className="text-center text-sm font-bold uppercase tracking-[0.2em] text-slate-500">
-        Connects With Your Entire Stack
-      </p>
-    </div>
+  <section style={{ background: "#0d111c", borderTop: "1px solid rgba(62,207,178,0.08)", borderBottom: "1px solid rgba(62,207,178,0.08)" }} className="py-12 overflow-hidden">
+    <p className="text-center text-xs font-bold uppercase tracking-[0.2em] mb-8" style={{ color: "#4a5568" }}>
+      Connects With Your Entire Stack
+    </p>
     <div className="relative -mx-8">
-      {/* Straight container */}
-      <div className="relative flex overflow-hidden border-y border-slate-800/50 bg-slate-900/50 backdrop-blur-sm py-4">
-        
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none" />
-
-        {/* Marquee Track */}
-        <div className="flex animate-marquee gap-12 items-center whitespace-nowrap w-max">
+      <div className="relative flex overflow-hidden py-2">
+        <div className="absolute left-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: "linear-gradient(to right, #0d111c, transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-40 z-10 pointer-events-none" style={{ background: "linear-gradient(to left, #0d111c, transparent)" }} />
+        <div className="flex animate-marquee gap-6 items-center whitespace-nowrap w-max">
           {[...logos, ...logos, ...logos].map((logo, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-800/60 border border-slate-700/50 shadow-lg shrink-0 hover:bg-slate-700/60 transition-colors"
+              className="flex items-center gap-3 px-5 py-3 rounded-xl shrink-0 transition-all"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
             >
-              <div className="w-8 h-8 rounded bg-slate-900 flex items-center justify-center text-xs font-bold text-teal-400 border border-teal-500/20">
-                {logo.charAt(0)}
-              </div>
-              <span className="text-base font-bold text-slate-300">{logo}</span>
+              <div className="w-2.5 h-2.5 rounded-full" style={{ background: logo.color }} />
+              <span className="text-sm font-semibold" style={{ color: "#8b9ab0" }}>{logo.name}</span>
             </div>
           ))}
         </div>
