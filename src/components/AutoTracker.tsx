@@ -18,7 +18,7 @@ export default function AutoTracker() {
           geoLoc = `${geoData.city || ""}, ${geoData.region || ""}, ${geoData.country_name || ""}`.trim().replace(/^,|,$/g, "").trim() || null;
         }
       } catch (err) {
-        console.error("Geo fetch failed in AutoTracker pageview:", err);
+        // Silent catch for geo fetches
       }
 
       try {
@@ -34,7 +34,7 @@ export default function AutoTracker() {
           }),
         });
       } catch (err) {
-        console.error("PageView logging failed:", err);
+        // Silent catch for page visits
       }
     };
 
@@ -89,10 +89,10 @@ export default function AutoTracker() {
             }),
           });
         } catch (err) {
-          console.error("Click logging failed:", err);
+          // Silent catch to prevent adblockers from cluttering the console
         }
       } catch (clickErr) {
-        console.error("AutoTracker global click handler error:", clickErr);
+        // Silent catch for global click tracker errors
       }
     };
 
