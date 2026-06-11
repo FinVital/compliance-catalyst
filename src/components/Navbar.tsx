@@ -62,7 +62,7 @@ interface NavbarProps {
   onContact?: () => void;
 }
 
-export default function Navbar({ onBooking }: NavbarProps) {
+export default function Navbar({ onBooking, onContact }: NavbarProps) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
