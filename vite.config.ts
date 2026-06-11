@@ -84,6 +84,19 @@ async function ensureTables(db) {
     )
   `);
   await db.execute(`
+    CREATE TABLE IF NOT EXISTS click_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      page_path TEXT NOT NULL,
+      element_type TEXT,
+      element_text TEXT,
+      element_id TEXT,
+      element_class TEXT,
+      ip TEXT,
+      location TEXT,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  await db.execute(`
     CREATE TABLE IF NOT EXISTS contacts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT,
@@ -91,9 +104,17 @@ async function ensureTables(db) {
       company TEXT,
       phone TEXT,
       message TEXT,
+      ip TEXT,
+      location TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+  try {
+    await db.execute("ALTER TABLE contacts ADD COLUMN ip TEXT");
+  } catch (e) {}
+  try {
+    await db.execute("ALTER TABLE contacts ADD COLUMN location TEXT");
+  } catch (e) {}
   await db.execute(`
     CREATE TABLE IF NOT EXISTS assessments (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -342,17 +363,40 @@ const apiMiddlewarePlugin = {
       // ── /api/contact ─────────────────────────────────────────────────
       if (pathname === "/api/contact" && req.method === "POST") {
         try {
-          const { name, email, company, phone, message } = await getBody(req);
+          const { name, email, company, phone, message, ip, location } = await getBody(req);
+          const clientIp = ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress || null;
+          const clientLocation = location || null;
 
           await db.execute({
-            sql: "INSERT INTO contacts (name, email, company, phone, message) VALUES (?, ?, ?, ?, ?)",
-            args: [name, email, company || null, phone || null, message || null],
+            sql: "INSERT INTO contacts (name, email, company, phone, message, ip, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            args: [name, email, company || null, phone || null, message || null, clientIp, clientLocation],
           });
 
           res.statusCode = 200;
           res.end(JSON.stringify({ success: true }));
         } catch (err) {
           console.error("[api/contact] error:", err);
+          res.statusCode = 500;
+          res.end(JSON.stringify({ error: String(err) }));
+        }
+        return;
+      }
+      // ── /api/track-click ─────────────────────────────────────────────
+      if (pathname === "/api/track-click" && req.method === "POST") {
+        try {
+          const { pagePath, elementType, elementText, elementId, elementClass, ip, location } = await getBody(req);
+          const clientIp = ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress || null;
+          const clientLocation = location || null;
+
+          await db.execute({
+            sql: "INSERT INTO click_logs (page_path, element_type, element_text, element_id, element_class, ip, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            args: [pagePath || "/", elementType || null, elementText || null, elementId || null, elementClass || null, clientIp, clientLocation],
+          });
+
+          res.statusCode = 200;
+          res.end(JSON.stringify({ success: true }));
+        } catch (err) {
+          console.error("[api/track-click] error:", err);
           res.statusCode = 500;
           res.end(JSON.stringify({ error: String(err) }));
         }

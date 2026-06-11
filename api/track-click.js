@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, email, company, phone, message, ip, location } = req.body;
+  const { pagePath, elementType, elementText, elementId, elementClass, ip, location } = req.body;
 
   // Resolve IP from request body or headers
   const clientIp = ip || req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || (req.socket && req.socket.remoteAddress) || null;
@@ -28,36 +28,28 @@ export default async function handler(req, res) {
   try {
     // Ensure table exists
     await dbClient.execute(`
-      CREATE TABLE IF NOT EXISTS contacts (
+      CREATE TABLE IF NOT EXISTS click_logs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT,
-        company TEXT,
-        phone TEXT,
-        message TEXT,
+        page_path TEXT NOT NULL,
+        element_type TEXT,
+        element_text TEXT,
+        element_id TEXT,
+        element_class TEXT,
         ip TEXT,
         location TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
-    // Ensure columns exist (soft migration for existing tables)
-    try {
-      await dbClient.execute("ALTER TABLE contacts ADD COLUMN ip TEXT");
-    } catch (e) {}
-    try {
-      await dbClient.execute("ALTER TABLE contacts ADD COLUMN location TEXT");
-    } catch (e) {}
-
-    // Insert data into Turso DB
+    // Insert click details into Turso DB
     await dbClient.execute({
-      sql: "INSERT INTO contacts (name, email, company, phone, message, ip, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      args: [name, email, company || null, phone || null, message || null, clientIp, clientLocation],
+      sql: "INSERT INTO click_logs (page_path, element_type, element_text, element_id, element_class, ip, location) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      args: [pagePath || "/", elementType || null, elementText || null, elementId || null, elementClass || null, clientIp, clientLocation],
     });
 
-    return res.status(200).json({ success: true, Messages: [{ Status: "success" }] });
+    return res.status(200).json({ success: true });
   } catch (dbErr) {
     console.error("Turso DB Error:", dbErr);
-    return res.status(500).json({ error: "Failed to save contact details to database" });
+    return res.status(500).json({ error: "Failed to save click tracking logs" });
   }
 }

@@ -9,6 +9,7 @@ import About from "./pages/About.tsx";
 import Careers from "./pages/Careers.tsx";
 import Contact from "./pages/Contact.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AutoTracker from "./components/AutoTracker.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <AutoTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/assessment" element={<Assessment />} />

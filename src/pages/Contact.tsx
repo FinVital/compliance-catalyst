@@ -38,11 +38,25 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
+
+    let geoIp = null;
+    let geoLoc = null;
+    try {
+      const geoResp = await fetch("/api/geo");
+      if (geoResp.ok) {
+        const geoData = await geoResp.json();
+        geoIp = geoData.ip || null;
+        geoLoc = `${geoData.city || ""}, ${geoData.region || ""}, ${geoData.country_name || ""}`.trim().replace(/^,|,$/g, "").trim() || null;
+      }
+    } catch (err) {
+      console.error("Geo fetch failed:", err);
+    }
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, company, phone, message }),
+        body: JSON.stringify({ name, email, company, phone, message, ip: geoIp, location: geoLoc }),
       });
       const data = await response.json();
       if (response.ok && data?.success === true) {

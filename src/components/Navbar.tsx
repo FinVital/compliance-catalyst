@@ -102,6 +102,7 @@ export default function Navbar({ onBooking }: NavbarProps) {
     const handleClick = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setActiveMenu(null);
+        setMobileOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClick);
@@ -425,7 +426,7 @@ export default function Navbar({ onBooking }: NavbarProps) {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
+        <div className="absolute top-16 left-0 right-0 lg:hidden bg-white border-t border-gray-100 shadow-2xl z-50 overflow-y-auto max-h-[calc(100vh-4rem)]">
           <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
             <a href="/#features" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Solutions</a>
             <a href="/#pricing" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Pricing</a>
