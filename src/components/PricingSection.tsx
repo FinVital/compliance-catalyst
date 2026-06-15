@@ -5,15 +5,14 @@ const plans = [
   {
     name: "Starter",
     price: "$79",
+    target: "Emerging Startups",
+    seats: "Up to 5 Members",
+    frameworks: "1 Included",
     desc: "Essential compliance mapping for growing teams starting their core security journey.",
     features: [
-      "Up to 5 team members",
-      "ISO 27001 & SECP compliance mapping",
-      "AI-powered control mapping",
-      "Compliance Graph dashboard",
-      "Evidence Summary & Gap Reports",
-      "Audit Readiness Checklist",
-      "Email support",
+      "Dashboard",
+      "Risk Monitoring",
+      "Basic Registry",
     ],
     popular: false,
     cta: "Get Started Free",
@@ -21,33 +20,30 @@ const plans = [
   {
     name: "Pro",
     price: "$219",
+    target: "Scaling Startups",
+    seats: "Up to 20 Members",
+    frameworks: "5 Included",
     desc: "Full GRC automation with multi-framework coverage and continuous auto-remediation.",
     features: [
-      "Unlimited team members",
-      "All 10 Global & Regional Frameworks",
-      "AI Governance (ISO 42001) & NIST CSF 2.0",
-      "Financial Standards: ISO 20022 & GLBA",
-      "Payments & Healthcare: PCI-DSS & HIPAA",
-      "11 AI-generated audit-ready reports",
-      "Urdu & Arabic language support",
-      "Priority 24/7 support",
+      "Full Risk & Remediation",
+      "Unlimited controls registry",
+      "Contract-Win Mode",
+      "Continuous Pulse Monitoring",
     ],
     popular: true,
     cta: "Start Pro Trial",
   },
   {
-    name: "Enterprise",
+    name: "Partner",
     price: "$349",
-    desc: "Tailored compliance infrastructure with custom frameworks, dedicated GRC experts.",
+    target: "Audit Consultant",
+    seats: "per client",
+    frameworks: "10 Included",
+    desc: "Advanced compliance pulse telemetry and white-label tools for consultants.",
     features: [
-      "Unlimited Global & Custom Frameworks",
-      "Custom GRC Framework Builder",
-      "Full White-Label platform & reports",
-      "Multi-entity parallel mapping",
-      "SSO & Custom API integration",
-      "Dedicated account manager",
-      "Risk Treatment Plan automation",
-      "SLA-backed priority support",
+      "Advanced Compliance Pulse telemetry",
+      "Dedicated support",
+      "White-Label platform",
     ],
     popular: false,
     cta: "Contact Sales",
@@ -125,7 +121,7 @@ const PricingSection = ({ onBooking }: PricingSectionProps) => (
               <h3 className={`text-xl font-bold mb-1 ${p.popular ? "text-slate-900" : "text-white"}`}>
                 {p.name}
               </h3>
-              <div className="mb-3">
+              <div className="mb-4">
                 <span
                   className={`text-4xl font-black ${p.popular ? "text-blue-600" : "text-white"}`}
                 >
@@ -133,7 +129,24 @@ const PricingSection = ({ onBooking }: PricingSectionProps) => (
                 </span>
                 <span className={p.popular ? "text-slate-500" : "text-slate-400"}> / month</span>
               </div>
+              
               <p className={`text-sm mb-6 leading-relaxed ${p.popular ? "text-slate-500" : "text-slate-400"}`}>{p.desc}</p>
+
+              {/* Target & Limits Badges */}
+              <div className={`mb-6 p-4 rounded-2xl space-y-2.5 ${p.popular ? "bg-slate-50" : "bg-white/5"}`}>
+                <div className={`flex items-center justify-between text-xs border-b pb-2 border-dashed ${p.popular ? "border-slate-200" : "border-white/10"}`}>
+                  <span className={p.popular ? "text-slate-500" : "text-slate-400"}>Target Segment:</span>
+                  <span className={`font-bold ${p.popular ? "text-slate-800" : "text-white"}`}>{p.target}</span>
+                </div>
+                <div className={`flex items-center justify-between text-xs border-b pb-2 border-dashed ${p.popular ? "border-slate-200" : "border-white/10"}`}>
+                  <span className={p.popular ? "text-slate-500" : "text-slate-400"}>User Seats:</span>
+                  <span className={`font-bold ${p.popular ? "text-slate-800" : "text-white"}`}>{p.seats}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className={p.popular ? "text-slate-500" : "text-slate-400"}>Compliance Frameworks:</span>
+                  <span className={`font-bold ${p.popular ? "text-slate-800" : "text-white"}`}>{p.frameworks}</span>
+                </div>
+              </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {p.features.map((f) => (
