@@ -64,19 +64,23 @@ export default function Hero({ onBooking }: HeroProps) {
             <br />
             re-engineered for
             <br />
-            <span className="relative inline-block overflow-hidden" style={{ minWidth: "8ch", minHeight: "1.1em" }}>
-              <AnimatePresence mode="wait">
+            <span className="relative inline-flex justify-center overflow-hidden" style={{ height: "1.2em", verticalAlign: "bottom" }}>
+              <AnimatePresence>
                 <motion.span
                   key={phraseIdx}
-                  className="text-teal-gradient block"
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -40, opacity: 0 }}
-                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                  className="text-teal-gradient absolute left-0 right-0 whitespace-nowrap"
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: "0%", opacity: 1 }}
+                  exit={{ y: "-100%", opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 100, damping: 14 }}
                 >
                   {rotatingPhrases[phraseIdx]}
                 </motion.span>
               </AnimatePresence>
+              {/* Invisible layout placeholder to prevent page layout shifts */}
+              <span className="opacity-0 pointer-events-none select-none whitespace-nowrap">
+                regulatory confidence.
+              </span>
             </span>
           </h1>
 
