@@ -11,6 +11,7 @@ export default function About() {
   const [modalTitle, setModalTitle] = useState("Talk to an Expert");
   const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
   const [activeLifecycleStep, setActiveLifecycleStep] = useState<number>(0);
+  const [activeNodeIndex, setActiveNodeIndex] = useState<number>(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,14 +19,14 @@ export default function About() {
   }, []);
 
   const openBooking = () => {
-    setModalTitle("Book a Live Demo");
-    setModalDesc("We will response within an hour.");
+    setModalTitle("Contact Sales");
+    setModalDesc("Talk to our GRC compliance experts. We will respond within an hour.");
     setContactOpen(true);
   };
 
   const openContact = () => {
-    setModalTitle("Talk to an Expert");
-    setModalDesc("We'll get back to you within 24 hours.");
+    setModalTitle("Contact Sales");
+    setModalDesc("Talk to our GRC compliance experts. We'll get back to you shortly.");
     setContactOpen(true);
   };
 
@@ -35,6 +36,14 @@ export default function About() {
       setActiveLifecycleStep((prev) => (prev + 1) % lifecycleSteps.length);
     }, 4000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Sync node focus state with 8s radar sweep duration (1.333s per node)
+  useEffect(() => {
+    const nodeInterval = setInterval(() => {
+      setActiveNodeIndex((prev) => (prev + 1) % 6);
+    }, 1333);
+    return () => clearInterval(nodeInterval);
   }, []);
 
   return (
@@ -274,22 +283,22 @@ export default function About() {
                 </defs>
                 {/* Beams from center to each node */}
                 <line x1="220" y1="220" x2="220" y2="30" stroke="url(#beam1)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="220" y2="30" stroke="#3ecfb2" strokeWidth="1.5" className="circuit-path-fast" opacity="0.3" />
+                <line x1="220" y1="220" x2="220" y2="30" stroke="#3ecfb2" strokeWidth={activeNodeIndex === 0 ? "2.5" : "1.5"} className="circuit-path-fast" opacity={activeNodeIndex === 0 ? "0.85" : "0.3"} />
                 
                 <line x1="220" y1="220" x2="385" y2="65" stroke="url(#beam2)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="385" y2="65" stroke="#ef4444" strokeWidth="1.5" className="circuit-path" opacity="0.25" />
+                <line x1="220" y1="220" x2="385" y2="65" stroke="#ef4444" strokeWidth={activeNodeIndex === 1 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 1 ? "0.85" : "0.25"} />
                 
                 <line x1="220" y1="220" x2="385" y2="375" stroke="url(#beam3)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="385" y2="375" stroke="#3b82f6" strokeWidth="1.5" className="circuit-path-reverse" opacity="0.25" />
+                <line x1="220" y1="220" x2="385" y2="375" stroke="#3b82f6" strokeWidth={activeNodeIndex === 2 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 2 ? "0.85" : "0.25"} />
                 
                 <line x1="220" y1="220" x2="220" y2="410" stroke="url(#beam4)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="220" y2="410" stroke="#a855f7" strokeWidth="1.5" className="circuit-path" opacity="0.25" />
+                <line x1="220" y1="220" x2="220" y2="410" stroke="#a855f7" strokeWidth={activeNodeIndex === 3 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 3 ? "0.85" : "0.25"} />
                 
                 <line x1="220" y1="220" x2="55" y2="375" stroke="url(#beam5)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="55" y2="375" stroke="#f59e0b" strokeWidth="1.5" className="circuit-path-reverse" opacity="0.25" />
+                <line x1="220" y1="220" x2="55" y2="375" stroke="#f59e0b" strokeWidth={activeNodeIndex === 4 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 4 ? "0.85" : "0.25"} />
                 
                 <line x1="220" y1="220" x2="55" y2="65" stroke="url(#beam6)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="55" y2="65" stroke="#06b6d4" strokeWidth="1.5" className="circuit-path" opacity="0.25" />
+                <line x1="220" y1="220" x2="55" y2="65" stroke="#06b6d4" strokeWidth={activeNodeIndex === 5 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 5 ? "0.85" : "0.25"} />
 
                 {/* Outer hexagonal connecting path between nodes */}
                 <path d="M 220,30 L 385,65 L 385,375 L 220,410 L 55,375 L 55,65 Z" fill="none" stroke="rgba(62,207,178,0.06)" strokeWidth="1" strokeDasharray="4,8" />
@@ -337,16 +346,34 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ top: "2%", left: "50%", transform: "translateX(-50%)" }}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                whileHover={{ scale: 1.08, y: -4 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, -6, 0],
+                  scale: activeNodeIndex === 0 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 0.5, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
+                whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
                   {/* Glow ring */}
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%)", opacity: activeNodeIndex === 0 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-[#3ecfb2]/30 group-hover:border-[#3ecfb2]/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(62,207,178,0.1) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(62,207,178,0.1), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 0 ? "rgba(62,207,178,0.9)" : "rgba(62,207,178,0.3)",
+                      boxShadow: activeNodeIndex === 0 ? "0 0 25px rgba(62,207,178,0.45), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(62,207,178,0.1), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 0 ? "linear-gradient(135deg, rgba(62,207,178,0.25) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(62,207,178,0.1) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <path d="M12 2L4 6v5c0 5.5 3.4 10.6 8 12 4.6-1.4 8-6.5 8-12V6L12 2z" stroke="#3ecfb2" strokeWidth="1.5" fill="rgba(62,207,178,0.08)" />
@@ -361,15 +388,40 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ top: "10%", right: "2%" }}
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, 5, 0],
+                  x: [0, -5, 0],
+                  scale: activeNodeIndex === 1 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.5,
+                    ease: "easeInOut"
+                  },
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.5,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 0.6, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
                 whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 1 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-red-500/30 group-hover:border-red-400/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(239,68,68,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 1 ? "rgba(239,68,68,0.8)" : "rgba(239,68,68,0.3)",
+                      boxShadow: activeNodeIndex === 1 ? "0 0 25px rgba(239,68,68,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(239,68,68,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 1 ? "linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <path d="M12 3L2 21h20L12 3z" stroke="#fca5a5" strokeWidth="1.5" fill="rgba(239,68,68,0.06)" />
@@ -388,15 +440,40 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ bottom: "10%", right: "2%" }}
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7, duration: 0.6 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, -5, 0],
+                  x: [0, 5, 0],
+                  scale: activeNodeIndex === 2 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.2,
+                    ease: "easeInOut"
+                  },
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.2,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 0.7, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
                 whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 2 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-blue-500/30 group-hover:border-blue-400/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(59,130,246,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 2 ? "rgba(59,130,246,0.8)" : "rgba(59,130,246,0.3)",
+                      boxShadow: activeNodeIndex === 2 ? "0 0 25px rgba(59,130,246,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(59,130,246,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 2 ? "linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <circle cx="12" cy="12" r="9" stroke="#93c5fd" strokeWidth="1.5" fill="rgba(59,130,246,0.06)" />
@@ -413,15 +490,33 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ bottom: "2%", left: "50%", transform: "translateX(-50%)" }}
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                whileHover={{ scale: 1.08, y: 4 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, 6, 0],
+                  scale: activeNodeIndex === 3 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 3.8,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 0.8, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
+                whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 3 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-purple-500/30 group-hover:border-purple-400/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 3 ? "rgba(168,85,247,0.8)" : "rgba(168,85,247,0.3)",
+                      boxShadow: activeNodeIndex === 3 ? "0 0 25px rgba(168,85,247,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 3 ? "linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <ellipse cx="12" cy="7" rx="8" ry="3.5" stroke="#c4b5fd" strokeWidth="1.3" fill="rgba(168,85,247,0.06)" />
@@ -439,15 +534,40 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ bottom: "10%", left: "2%" }}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.9, duration: 0.6 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, -5, 0],
+                  x: [0, -5, 0],
+                  scale: activeNodeIndex === 4 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.7,
+                    ease: "easeInOut"
+                  },
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.7,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 0.9, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
                 whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 4 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-amber-500/30 group-hover:border-amber-400/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(245,158,11,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 4 ? "rgba(245,158,11,0.8)" : "rgba(245,158,11,0.3)",
+                      boxShadow: activeNodeIndex === 4 ? "0 0 25px rgba(245,158,11,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(245,158,11,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 4 ? "linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <circle cx="10" cy="10" r="6" stroke="#fcd34d" strokeWidth="1.3" fill="rgba(245,158,11,0.06)" />
@@ -463,15 +583,40 @@ export default function About() {
                 className="absolute z-10 group cursor-pointer"
                 style={{ top: "10%", left: "2%" }}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.0, duration: 0.6 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, 5, 0],
+                  x: [0, 5, 0],
+                  scale: activeNodeIndex === 5 ? 1.15 : 1
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.3,
+                    ease: "easeInOut"
+                  },
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.3,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 1.0, duration: 0.6 },
+                  scale: { duration: 0.25 }
+                }}
                 whileHover={{ scale: 1.08 }}
               >
                 <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)" }} />
+                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 5 ? 1 : undefined }} />
                   <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border border-cyan-500/30 group-hover:border-cyan-400/60 transition-all duration-300"
-                    style={{ background: "linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,17,28,0.95) 100%)", backdropFilter: "blur(12px)", boxShadow: "0 0 20px rgba(6,182,212,0.08), inset 0 1px 0 rgba(255,255,255,0.05)" }}
+                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
+                    style={{ 
+                      borderColor: activeNodeIndex === 5 ? "rgba(6,182,212,0.8)" : "rgba(6,182,212,0.3)",
+                      boxShadow: activeNodeIndex === 5 ? "0 0 25px rgba(6,182,212,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(6,182,212,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+                      background: activeNodeIndex === 5 ? "linear-gradient(135deg, rgba(6,182,212,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,17,28,0.95) 100%)",
+                      backdropFilter: "blur(12px)"
+                    }}
                   >
                     <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                       <rect x="5" y="3" width="14" height="18" rx="2" stroke="#67e8f9" strokeWidth="1.3" fill="rgba(6,182,212,0.06)" />
@@ -490,8 +635,19 @@ export default function About() {
                 className="absolute z-30 data-blink-1"
                 style={{ top: "0%", right: "-4%" }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.3, duration: 0.5 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, -6, 0] 
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 5,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 1.3, duration: 0.5 }
+                }}
               >
                 <div className="px-3 py-2 rounded-xl border border-[#3ecfb2]/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
                   <div className="text-[10px] font-black text-[#3ecfb2]" style={{ fontFamily: "'Plus Jakarta Sans'" }}>98.7%</div>
@@ -508,8 +664,19 @@ export default function About() {
                 className="absolute z-30 data-blink-4"
                 style={{ bottom: "5%", left: "-6%" }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 0.5 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, 5, 0] 
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 5.5,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 1.5, duration: 0.5 }
+                }}
               >
                 <div className="px-3 py-2 rounded-xl border border-amber-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
                   <div className="text-[10px] font-black text-amber-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>6 Active</div>
@@ -525,8 +692,19 @@ export default function About() {
                 className="absolute z-30 data-blink-2"
                 style={{ top: "42%", right: "-8%" }}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.4, duration: 0.5 }}
+                animate={{ 
+                  opacity: 1,
+                  y: [0, -5, 0] 
+                }}
+                transition={{ 
+                  y: {
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 4.8,
+                    ease: "easeInOut"
+                  },
+                  opacity: { delay: 1.4, duration: 0.5 }
+                }}
               >
                 <div className="px-3 py-2 rounded-xl border border-blue-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
                   <div className="text-[10px] font-black text-blue-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>342</div>

@@ -33,11 +33,12 @@ const Footer = ({ onContact }: FooterProps) => (
         {/* Brand column */}
         <div className="lg:col-span-2">
           <div className="flex items-center gap-3 mb-5">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
-              style={{ background: "linear-gradient(135deg, #2563eb, #4f46e5)" }}
-            >
-              <span className="text-white font-bold text-xl">R</span>
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-slate-800/80">
+              <img 
+                src="/logo.jpg" 
+                alt="ReguLattice Shield Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="text-white font-bold text-xl tracking-tight">ReguLattice</span>
           </div>
