@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactFormModal from "@/components/ContactFormModal";
-import FounderSection from "@/components/FounderSection";
-import { Sparkles, Award, ArrowRight, CheckCircle2, Target, Eye, Heart, Globe, Lock, Bot, BarChart3 } from "lucide-react";
+import PricingSection from "@/components/PricingSection";
+import { Sparkles, Award, ArrowRight, CheckCircle2, Target, Eye, Heart, Globe, Lock, Bot, BarChart3, Shield, CreditCard, HeartPulse, Landmark, Coins, Scale } from "lucide-react";
 
 export default function About() {
   const [contactOpen, setContactOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function About() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "About ReguLattice | Leading AI Compliance & RegTech Solution in Pakistan";
+    document.title = "Home Page | ReguLattice | Leading AI Compliance & RegTech Solution";
   }, []);
 
   const openBooking = () => {
@@ -194,7 +194,7 @@ export default function About() {
 
                 <div className="flex gap-4 flex-wrap">
                   <a 
-                    href="#lifecycle" 
+                    href="#how-it-works" 
                     className="px-6 py-3 rounded-full bg-[#3ecfb2] hover:bg-[#2ebfa2] text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#3ecfb2]/10"
                   >
                     Explore Lifecycle
@@ -689,7 +689,7 @@ export default function About() {
       {/* ──────────────────────────────────────────────────────────────── */}
       {/* 4. GRC LIFECYCLE — Circular Workflow                           */}
       {/* ──────────────────────────────────────────────────────────────── */}
-      <section id="lifecycle" className="py-24 bg-[#111625] relative overflow-hidden border-t border-slate-800/40">
+      <section id="how-it-works" className="py-24 bg-[#111625] relative overflow-hidden border-t border-slate-800/40">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-600/5 blur-3xl pointer-events-none" />
 
         <div className="container mx-auto px-6 relative z-10 max-w-6xl">
@@ -801,7 +801,7 @@ export default function About() {
       {/* ──────────────────────────────────────────────────────────────── */}
       {/* 5. TECHNOLOGY & FRAMEWORKS GRID                                */}
       {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0d111c] relative border-t border-slate-800/40">
+      <section id="frameworks" className="py-24 bg-[#0d111c] relative border-t border-slate-800/40">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
@@ -811,37 +811,38 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-4 order-2 lg:order-1"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 order-2 lg:order-1"
             >
-              {frameworksList.map((fw) => (
-                <div 
-                  key={fw}
-                  className="rounded-xl p-4 border border-slate-800/60 bg-[#141927] hover:border-[#3ecfb2]/20 hover:bg-[#1a2133] text-center transition-all duration-300"
-                >
-                  <div className="text-[10px] font-bold text-[#3ecfb2]/85 uppercase tracking-widest mb-1.5">Standard</div>
+              {complianceList.map((item) => {
+                const c = colorMap[item.color] || colorMap.teal;
+                const IconComponent = item.icon;
+                return (
                   <div 
-                    className="text-base font-extrabold text-white tracking-wide"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    key={item.name}
+                    className={`group rounded-xl p-5 border ${c.border} bg-[#141927] ${c.hoverBorder} hover:bg-[#1a2133] ${c.hoverGlow} transition-all duration-300 flex flex-col justify-between`}
                   >
-                    {fw}
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${c.tagBg} ${c.tagText}`}>
+                          {item.tag}
+                        </span>
+                        <div className={`w-8 h-8 rounded-lg ${c.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                          <IconComponent className={`w-4 h-4 ${c.text}`} />
+                        </div>
+                      </div>
+                      <div 
+                        className="text-base font-extrabold text-white tracking-wide mb-1.5"
+                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                      >
+                        {item.name}
+                      </div>
+                      <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {/* Certifications Badges */}
-              {certificationsList.map((cert) => (
-                <div 
-                  key={cert}
-                  className="rounded-xl p-4 border border-blue-500/25 bg-[#141927]/90 hover:border-blue-400/45 text-center transition-all"
-                >
-                  <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1.5">Expertise</div>
-                  <div 
-                    className="text-base font-extrabold text-white tracking-wide"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                  >
-                    {cert}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </motion.div>
 
             {/* Right details */}
@@ -871,10 +872,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 6. FOUNDER SECTION                                             */}
-      {/* ──────────────────────────────────────────────────────────────── */}
-      <FounderSection />
+      <div id="pricing">
+        <PricingSection onBooking={openBooking} />
+      </div>
 
       {/* ──────────────────────────────────────────────────────────────── */}
       {/* 7. BOTTOM CTA                                                  */}
@@ -1013,18 +1013,159 @@ const lifecycleSteps = [
   },
 ];
 
-const frameworksList = [
-  "ISO 27001",
-  "SOC 2",
-  "SAMA",
-  "NIST CSF",
-  "PCI-DSS",
-  "HIPAA",
+const complianceList = [
+  {
+    name: "ISO 27001",
+    tag: "Security",
+    desc: "Information Security Management — the global gold standard for enterprise security compliance.",
+    icon: Lock,
+    color: "teal",
+  },
+  {
+    name: "ISO 42001",
+    tag: "AI Governance",
+    desc: "AI Governance — structural guidelines for managing safe and responsible AI system deployments.",
+    icon: Bot,
+    color: "indigo",
+  },
+  {
+    name: "NIST CSF 2.0",
+    tag: "Cybersecurity",
+    desc: "Cybersecurity Framework — standard protocols for assessing and mitigating infrastructure risks.",
+    icon: Shield,
+    color: "rose",
+  },
+  {
+    name: "SOC 2",
+    tag: "Operations",
+    desc: "Service Controls — thorough trust procedures ensuring customer data security and privacy.",
+    icon: CheckCircle2,
+    color: "emerald",
+  },
+  {
+    name: "PCI-DSS",
+    tag: "Payments",
+    desc: "Payment Security — robust standards for storing and processing cardholder transaction data safely.",
+    icon: CreditCard,
+    color: "blue",
+  },
+  {
+    name: "HIPAA",
+    tag: "Healthcare",
+    desc: "Healthcare Privacy — mandatory safeguards protecting sensitive medical records and health data.",
+    icon: HeartPulse,
+    color: "pink",
+  },
+  {
+    name: "GLBA",
+    tag: "Finance",
+    desc: "Financial Data Protection — strict consumer privacy acts for financial services firms.",
+    icon: Landmark,
+    color: "cyan",
+  },
+  {
+    name: "ISO 20022",
+    tag: "Messaging",
+    desc: "Financial Messaging — advanced schemas for reliable, frictionless global payment messaging.",
+    icon: Coins,
+    color: "violet",
+  },
+  {
+    name: "SAMA",
+    tag: "MENA Regional",
+    desc: "Saudi Central Bank — comprehensive cybersecurity framework mandated for financial institutions in KSA.",
+    icon: Globe,
+    color: "emerald",
+  },
+  {
+    name: "SECP",
+    tag: "South Asia Regional",
+    desc: "Pakistan Securities — state-level compliance mandates and securities readiness for corporates.",
+    icon: Scale,
+    color: "lime",
+  },
 ];
 
-const certificationsList = [
-  "CISSP",
-  "CISA",
-  "ISO AUDITOR",
-  "CISM",
-];
+const colorMap: Record<string, { bg: string; text: string; border: string; tagBg: string; tagText: string; hoverBorder: string; hoverGlow: string }> = {
+  teal: { 
+    bg: "bg-teal-500/10", 
+    text: "text-teal-400", 
+    border: "border-teal-500/20", 
+    tagBg: "bg-teal-500/10", 
+    tagText: "text-teal-400",
+    hoverBorder: "hover:border-teal-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(20,184,166,0.15)]"
+  },
+  indigo: { 
+    bg: "bg-indigo-500/10", 
+    text: "text-indigo-400", 
+    border: "border-indigo-500/20", 
+    tagBg: "bg-indigo-500/10", 
+    tagText: "text-indigo-400",
+    hoverBorder: "hover:border-indigo-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+  },
+  rose: { 
+    bg: "bg-rose-500/10", 
+    text: "text-rose-400", 
+    border: "border-rose-500/20", 
+    tagBg: "bg-rose-500/10", 
+    tagText: "text-rose-400",
+    hoverBorder: "hover:border-rose-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(244,63,94,0.15)]"
+  },
+  emerald: { 
+    bg: "bg-emerald-500/10", 
+    text: "text-emerald-400", 
+    border: "border-emerald-500/20", 
+    tagBg: "bg-emerald-500/10", 
+    tagText: "text-emerald-400",
+    hoverBorder: "hover:border-emerald-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+  },
+  blue: { 
+    bg: "bg-blue-500/10", 
+    text: "text-blue-400", 
+    border: "border-blue-500/20", 
+    tagBg: "bg-blue-500/10", 
+    tagText: "text-blue-400",
+    hoverBorder: "hover:border-blue-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
+  },
+  pink: { 
+    bg: "bg-pink-500/10", 
+    text: "text-pink-400", 
+    border: "border-pink-500/20", 
+    tagBg: "bg-pink-500/10", 
+    tagText: "text-pink-400",
+    hoverBorder: "hover:border-pink-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]"
+  },
+  cyan: { 
+    bg: "bg-cyan-500/10", 
+    text: "text-cyan-400", 
+    border: "border-cyan-500/20", 
+    tagBg: "bg-cyan-500/10", 
+    tagText: "text-cyan-400",
+    hoverBorder: "hover:border-cyan-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+  },
+  violet: { 
+    bg: "bg-violet-500/10", 
+    text: "text-violet-400", 
+    border: "border-violet-500/20", 
+    tagBg: "bg-violet-500/10", 
+    tagText: "text-violet-400",
+    hoverBorder: "hover:border-violet-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
+  },
+  lime: { 
+    bg: "bg-lime-500/10", 
+    text: "text-lime-400", 
+    border: "border-lime-500/20", 
+    tagBg: "bg-lime-500/10", 
+    tagText: "text-lime-400",
+    hoverBorder: "hover:border-lime-500/40",
+    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(132,204,22,0.15)]"
+  },
+};

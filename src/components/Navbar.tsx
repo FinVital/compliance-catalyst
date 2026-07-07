@@ -2,60 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, X, Menu, Shield, FileText, BarChart3, Globe, Cpu, Users, BookOpen, MessageSquare, Award, Map, Lock, Bot, Heart } from "lucide-react";
 
-const solutionsMenu = [
-  {
-    heading: "GRC Automation",
-    description: "Autonomously map your controls, collect evidence, and stay audit-ready across all frameworks.",
-    links: [
-      { icon: Map, label: "Control Mapping", sub: "AI maps controls to 10+ frameworks" },
-      { icon: Shield, label: "Risk Assessment", sub: "Continuous risk scoring & alerts" },
-      { icon: FileText, label: "Policy Generation", sub: "Auto-draft compliant policies" },
-      { icon: BarChart3, label: "Compliance Graph", sub: "Live posture dashboard" },
-    ],
-  },
-  {
-    heading: "AI Compliance Agents",
-    description: "24/7 autonomous agents that remediate gaps, answer questionnaires, and prep your audit pack.",
-    links: [
-      { icon: Cpu, label: "Autonomous Remediation", sub: "One-click gap closure" },
-      { icon: Lock, label: "Evidence Collection", sub: "Auto-gather screenshots & logs" },
-      { icon: Bot, label: "AI Mock Audits", sub: "Simulate auditor interviews" },
-      { icon: Award, label: "Report Generation", sub: "11 AI-ready audit reports" },
-    ],
-  },
-];
-
-const companyMenu = [
-  {
-    heading: "Company",
-    description: "Behind ReguLattice is a team reimagining how compliance is done — autonomously, at scale.",
-    links: [
-      { label: "About Us", href: "/about" },
-      { label: "Our Founder", href: "/about#founder" },
-      { label: "Contact Us", href: "/contact" },
-    ],
-  },
-  {
-    heading: "Careers",
-    description: "We're building the future of autonomous GRC. Explore open roles.",
-    links: [
-      { label: "Open Positions", href: "/careers#open-positions" },
-    ],
-  },
-];
-
-const resourcesMenu = [
-  {
-    heading: "Resources",
-    description: "Guides, reports, and insights for compliance leaders and GRC practitioners.",
-    links: [
-      { icon: BookOpen, label: "Documentation", href: "#" },
-      { icon: Globe, label: "Blog & Insights", href: "#" },
-      { icon: Users, label: "Customer Stories", href: "#" },
-      { icon: MessageSquare, label: "Webinars", href: "#" },
-    ],
-  },
-];
+// Removed solutionsMenu and resourcesMenu arrays
 
 interface NavbarProps {
   onBooking: () => void;
@@ -261,42 +208,25 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {/* Solutions */}
-          <button
-            onClick={() => toggle("solutions")}
-            className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeMenu === "solutions" ? "text-gray-900 bg-gray-50" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}
-          >
-            Solutions
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeMenu === "solutions" ? "rotate-180" : ""}`} />
-          </button>
+          {/* Home */}
+          <a href="/" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
+            Home
+          </a>
 
           {/* Pricing */}
           <a href="/#pricing" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
             Pricing
           </a>
 
-          {/* Resources */}
-          <button
-            onClick={() => toggle("resources")}
-            className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeMenu === "resources" ? "text-gray-900 bg-gray-50" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}
-          >
-            Resources
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeMenu === "resources" ? "rotate-180" : ""}`} />
-          </button>
+          {/* How It Works */}
+          <a href="/#how-it-works" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
+            How It Works
+          </a>
 
           {/* Frameworks */}
           <a href="/#frameworks" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
             Frameworks
           </a>
-
-          {/* Company */}
-          <button
-            onClick={() => toggle("company")}
-            className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeMenu === "company" ? "text-gray-900 bg-gray-50" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"}`}
-          >
-            Company
-            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeMenu === "company" ? "rotate-180" : ""}`} />
-          </button>
         </nav>
 
         {/* Right buttons */}
@@ -318,121 +248,16 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
         </button>
       </div>
 
-      {/* Dropdown Panels — Solutions */}
-      {activeMenu === "solutions" && (
-        <div className="absolute top-full left-0 right-0 z-50 shadow-2xl" style={{ background: "#1e2537" }}>
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="grid grid-cols-2 gap-12">
-              {solutionsMenu.map((col) => (
-                <div key={col.heading}>
-                  <h3 className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#3ecfb2" }}>{col.heading}</h3>
-                  <p className="text-xs mb-5" style={{ color: "#8b9ab0" }}>{col.description}</p>
-                  <ul className="space-y-3">
-                    {col.links.map((link) => (
-                      <li key={link.label}>
-                        <a
-                          href="/#features"
-                          onClick={() => setActiveMenu(null)}
-                          className="flex items-start gap-3 group"
-                        >
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(62,207,178,0.1)" }}>
-                            <link.icon className="w-4 h-4" style={{ color: "#3ecfb2" }} />
-                          </div>
-                          <div>
-                            <div className="text-sm font-semibold text-white group-hover:text-[#3ecfb2] transition-colors">{link.label}</div>
-                            <div className="text-xs" style={{ color: "#8b9ab0" }}>{link.sub}</div>
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Dropdown — Resources */}
-      {activeMenu === "resources" && (
-        <div className="absolute top-full left-0 right-0 z-50 shadow-2xl" style={{ background: "#1e2537" }}>
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="grid grid-cols-2 gap-12">
-              {resourcesMenu.map((col) => (
-                <div key={col.heading}>
-                  <h3 className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#3ecfb2" }}>{col.heading}</h3>
-                  <p className="text-xs mb-5" style={{ color: "#8b9ab0" }}>{col.description}</p>
-                  <ul className="space-y-3">
-                    {col.links.map((link) => (
-                      <li key={link.label}>
-                        <a href="/" onClick={() => setActiveMenu(null)} className="flex items-center gap-3 group">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "rgba(62,207,178,0.1)" }}>
-                            <link.icon className="w-4 h-4" style={{ color: "#3ecfb2" }} />
-                          </div>
-                          <span className="text-sm font-semibold text-white group-hover:text-[#3ecfb2] transition-colors">{link.label}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#3ecfb2" }}>Featured</h3>
-                <div className="rounded-xl p-4 border" style={{ background: "rgba(62,207,178,0.05)", borderColor: "rgba(62,207,178,0.15)" }}>
-                  <div className="text-[10px] uppercase tracking-widest mb-1" style={{ color: "#3ecfb2" }}>Whitepaper</div>
-                  <div className="text-sm font-semibold text-white mb-2">The State of GRC Automation 2025</div>
-                  <div className="text-xs" style={{ color: "#8b9ab0" }}>How AI is reshaping compliance for enterprise teams.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Dropdown — Company */}
-      {activeMenu === "company" && (
-        <div className="absolute top-full left-0 right-0 z-50 shadow-2xl" style={{ background: "#1e2537" }}>
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="grid grid-cols-2 gap-12">
-              {companyMenu.map((col) => (
-                <div key={col.heading}>
-                  <h3 className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#3ecfb2" }}>{col.heading}</h3>
-                  <p className="text-xs mb-5" style={{ color: "#8b9ab0" }}>{col.description}</p>
-                  <ul className="space-y-2">
-                    {col.links.map((link) => (
-                      <li key={link.label}>
-                        <a 
-                          href={link.href} 
-                          onClick={(e) => {
-                            if (link.label === "Contact Us" && onContact) {
-                              e.preventDefault();
-                              onContact();
-                            }
-                            setActiveMenu(null);
-                          }} 
-                          className="text-sm font-medium text-white hover:text-[#3ecfb2] transition-colors"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Solutions, Resources, and Company menus removed */}
 
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="absolute top-16 left-0 right-0 lg:hidden bg-white border-t border-gray-100 shadow-2xl z-50 overflow-y-auto max-h-[calc(100vh-4rem)]">
           <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
-            <a href="/#features" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Solutions</a>
+            <a href="/" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Home</a>
             <a href="/#pricing" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Pricing</a>
+            <a href="/#how-it-works" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>How It Works</a>
             <a href="/#frameworks" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Frameworks</a>
-            <a href="/#how-it-works" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Resources</a>
-            <a href="/about" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>About Us</a>
             <a href="/careers" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Careers & Openings</a>
             {onContact && (
               <button 

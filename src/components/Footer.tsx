@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Mail } from "lucide-react";
+import { Linkedin, Twitter, Mail, Instagram, MapPin, Phone } from "lucide-react";
 
 interface FooterProps {
   onContact: () => void;
@@ -6,28 +6,19 @@ interface FooterProps {
 
 const footerLinks = [
   {
-    title: "Solutions",
-    links: [
-      { label: "KYC/KYB Automation", href: "#features" },
-      { label: "Risk Assessment", href: "#how-it-works" },
-      { label: "Transaction Monitoring", href: "#features" },
-      { label: "Audit Readiness", href: "#features" },
-    ],
-  },
-  {
     title: "Platform",
     links: [
-      { label: "AI Engine", href: "#features" },
-      { label: "Integrations", href: "#frameworks" },
-      { label: "Security", href: "#features" },
-      { label: "How It Works", href: "#how-it-works" },
+      { label: "AI Engine", href: "/#features" },
+      { label: "Integrations", href: "/#frameworks" },
+      { label: "Security", href: "/#features" },
+      { label: "How It Works", href: "/#how-it-works" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Pricing", href: "#pricing" },
+      { label: "Home", href: "/" },
+      { label: "Pricing", href: "/#pricing" },
       { label: "Privacy Policy", href: "#" },
       { label: "Terms of Service", href: "#" },
     ],
@@ -38,7 +29,7 @@ const Footer = ({ onContact }: FooterProps) => (
   <footer className="bg-slate-950 border-t border-slate-800/50">
     {/* Main footer */}
     <div className="container mx-auto px-6 py-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Brand column */}
         <div className="lg:col-span-2">
           <div className="flex items-center gap-3 mb-5">
@@ -53,7 +44,20 @@ const Footer = ({ onContact }: FooterProps) => (
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-6">
             The world's first Autonomous GRC Engine. Maps your evidence, monitors your risk, and keeps you audit-ready — continuously, across every framework.
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-2 mb-6">
+            <div className="flex items-center gap-2 text-slate-400 text-sm">
+              <MapPin className="w-4 h-4 text-slate-500" />
+              <span>Pakistan</span>
+            </div>
+            <a 
+              href="tel:+923346250250" 
+              className="flex items-center gap-2 text-slate-400 text-sm hover:text-blue-400 transition-colors"
+            >
+              <Phone className="w-4 h-4 text-slate-500" />
+              <span>+92 334 6250250</span>
+            </a>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
             <a
               href="https://www.linkedin.com/company/regulattice/"
               target="_blank"
@@ -63,10 +67,20 @@ const Footer = ({ onContact }: FooterProps) => (
               <Linkedin className="w-4 h-4" />
             </a>
             <a
-              href="#"
+              href="https://x.com/regulattice"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all"
             >
               <Twitter className="w-4 h-4" />
+            </a>
+            <a
+              href="https://instagram.com/regulattice"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all"
+            >
+              <Instagram className="w-4 h-4" />
             </a>
             <button
               onClick={onContact}
