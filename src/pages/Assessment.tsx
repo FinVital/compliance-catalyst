@@ -9,52 +9,52 @@ type AssessmentState = "landing" | "questions" | "lead-form" | "results";
 const questions = [
   {
     id: 1,
-    question: "How do you currently track your compliance requirements?",
+    question: "How does your organization currently discover and catalog active AI systems?",
     options: [
-      { text: "Manual spreadsheets and emails", score: 10 },
-      { text: "A mix of tools like Jira and Confluence", score: 20 },
-      { text: "A dedicated GRC platform", score: 30 },
-      { text: "Automated, continuous compliance monitoring", score: 40 },
+      { text: "We have no formal inventory of AI systems", score: 10 },
+      { text: "Departments track their own AI tools in ad-hoc lists", score: 20 },
+      { text: "We maintain a centralized spreadsheet registry of AI systems", score: 30 },
+      { text: "Autonomous AI discovery automatically maps and tracks all model deployments", score: 40 },
     ],
   },
   {
     id: 2,
-    question: "How often do you review your security policies and procedures?",
+    question: "How do you assess risks (bias, security, privacy) for deployed AI systems?",
     options: [
-      { text: "Rarely, or only when an audit is due", score: 10 },
-      { text: "Annually", score: 20 },
-      { text: "Quarterly", score: 30 },
-      { text: "Continuously, triggered by system changes", score: 40 },
+      { text: "No formal risk assessment or guardrails in place", score: 10 },
+      { text: "Basic security checks but no AI-specific risk assessments", score: 20 },
+      { text: "Manual review of AI model cards and third-party questionnaires", score: 30 },
+      { text: "Continuous automated AI risk assessment and live alignment monitoring", score: 40 },
     ],
   },
   {
     id: 3,
-    question: "How are your employees trained on compliance and security?",
+    question: "How are your organization's AI policies and system documentation generated?",
     options: [
-      { text: "We have no formal training program", score: 10 },
-      { text: "One-off onboarding sessions", score: 20 },
-      { text: "Annual interactive training", score: 30 },
-      { text: "Continuous, role-specific training with phishing simulations", score: 40 },
+      { text: "We do not have documented policies for AI use", score: 10 },
+      { text: "Basic guidelines adapted from generic templates", score: 20 },
+      { text: "Compliance teams manually draft custom AI policies and documentation", score: 30 },
+      { text: "AI agents autonomously generate policies, system descriptions, and model cards", score: 40 },
     ],
   },
   {
     id: 4,
-    question: "What is your approach to managing third-party vendor risk?",
+    question: "How do you perform AI Impact Assessments (AIA) or Algorithmic Impact Assessments?",
     options: [
-      { text: "We don't formally assess vendors", score: 10 },
-      { text: "We send a basic security questionnaire", score: 20 },
-      { text: "We require SOC 2 reports from major vendors", score: 30 },
-      { text: "Automated vendor risk monitoring and scoring", score: 40 },
+      { text: "We do not conduct impact assessments", score: 10 },
+      { text: "Ad-hoc reviews when launching high-risk applications", score: 20 },
+      { text: "Manual impact assessments using external consultant frameworks", score: 30 },
+      { text: "Automated impact assessments integrated into our AI deployment pipelines", score: 40 },
     ],
   },
   {
     id: 5,
-    question: "How prepared are you for an unexpected compliance audit?",
+    question: "How prepared are you for upcoming AI regulations (e.g., EU AI Act, ISO 42001, NIST AI RMF)?",
     options: [
-      { text: "Not prepared, it would take weeks to gather evidence", score: 10 },
-      { text: "Somewhat prepared, but it would disrupt regular work", score: 20 },
-      { text: "Well prepared, evidence is mostly centralized", score: 30 },
-      { text: "Always ready, evidence is automatically mapped to controls", score: 40 },
+      { text: "Not prepared, we are unsure which regulations apply to us", score: 10 },
+      { text: "Tracking the regulations manually but no active compliance steps", score: 20 },
+      { text: "Working on manual alignment with ISO 42001 or NIST AI RMF", score: 30 },
+      { text: "Fully aligned with automated mapping and continuous compliance tracking", score: 40 },
     ],
   },
 ];
@@ -76,7 +76,7 @@ const Assessment = () => {
 
     initGA();
     trackGAPageview();
-    document.title = "Free Compliance Assessment | ReguLattice GRC Platform";
+    document.title = "Free AI Governance Assessment | ReguLattice Platform";
   }, []);
 
   const handleOptionSelect = (score: number) => {
@@ -172,10 +172,10 @@ const Assessment = () => {
                   Free Assessment
                 </div>
                 <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                  Compliance Posture <br className="hidden md:block" /> Assessment
+                  AI Governance Readiness <br className="hidden md:block" /> Assessment
                 </h1>
                 <p className="text-xl text-slate-500 max-w-2xl mx-auto mb-10">
-                  5 questions. 4 key dimensions. 2 minutes. Get your Compliance Readiness Score and a personalized action plan instantly.
+                  5 questions. 2 minutes. Get your AI Governance Readiness Score and a personalized action plan instantly.
                 </p>
                 <button
                   onClick={() => {
@@ -355,7 +355,7 @@ const Assessment = () => {
             >
               <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-200 text-center mb-8 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-teal-400 to-emerald-400" />
-                <h2 className="text-3xl font-bold mb-2">Your Compliance Posture Score</h2>
+                <h2 className="text-3xl font-bold mb-2">Your AI Governance Readiness Score</h2>
                 <p className="text-slate-500 mb-8">Based on your responses, here is your calculated readiness.</p>
                 
                 <div className="w-48 h-48 mx-auto rounded-full border-[12px] border-teal-100 flex items-center justify-center mb-8 relative">
@@ -366,7 +366,7 @@ const Assessment = () => {
                 <div className="max-w-2xl mx-auto bg-slate-50 p-6 rounded-2xl">
                   <h3 className="font-bold text-lg mb-2">Next Steps</h3>
                   <p className="text-slate-600 mb-6">
-                    A score of {calculateScore()} indicates room for improvement. While you have some foundational elements, moving towards an automated GRC system will drastically reduce audit times and compliance risks.
+                    A score of {calculateScore()} indicates room for improvement. While you have some foundational elements, moving towards an autonomous AI Governance platform like ReguLattice will drastically reduce compliance effort and align you with major standards like ISO 42001 and the EU AI Act.
                   </p>
                   <a href="/" className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition-colors">
                     Return Home

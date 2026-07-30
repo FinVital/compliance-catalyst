@@ -5,23 +5,23 @@ const steps = [
   {
     num: "01",
     icon: Upload,
-    title: "Connect & Import",
-    desc: "Link your cloud infrastructure, upload existing policies, and define your compliance scope. Our AI ingests everything in minutes — AWS, Azure, GCP, Jira, GitHub, and 10+ more.",
-    tag: "Onboarding",
+    title: "Connect & Discover",
+    desc: "Connect your model registries (Hugging Face, MLflow, AWS Bedrock, OpenAI), code repositories, and data pipelines. Our autonomous agents automatically scan and catalog all active AI assets in minutes.",
+    tag: "Discovery",
   },
   {
     num: "02",
     icon: Cpu,
-    title: "AI Maps & Remediates",
-    desc: "Autonomous agents map controls, collect evidence, generate policies, and close gaps across all active frameworks — running continuously without human intervention.",
-    tag: "Automation",
+    title: "Assess & Generate",
+    desc: "AI agents evaluate your models for governance risks, draft customized AI policies, perform Algorithmic Impact Assessments, and automatically generate comprehensive model cards.",
+    tag: "Assessment",
   },
   {
     num: "03",
     icon: ShieldCheck,
-    title: "Stay Audit-Ready",
-    desc: "Monitor your live Compliance Graph, export audit-ready reports for any framework, and run AI mock audits. When your auditor arrives, you're already done.",
-    tag: "Certification",
+    title: "Monitor & Align",
+    desc: "Monitor live model alignment and policy compliance on your dashboard. When AI regulations like the EU AI Act evolve, the system updates your documentation and alerts you of drift autonomously.",
+    tag: "Monitoring",
   },
 ];
 

@@ -4,34 +4,34 @@ import { Map, Activity, Wrench, FileText, ShieldCheck, CheckCircle } from "lucid
 
 const tabs = [
   {
-    id: "map", label: "Map Controls", icon: Map,
-    title: "Intelligent Control Mapping",
-    description: "AI agents automatically map your existing infrastructure against ISO 27001, ISO 42001, NIST CSF 2.0, SOC 2, SAMA, SECP and more — across 10 frameworks simultaneously with precise gap identification.",
-    highlights: ["Multi-framework parallel mapping", "Real-time gap identification", "Auto-detect controls from cloud infra"],
+    id: "discover", label: "Discover AI", icon: Map,
+    title: "Autonomous AI System Discovery",
+    description: "Intelligent AI agents automatically scan your software codebases, model registries, cloud infrastructure, and APIs to map and discover all active AI models and data pipelines, identifying shadow AI deployments instantly.",
+    highlights: ["Automatic model registry mapping", "API & data pipeline detection", "Shadow AI discovery"],
   },
   {
-    id: "monitor", label: "Monitor", icon: Activity,
+    id: "risk", label: "Assess Risk", icon: Wrench,
+    title: "Dynamic Governance Risk Assessment",
+    description: "Identify compliance gaps, evaluate potential model biases, track data privacy leaks, and assess safety hazards across your model footprint with automated risk assessments mapped directly to regulation.",
+    highlights: ["Automated bias & safety checks", "Regulation-mapped risk scores", "Prioritized mitigation suggestions"],
+  },
+  {
+    id: "policy", label: "Generate Policies", icon: FileText,
+    title: "AI Policy & Documentation Generator",
+    description: "Automatically draft custom AI governance policies, system descriptions, data usage guidelines, and detailed model cards required by regulations with zero manual typing.",
+    highlights: ["Automated custom policy drafting", "Audit-ready model card generation", "Standardized system descriptions"],
+  },
+  {
+    id: "impact", label: "Impact Assessments", icon: ShieldCheck,
+    title: "AI & Algorithmic Impact Assessments",
+    description: "Perform automated AI Impact Assessments (AIA) tailored to high-risk AI definitions, testing model behavior and compliance inputs against current global standards.",
+    highlights: ["Algorithmic Impact Assessments (AIA)", "High-risk system categorization", "Compliance readiness scoring"],
+  },
+  {
+    id: "monitor", label: "Continuous Monitoring", icon: Activity,
     title: "Continuous Compliance Monitoring",
-    description: "The Compliance Graph gives you a live pulse on your security posture — tracking structural readiness, AI-adjusted scores, and vendor compliance as your organization evolves.",
-    highlights: ["Live Compliance Graph dashboard", "AI-adjusted risk scoring", "Vendor & asset tracking"],
-  },
-  {
-    id: "remediate", label: "Auto-Remediate", icon: Wrench,
-    title: "AI-Powered Auto-Remediation",
-    description: "Stop triaging manually. AI agents surface prioritized actions, identify protection gaps, suggest one-click fixes, and auto-draft access control policies — all without human intervention.",
-    highlights: ["Prioritized AI action queue", "One-click remediation", "Auto-generated policy drafts"],
-  },
-  {
-    id: "report", label: "Generate Reports", icon: FileText,
-    title: "11 AI-Generated Audit Reports",
-    description: "From Evidence Summaries to Privacy Impact Assessments — generate comprehensive audit-ready reports with a single click, each mapped to your active compliance standards.",
-    highlights: ["Risk & Gap Analysis", "Executive Compliance Summary", "Data Transfer Impact Assessment"],
-  },
-  {
-    id: "audit", label: "Audit Ready", icon: ShieldCheck,
-    title: "Always Audit-Ready",
-    description: "Mock audit simulations test your preparedness. The Audit Readiness Checklist keeps documentation, evidence, and team readiness always current — so when the auditor arrives, you're already done.",
-    highlights: ["AI Mock Audit simulations", "Evidence confidence scoring", "Certification readiness tracker"],
+    description: "Track compliance activities and live model alignment in real-time. Our system continuously monitors model configurations, training datasets, and outputs, alerting you immediately to drift or policy violations.",
+    highlights: ["Live compliance pulse graph", "Real-time drift & policy alerts", "Always-on audit trail logs"],
   },
 ];
 
@@ -43,10 +43,10 @@ const FeaturesSection = () => {
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
           <div className="ca-badge mb-4">Platform Capabilities</div>
           <h2 className="text-4xl md:text-5xl font-black mb-4" style={{ color: "#141927", letterSpacing: "-0.03em" }}>
-            Manage GRC on a single platform
+            Responsible AI Governance on a Single Platform
           </h2>
           <p className="text-lg max-w-2xl" style={{ color: "#5e6278" }}>
-            Five core pillars that take you from zero to audit-ready with autonomous AI agents working 24/7.
+            Five core pillars designed to discover, document, and monitor AI systems autonomously.
           </p>
         </motion.div>
 

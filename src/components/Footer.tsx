@@ -43,7 +43,7 @@ const Footer = ({ onContact }: FooterProps) => (
             <span className="text-white font-bold text-xl tracking-tight">ReguLattice</span>
           </div>
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-6">
-            The world's first Autonomous GRC Engine. Maps your evidence, monitors your risk, and keeps you audit-ready — continuously, across every framework.
+            ReguLattice is an AI-native Governance platform built to help organizations manage AI responsibly and with confidence using autonomous AI agents.
           </p>
           <div className="flex flex-col gap-2 mb-6">
             <div className="flex items-center gap-2 text-slate-400 text-sm">
@@ -129,11 +129,7 @@ const Footer = ({ onContact }: FooterProps) => (
         <p className="text-xs text-slate-600">
           © {new Date().getFullYear()} ReguLattice. All rights reserved.
         </p>
-        <div className="flex items-center gap-1 text-xs text-slate-600">
-          <span>Built with</span>
-          <span className="text-red-500">♥</span>
-          <span>for compliance teams worldwide</span>
-        </div>
+
       </div>
     </div>
   </footer>

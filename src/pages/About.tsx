@@ -15,18 +15,18 @@ export default function About() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Home Page | ReguLattice | Leading AI Compliance & RegTech Solution";
+    document.title = "About Us | ReguLattice | AI-Native Governance Platform";
   }, []);
 
   const openBooking = () => {
-    setModalTitle("Contact Sales");
-    setModalDesc("Talk to our GRC compliance experts. We will respond within an hour.");
+    setModalTitle("Booking Demo");
+    setModalDesc("Schedule a 15-minute live walkthrough of the platform.");
     setContactOpen(true);
   };
 
   const openContact = () => {
     setModalTitle("Contact Sales");
-    setModalDesc("Talk to our GRC compliance experts. We'll get back to you shortly.");
+    setModalDesc("Talk to our AI governance experts. We will respond within an hour.");
     setContactOpen(true);
   };
 
@@ -38,11 +38,11 @@ export default function About() {
     return () => clearInterval(interval);
   }, []);
 
-  // Sync node focus state with 8s radar sweep duration (1.333s per node)
+  // Sync node focus state with 18s radar sweep duration (3s per node)
   useEffect(() => {
     const nodeInterval = setInterval(() => {
       setActiveNodeIndex((prev) => (prev + 1) % 6);
-    }, 1333);
+    }, 3000);
     return () => clearInterval(nodeInterval);
   }, []);
 
@@ -148,7 +148,7 @@ export default function About() {
           animation: hex-breathe 3s ease-in-out infinite;
         }
         .scanner-line {
-          animation: scanner-sweep 8s linear infinite;
+          animation: scanner-sweep 18s linear infinite;
           transform-origin: center;
         }
         .data-blink-1 { animation: data-blink 2s ease-in-out infinite; }
@@ -186,19 +186,19 @@ export default function About() {
                   className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest mb-6" 
                   style={{ background: "rgba(62,207,178,0.08)", borderColor: "rgba(62,207,178,0.2)", color: "#7ee8d5" }}
                 >
-                  <Sparkles className="w-3 h-3 text-[#3ecfb2]" /> Sovereign GRC Core
+                  <Sparkles className="w-3 h-3 text-[#3ecfb2]" /> Sovereign AI Governance
                 </div>
                 
                 <h1 
                   className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6 text-white uppercase"
                   style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
                 >
-                  Reimagining GRC <br />
+                  Reimagining Governance <br />
                   for the <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #3ecfb2, #2563eb)" }}>AI Era</span>
                 </h1>
                 
                 <p className="text-slate-400 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-                  ReguLattice operates a sovereign, 100% air-gapped GRC platform. We map evidence, close security gaps, and automate compliance audits dynamically.
+                  ReguLattice operates a sovereign, AI-native Governance platform. We discover models, assess compliance, and automate impact reports dynamically.
                 </p>
 
                 <div className="flex gap-4 flex-wrap">
@@ -280,25 +280,74 @@ export default function About() {
                     <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
                     <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
                   </linearGradient>
+                  
+                  {/* Neon Glow Filter */}
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
                 </defs>
-                {/* Beams from center to each node */}
-                <line x1="220" y1="220" x2="220" y2="30" stroke="url(#beam1)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="220" y2="30" stroke="#3ecfb2" strokeWidth={activeNodeIndex === 0 ? "2.5" : "1.5"} className="circuit-path-fast" opacity={activeNodeIndex === 0 ? "0.85" : "0.3"} />
+                {/* Orthogonal Circuit Tracks */}
+                {/* 1. Governance */}
+                <path d="M 220,220 L 220,30" fill="none" stroke="url(#beam1)" strokeWidth="2" />
+                <path d="M 220,220 L 220,30" fill="none" stroke="#3ecfb2" strokeWidth={activeNodeIndex === 0 ? "2.5" : "1.5"} className="circuit-path-fast" opacity={activeNodeIndex === 0 ? "0.85" : "0.3"} />
                 
-                <line x1="220" y1="220" x2="385" y2="65" stroke="url(#beam2)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="385" y2="65" stroke="#ef4444" strokeWidth={activeNodeIndex === 1 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 1 ? "0.85" : "0.25"} />
+                {/* 2. Risk */}
+                <path d="M 220,220 H 320 V 65 H 385" fill="none" stroke="url(#beam2)" strokeWidth="2" />
+                <path d="M 220,220 H 320 V 65 H 385" fill="none" stroke="#ef4444" strokeWidth={activeNodeIndex === 1 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 1 ? "0.85" : "0.25"} />
                 
-                <line x1="220" y1="220" x2="385" y2="375" stroke="url(#beam3)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="385" y2="375" stroke="#3b82f6" strokeWidth={activeNodeIndex === 2 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 2 ? "0.85" : "0.25"} />
+                {/* 3. Compliance */}
+                <path d="M 220,220 H 320 V 375 H 385" fill="none" stroke="url(#beam3)" strokeWidth="2" />
+                <path d="M 220,220 H 320 V 375 H 385" fill="none" stroke="#3b82f6" strokeWidth={activeNodeIndex === 2 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 2 ? "0.85" : "0.25"} />
                 
-                <line x1="220" y1="220" x2="220" y2="410" stroke="url(#beam4)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="220" y2="410" stroke="#a855f7" strokeWidth={activeNodeIndex === 3 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 3 ? "0.85" : "0.25"} />
+                {/* 4. Evidence */}
+                <path d="M 220,220 L 220,410" fill="none" stroke="url(#beam4)" strokeWidth="2" />
+                <path d="M 220,220 L 220,410" fill="none" stroke="#a855f7" strokeWidth={activeNodeIndex === 3 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 3 ? "0.85" : "0.25"} />
                 
-                <line x1="220" y1="220" x2="55" y2="375" stroke="url(#beam5)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="55" y2="375" stroke="#f59e0b" strokeWidth={activeNodeIndex === 4 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 4 ? "0.85" : "0.25"} />
+                {/* 5. Audit */}
+                <path d="M 220,220 H 120 V 375 H 55" fill="none" stroke="url(#beam5)" strokeWidth="2" />
+                <path d="M 220,220 H 120 V 375 H 55" fill="none" stroke="#f59e0b" strokeWidth={activeNodeIndex === 4 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 4 ? "0.85" : "0.25"} />
                 
-                <line x1="220" y1="220" x2="55" y2="65" stroke="url(#beam6)" strokeWidth="2" />
-                <line x1="220" y1="220" x2="55" y2="65" stroke="#06b6d4" strokeWidth={activeNodeIndex === 5 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 5 ? "0.85" : "0.25"} />
+                {/* 6. Policy */}
+                <path d="M 220,220 H 120 V 65 H 55" fill="none" stroke="url(#beam6)" strokeWidth="2" />
+                <path d="M 220,220 H 120 V 65 H 55" fill="none" stroke="#06b6d4" strokeWidth={activeNodeIndex === 5 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 5 ? "0.85" : "0.25"} />
+
+                {/* Concentric Resonance Rings (breathing background ripples) */}
+                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(62,207,178,0.08)" strokeWidth="1.5">
+                  <animate attributeName="r" values="30;220" dur="8s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="8s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(59,130,246,0.06)" strokeWidth="1.5">
+                  <animate attributeName="r" values="30;220" dur="8s" begin="2.66s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="8s" begin="2.66s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(168,85,247,0.04)" strokeWidth="1.5">
+                  <animate attributeName="r" values="30;220" dur="8s" begin="5.33s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="8s" begin="5.33s" repeatCount="indefinite" />
+                </circle>
+
+                {/* Traveling glowing particles following connections */}
+                <circle r={activeNodeIndex === 0 ? "5.5" : "3"} fill="#3ecfb2" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 0 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 L 220,30" />
+                </circle>
+                <circle r={activeNodeIndex === 1 ? "5.5" : "3"} fill="#ef4444" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 1 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 320 V 65 H 385" />
+                </circle>
+                <circle r={activeNodeIndex === 2 ? "5.5" : "3"} fill="#3b82f6" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 2 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 320 V 375 H 385" />
+                </circle>
+                <circle r={activeNodeIndex === 3 ? "5.5" : "3"} fill="#a855f7" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 3 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 L 220,410" />
+                </circle>
+                <circle r={activeNodeIndex === 4 ? "5.5" : "3"} fill="#f59e0b" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 4 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 120 V 375 H 55" />
+                </circle>
+                <circle r={activeNodeIndex === 5 ? "5.5" : "3"} fill="#06b6d4" filter="url(#glow)">
+                  <animateMotion dur={activeNodeIndex === 5 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 120 V 65 H 55" />
+                </circle>
 
                 {/* Outer hexagonal connecting path between nodes */}
                 <path d="M 220,30 L 385,65 L 385,375 L 220,410 L 55,375 L 55,65 Z" fill="none" stroke="rgba(62,207,178,0.06)" strokeWidth="1" strokeDasharray="4,8" />
@@ -333,7 +382,7 @@ export default function About() {
                       <path d="M16 3L6 8v7c0 6.5 4.3 12.6 10 14 5.7-1.4 10-7.5 10-14V8L16 3z" stroke="#3ecfb2" strokeWidth="1.5" fill="rgba(62,207,178,0.06)" />
                       <path d="M12 16l3 3 6-7" stroke="#3ecfb2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <span className="text-[10px] font-black tracking-[0.3em] text-[#3ecfb2] uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>GRC</span>
+                    <span className="text-[10px] font-black tracking-[0.3em] text-[#3ecfb2] uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>GOVERNANCE</span>
                   </div>
                 </div>
               </div>
@@ -878,12 +927,12 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">GRC Lifecycle</span>
+            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">AI Governance Lifecycle</span>
             <h2 
               className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
               style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
             >
-              Continual Improvement for GRC
+              Continual Improvement for AI Governance
             </h2>
           </motion.div>
 
@@ -1051,7 +1100,7 @@ export default function About() {
       </section>
 
       <div id="pricing">
-        <PricingSection onBooking={openBooking} />
+        <PricingSection onBooking={openContact} />
       </div>
 
       {/* ──────────────────────────────────────────────────────────────── */}
@@ -1114,153 +1163,118 @@ const pillarsList = [
   {
     icon: Eye,
     title: "Our Vision",
-    desc: "To deliver zero-friction, sovereign compliance infrastructure that runs autonomously on customer premises without leaking metadata.",
+    desc: "To deliver zero-friction, sovereign AI governance infrastructure that runs autonomously on customer premises without leaking metadata.",
   },
   {
     icon: Target,
     title: "Our Mission",
-    desc: "To automate 100% of GRC evidence mapping, screenshot collections, and mock audits, cutting enterprise sales cycles by 10x.",
+    desc: "To automate 100% of AI system discovery, risk assessments, policy drafts, and impact reports, accelerating safe AI adoption.",
   },
   {
     icon: Heart,
     title: "Our Core Values",
-    desc: "We stand on absolute engineering excellence, metadata isolation (sovereignty), and continuous audit readiness.",
+    desc: "We stand on absolute engineering excellence, metadata isolation (sovereignty), and continuous AI policy alignment.",
   },
 ];
 
 const statsList = [
-  { value: "10+", label: "Frameworks Supported" },
-  { value: "100%", label: "Air-Gapped Deployment" },
-  { value: "24/7", label: "Autonomous Monitoring" },
-  { value: "10x", label: "Faster Audit Cycles" },
+  { value: "5+", label: "AI Standards Supported" },
+  { value: "100%", label: "Sovereign Trust & Control" },
+  { value: "24/7", label: "Autonomous AI Scanning" },
+  { value: "10x", label: "Faster Deployment Cycles" },
 ];
 
 const differentiatorsList = [
   {
     icon: Lock,
-    title: "Sovereign & Air-Gapped",
-    desc: "Your data never leaves your infrastructure. Fully on-premises with zero cloud dependency for evidence processing.",
+    title: "Sovereign & Localized",
+    desc: "Your data never leaves your infrastructure. Deployed fully on-premises or private cloud with zero external dependency.",
   },
   {
     icon: Bot,
-    title: "AI-Powered Agents",
-    desc: "Autonomous agents that continuously collect evidence, remediate gaps, and simulate auditor queries 24/7.",
+    title: "Autonomous AI Agents",
+    desc: "Intelligent agents that continuously discover shadow AI models, evaluate risk, and draft policy card documentation.",
   },
   {
     icon: Globe,
-    title: "Multi-Framework Coverage",
-    desc: "Single unified platform covering ISO 27001, SOC 2, SAMA, NIST CSF, PCI-DSS, HIPAA, and more.",
+    title: "AI Standards Coverage",
+    desc: "Designed for leading frameworks including ISO 42001, NIST AI RMF, the EU AI Act, OECD, and UNESCO.",
   },
   {
     icon: BarChart3,
-    title: "Real-Time Compliance Dashboard",
-    desc: "Live posture scoring and gap analysis that keeps your team always audit-ready with actionable insights.",
+    title: "Live Governance Dashboard",
+    desc: "Track active models, bias assessments, alignment scores, and documentation readiness in real-time.",
   },
 ];
 
 const lifecycleSteps = [
   {
-    name: "Gap Assessment",
-    desc: "We scan current stack infrastructure against frameworks to identify control deficiencies immediately.",
-    deliverable: "Gap Assessment Score & Vulnerability Report",
+    name: "AI System Discovery",
+    desc: "We scan current stack infrastructure, repos, and model registries to map and catalog all AI systems immediately.",
+    deliverable: "Automated AI Inventory & Model Registry Map",
   },
   {
-    name: "Control Mapping",
-    desc: "Our engine maps physical cloud configs, code pipelines, and policies to specific standards like ISO 27001 and SAMA.",
-    deliverable: "Control Lattice Graph Model",
+    name: "Risk & Bias Assessment",
+    desc: "Our engine evaluates active AI models against bias, safety, privacy, and compliance requirements.",
+    deliverable: "Model Bias & Risk Analysis Report",
   },
   {
-    name: "Evidence Collection",
-    desc: "Agents autonomously collect audit-ready logs, configuration states, and screenshot evidence.",
-    deliverable: "Secure evidence locker files",
+    name: "Policy Generation",
+    desc: "Agents autonomously generate custom AI governance policies, data usage terms, and model cards.",
+    deliverable: "Secure policy documents & model cards",
   },
   {
-    name: "Auto Remediation",
-    desc: "Identified security gaps are fixed automatically or provided with one-click patches.",
-    deliverable: "One-click gap closures & patches",
+    name: "Impact Assessment",
+    desc: "Perform automated AI/Algorithmic Impact Assessments required by global legal frameworks.",
+    deliverable: "Algorithmic Impact Assessment (AIA)",
   },
   {
-    name: "Mock Audits",
-    desc: "Localized GRC agents run mock audits to simulate real auditor queries and verify readiness.",
-    deliverable: "Simulated Auditor Scorecard",
+    name: "Live Alignment Simulation",
+    desc: "Run simulations against regulations to test system behavior and compliance thresholds.",
+    deliverable: "Simulated Model Alignment Scorecard",
   },
   {
-    name: "Continuous Certification",
-    desc: "Once audit-ready, the system continuously logs updates and maintains compliance trails dynamically.",
+    name: "Continuous Monitoring",
+    desc: "Once aligned, the system continuously logs model updates, drift indicators, and compliance trails.",
     deliverable: "Always-on posture dashboard",
   },
 ];
 
 const complianceList = [
   {
-    name: "ISO 27001",
-    tag: "Security",
-    desc: "Information Security Management — the global gold standard for enterprise security compliance.",
-    icon: Lock,
+    name: "ISO/IEC 42001",
+    tag: "AI Management System",
+    desc: "AI Governance — structural guidelines for managing safe and responsible AI system deployments.",
+    icon: Bot,
     color: "teal",
   },
   {
-    name: "ISO 42001",
-    tag: "AI Governance",
-    desc: "AI Governance — structural guidelines for managing safe and responsible AI system deployments.",
-    icon: Bot,
+    name: "NIST AI RMF",
+    tag: "Risk Management",
+    desc: "Trustworthiness Considerations — standard protocols for assessing and mitigating AI system risks.",
+    icon: Shield,
     color: "indigo",
   },
   {
-    name: "NIST CSF 2.0",
-    tag: "Cybersecurity",
-    desc: "Cybersecurity Framework — standard protocols for assessing and mitigating infrastructure risks.",
-    icon: Shield,
+    name: "EU AI Act",
+    tag: "Legal Regulation",
+    desc: "World's First Horizontal AI Law — comprehensive legal mandates categorizing systems by risk levels.",
+    icon: Scale,
     color: "rose",
   },
   {
-    name: "SOC 2",
-    tag: "Operations",
-    desc: "Service Controls — thorough trust procedures ensuring customer data security and privacy.",
-    icon: CheckCircle2,
-    color: "emerald",
-  },
-  {
-    name: "PCI-DSS",
-    tag: "Payments",
-    desc: "Payment Security — robust standards for storing and processing cardholder transaction data safely.",
-    icon: CreditCard,
-    color: "blue",
-  },
-  {
-    name: "HIPAA",
-    tag: "Healthcare",
-    desc: "Healthcare Privacy — mandatory safeguards protecting sensitive medical records and health data.",
-    icon: HeartPulse,
-    color: "pink",
-  },
-  {
-    name: "GLBA",
-    tag: "Finance",
-    desc: "Financial Data Protection — strict consumer privacy acts for financial services firms.",
-    icon: Landmark,
-    color: "cyan",
-  },
-  {
-    name: "ISO 20022",
-    tag: "Messaging",
-    desc: "Financial Messaging — advanced schemas for reliable, frictionless global payment messaging.",
-    icon: Coins,
-    color: "violet",
-  },
-  {
-    name: "SAMA",
-    tag: "MENA Regional",
-    desc: "Saudi Central Bank — comprehensive cybersecurity framework mandated for financial institutions in KSA.",
+    name: "OECD AI Principles",
+    tag: "Global Guidance",
+    desc: "Global Trustworthy AI — international values promoting accountability, safety, and transparency.",
     icon: Globe,
     color: "emerald",
   },
   {
-    name: "SECP",
-    tag: "South Asia Regional",
-    desc: "Pakistan Securities — state-level compliance mandates and securities readiness for corporates.",
-    icon: Scale,
-    color: "lime",
+    name: "UNESCO Recommendation",
+    tag: "Ethical Standard",
+    desc: "Ethical AI Framework — the first global standard-setting instrument on the ethics of AI.",
+    icon: Landmark,
+    color: "cyan",
   },
 ];
 
@@ -1301,24 +1315,6 @@ const colorMap: Record<string, { bg: string; text: string; border: string; tagBg
     hoverBorder: "hover:border-emerald-500/40",
     hoverGlow: "group-hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
   },
-  blue: { 
-    bg: "bg-blue-500/10", 
-    text: "text-blue-400", 
-    border: "border-blue-500/20", 
-    tagBg: "bg-blue-500/10", 
-    tagText: "text-blue-400",
-    hoverBorder: "hover:border-blue-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
-  },
-  pink: { 
-    bg: "bg-pink-500/10", 
-    text: "text-pink-400", 
-    border: "border-pink-500/20", 
-    tagBg: "bg-pink-500/10", 
-    tagText: "text-pink-400",
-    hoverBorder: "hover:border-pink-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]"
-  },
   cyan: { 
     bg: "bg-cyan-500/10", 
     text: "text-cyan-400", 
@@ -1327,23 +1323,5 @@ const colorMap: Record<string, { bg: string; text: string; border: string; tagBg
     tagText: "text-cyan-400",
     hoverBorder: "hover:border-cyan-500/40",
     hoverGlow: "group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
-  },
-  violet: { 
-    bg: "bg-violet-500/10", 
-    text: "text-violet-400", 
-    border: "border-violet-500/20", 
-    tagBg: "bg-violet-500/10", 
-    tagText: "text-violet-400",
-    hoverBorder: "hover:border-violet-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
-  },
-  lime: { 
-    bg: "bg-lime-500/10", 
-    text: "text-lime-400", 
-    border: "border-lime-500/20", 
-    tagBg: "bg-lime-500/10", 
-    tagText: "text-lime-400",
-    hoverBorder: "hover:border-lime-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(132,204,22,0.15)]"
   },
 };

@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const rotatingPhrases = [
-  "the age of AI.",
+  "responsible AI.",
   "regulatory confidence.",
-  "zero manual effort.",
-  "global frameworks.",
-  "autonomous audits.",
+  "sovereign trust.",
+  "autonomous governance.",
+  "intelligent compliance.",
 ];
 
 const clientLogos = [
-  "SAMA", "ISO 27001", "SOC 2", "NIST CSF", "PCI-DSS",
-  "HIPAA", "ISO 42001", "GLBA", "ISO 20022", "SECP",
+  "ISO/IEC 42001",
+  "NIST AI RMF",
+  "EU AI Act",
+  "OECD AI Principles",
+  "UNESCO Ethics Recommendation",
 ];
 
 interface HeroProps {
@@ -60,7 +63,7 @@ export default function Hero({ onBooking }: HeroProps) {
             className="font-black text-white leading-[1.08] mb-6"
             style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)", letterSpacing: "-0.035em" }}
           >
-            GRC Compliance
+            AI Governance
             <br />
             re-engineered for
             <br />
@@ -88,7 +91,7 @@ export default function Hero({ onBooking }: HeroProps) {
             className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
             style={{ color: "#8b9ab0" }}
           >
-            The AI-native GRC platform with autonomous agents that map evidence, remediate gaps, and keep you audit-ready across 10 global compliance frameworks.
+            ReguLattice is an AI-native Governance platform built to help organizations manage AI responsibly and with confidence using autonomous AI agents.
           </p>
 
           {/* CTA */}
@@ -113,7 +116,7 @@ export default function Hero({ onBooking }: HeroProps) {
           className="mt-16 mb-0"
         >
           <p className="text-xs uppercase tracking-widest font-semibold mb-6" style={{ color: "#4a5568" }}>
-            Covering all frameworks your business needs
+            Designed around leading AI governance standards and guidance
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {clientLogos.map(logo => (

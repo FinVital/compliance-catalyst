@@ -26,7 +26,7 @@ export default function Contact() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Contact ReguLattice | RegTech Pakistan & AI Powered Compliance Support";
+    document.title = "Contact ReguLattice | AI-Native Governance Platform Support";
   }, []);
 
   const openBooking = () => {
@@ -152,7 +152,7 @@ export default function Contact() {
               </span>
             </h1>
             <p className="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-              Whether you're exploring GRC automation or ready to deploy, our compliance architects are here to help you every step of the way.
+              Whether you're exploring AI governance automation or ready to deploy, our compliance architects are here to help you every step of the way.
             </p>
           </motion.div>
         </div>
@@ -599,7 +599,7 @@ export default function Contact() {
               Prefer a live conversation?
             </h2>
             <p className="text-slate-400 text-sm md:text-base mb-8 max-w-lg mx-auto relative z-10">
-              Schedule a 15-minute call with our compliance architect. No sales pitch — just honest answers about your GRC challenges.
+              Schedule a 15-minute call with our AI governance architect. No sales pitch — just honest answers about your AI risk challenges.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-10">
               <button 
@@ -626,10 +626,10 @@ export default function Contact() {
 /* ─── DATA ────────────────────────────────────────────────────────────── */
 
 const topicChips = [
-  "SOC 2 Readiness",
-  "ISO 27001 Certification",
-  "SAMA Compliance",
-  "AI GRC Automation",
+  "ISO 42001 & AI RMF",
+  "EU AI Act Compliance",
+  "AI System Discovery",
+  "AI Impact Assessments",
   "Pricing Inquiry",
   "Partnership",
 ];
@@ -637,15 +637,15 @@ const topicChips = [
 const faqItems = [
   {
     q: "How quickly can I get started with ReguLattice?",
-    a: "Most customers are up and running within 48 hours. Our air-gapped deployment requires minimal configuration, and our onboarding team handles the heavy lifting.",
+    a: "Most customers are up and running within 48 hours. Our platform quickly connects to your repositories and model registry to catalog your active AI systems.",
   },
   {
     q: "Do you offer a free trial or pilot program?",
-    a: "Yes! We offer a free compliance assessment and a 14-day pilot program so you can experience the platform with your own data before committing.",
+    a: "Yes! We offer a free AI governance readiness assessment and a pilot program so you can experience the platform with your models before committing.",
   },
   {
     q: "Which frameworks do you support?",
-    a: "We support ISO 27001, SOC 2, SAMA CSF, NIST CSF, PCI-DSS, HIPAA, and more. Our platform continuously adds new frameworks based on customer demand.",
+    a: "We support leading AI governance frameworks including ISO/IEC 42001, the NIST AI Risk Management Framework (AI RMF), the EU AI Act, the OECD AI Principles, and the UNESCO Recommendation on the Ethics of Artificial Intelligence.",
   },
   {
     q: "Is my data secure with ReguLattice?",

@@ -23,16 +23,13 @@ export default async function handler(req, res) {
       )
     `);
 
-    // 2. Check if table is empty
-    const countCheck = await dbClient.execute("SELECT COUNT(*) as count FROM use_cases");
-    if (countCheck.rows[0]?.count === 0) {
-      await dbClient.execute({
-        sql: `INSERT OR IGNORE INTO use_cases (card_key, title, badge, problem, solution) VALUES 
-          ('vciso', 'vCISO & GRC Consultants', 'Consultant Force Multiplier', 'Consultants spend 80% of their billing hours manually requesting screenshots, chasing down client stakeholders, and copying text into static spreadsheets.', 'Manage 15+ clients from a single white-labeled GRC command center. ReguLattice autonomously maps client infrastructure, highlights gaps, and auto-generates policy templates, letting you focus on high-margin strategic advisory.'),
-          ('fintech', 'Fintechs & High-Growth Startups', 'Enterprise Sales Accelerator', 'Landing a major enterprise bank or financial contract stalls for weeks when the buyer''s procurement team dumps a grueling 400-question compliance spreadsheet.', 'Drop the questionnaire into ReguLattice. The AI engine cross-references your live evidence, auto-fills the document in minutes, and generates an audit-ready pack showing your active ISO 27001, SOC 2, and SAMA posture, cutting sales cycles by 10x.'),
-          ('auditor', 'Auditors & Compliance Officers', 'Frictionless Auditing', 'The annual certification audit is a high-stress scramble of screenshot gathering, sample testing, and developer interviews, draining weeks of engineering time.', 'Provide your external auditor with a read-only secure dashboard to your live Compliance Graph. Auditors can inspect automatically logged evidence trails, verify control mappings, and approve samples directly — turning weeks of chaos into a 2-hour sign-off.')`,
-      });
-    }
+    // 2. Seed/Update table with new AI use cases
+    await dbClient.execute({
+      sql: `INSERT OR REPLACE INTO use_cases (card_key, title, badge, problem, solution) VALUES 
+        ('vciso', 'AI Product Managers & Devs', 'Safety & Documentation Accelerator', 'Engineering teams spend days manually writing model cards, system descriptions, and filling out compliance logs before deploying new AI models.', 'ReguLattice autonomously scans repositories, model registries, and datasets to auto-generate comprehensive system documentation and model cards, cutting time-to-deployment by 10x.'),
+        ('fintech', 'Risk & Compliance Officers', 'Autonomous AI Risk Management', 'With evolving AI standards like ISO 42001 and the EU AI Act, risk officers struggle to manually assess model bias, safety issues, and data privacy risks.', 'Our AI agents perform continuous automated risk and impact assessments, flagging model drift, bias, or regulatory non-compliance in real-time.'),
+        ('auditor', 'AI Auditors & Consultants', 'Frictionless Verification', 'Preparing for independent AI audits is chaotic, requiring manual tracing of training data, model versions, testing parameters, and compliance logs.', 'Provide third-party auditors with a read-only dashboard to a secure, automatically logged evidence trail, reducing audit validation times to a few hours.')`,
+    });
 
     // 3. Fetch all use cases
     const result = await dbClient.execute("SELECT * FROM use_cases ORDER BY id ASC");

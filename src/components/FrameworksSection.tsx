@@ -14,84 +14,44 @@ import {
 
 const frameworks = [
   {
-    icon: Lock,
-    emoji: "🔐",
-    name: "ISO 27001",
-    desc: "Information Security Management — the global gold standard for enterprise security compliance.",
-    tag: "Security",
-    color: "teal",
-  },
-  {
     icon: Bot,
     emoji: "🤖",
-    name: "ISO 42001",
-    desc: "AI Governance — structural guidelines for managing safe and responsible AI system deployments.",
-    tag: "AI Governance",
-    color: "indigo",
+    name: "ISO/IEC 42001",
+    desc: "AI Management System (AIMS) — the global standard for certifying safe, ethical, and responsible AI system development.",
+    tag: "Certification Standard",
+    color: "teal",
   },
   {
     icon: Shield,
     emoji: "🛡️",
-    name: "NIST CSF 2.0",
-    desc: "Cybersecurity Framework — standard protocols for assessing and mitigating infrastructure risks.",
-    tag: "Cybersecurity",
-    color: "rose",
-  },
-  {
-    icon: CheckCircle2,
-    emoji: "✅",
-    name: "SOC 2",
-    desc: "Service Controls — thorough trust procedures ensuring customer data security and privacy.",
-    tag: "Operations",
-    color: "emerald",
-  },
-  {
-    icon: CreditCard,
-    emoji: "💳",
-    name: "PCI-DSS",
-    desc: "Payment Security — robust standards for storing and processing cardholder transaction data safely.",
-    tag: "Payments",
-    color: "amber",
-  },
-  {
-    icon: HeartPulse,
-    emoji: "🏥",
-    name: "HIPAA",
-    desc: "Healthcare Privacy — mandatory safeguards protecting sensitive medical records and health data.",
-    tag: "Healthcare",
-    color: "pink",
-  },
-  {
-    icon: Landmark,
-    emoji: "🏦",
-    name: "GLBA",
-    desc: "Financial Data Protection — strict consumer privacy acts for financial services firms.",
-    tag: "Finance",
-    color: "cyan",
-  },
-  {
-    icon: Coins,
-    emoji: "💱",
-    name: "ISO 20022",
-    desc: "Financial Messaging — advanced schemas for reliable, frictionless global payment messaging.",
-    tag: "Messaging",
-    color: "violet",
-  },
-  {
-    icon: Globe,
-    emoji: "🇸🇦",
-    name: "SAMA",
-    desc: "Saudi Central Bank — comprehensive cybersecurity framework mandated for financial institutions in KSA.",
-    tag: "MENA Regional",
-    color: "green",
+    name: "NIST AI RMF",
+    desc: "A voluntary framework designed to improve the incorporation of trustworthiness considerations into AI product design and use.",
+    tag: "Risk Framework",
+    color: "indigo",
   },
   {
     icon: Scale,
-    emoji: "🇵🇰",
-    name: "SECP",
-    desc: "Pakistan Securities — state-level compliance mandates and securities readiness for corporates.",
-    tag: "South Asia Regional",
-    color: "lime",
+    emoji: "⚖️",
+    name: "EU AI Act",
+    desc: "The world's first comprehensive horizontal legal framework on AI, categorizing systems by risk levels and enforcing strict rules.",
+    tag: "Legal Regulation",
+    color: "rose",
+  },
+  {
+    icon: Globe,
+    emoji: "🌐",
+    name: "OECD AI Principles",
+    desc: "Global principles for trustworthy AI adopted by member countries, promoting transparency, accountability, and safety.",
+    tag: "Global Guidance",
+    color: "emerald",
+  },
+  {
+    icon: Landmark,
+    emoji: "🏛️",
+    name: "UNESCO AI Recommendation",
+    desc: "The first global standard-setting instrument on the ethics of AI, providing a policy action framework for human-centric AI.",
+    tag: "Ethical Standard",
+    color: "cyan",
   },
 ];
 
@@ -100,12 +60,7 @@ const colorMap: Record<string, { bg: string; text: string; border: string; tagBg
   indigo: { bg: "bg-indigo-50/50", text: "text-indigo-600", border: "border-indigo-100", tagBg: "bg-indigo-50", tagText: "text-indigo-600", shadow: "group-hover:shadow-indigo-500/5" },
   rose: { bg: "bg-rose-50/50", text: "text-rose-600", border: "border-rose-100", tagBg: "bg-rose-50", tagText: "text-rose-600", shadow: "group-hover:shadow-rose-500/5" },
   emerald: { bg: "bg-emerald-50/50", text: "text-emerald-600", border: "border-emerald-100", tagBg: "bg-emerald-50", tagText: "text-emerald-600", shadow: "group-hover:shadow-emerald-500/5" },
-  amber: { bg: "bg-blue-50/50", text: "text-blue-600", border: "border-blue-100", tagBg: "bg-blue-50", tagText: "text-blue-600", shadow: "group-hover:shadow-blue-500/5" },
-  pink: { bg: "bg-indigo-50/50", text: "text-indigo-600", border: "border-indigo-100", tagBg: "bg-indigo-50", tagText: "text-indigo-600", shadow: "group-hover:shadow-indigo-500/5" },
   cyan: { bg: "bg-cyan-50/50", text: "text-cyan-600", border: "border-cyan-100", tagBg: "bg-cyan-50", tagText: "text-cyan-600", shadow: "group-hover:shadow-cyan-500/5" },
-  violet: { bg: "bg-violet-50/50", text: "text-violet-600", border: "border-violet-100", tagBg: "bg-violet-50", tagText: "text-violet-600", shadow: "group-hover:shadow-violet-500/5" },
-  green: { bg: "bg-emerald-50/50", text: "text-emerald-600", border: "border-emerald-100", tagBg: "bg-emerald-50", tagText: "text-emerald-600", shadow: "group-hover:shadow-emerald-500/5" },
-  lime: { bg: "bg-blue-50/50", text: "text-blue-600", border: "border-blue-100", tagBg: "bg-blue-50", tagText: "text-blue-600", shadow: "group-hover:shadow-blue-500/5" },
 };
 
 const FrameworksSection = () => (
@@ -126,19 +81,19 @@ const FrameworksSection = () => (
         className="text-center mb-16"
       >
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-blue-600 border border-blue-100 bg-blue-50/50 text-xs font-semibold uppercase tracking-widest mb-4">
-          Complete Compliance Stack
+          Leading Standards Coverage
         </div>
         <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-          10 Frameworks.{" "}
+          Leading AI Standards.{" "}
           <span
             className="text-transparent bg-clip-text"
             style={{ backgroundImage: "linear-gradient(90deg, #1e40af, #3b82f6)" }}
           >
-            One Autonomous Engine.
+            One Sovereign Platform.
           </span>
         </h2>
         <p className="text-slate-500 text-lg max-w-3xl mx-auto leading-relaxed">
-          Not a checklist. Not a consultant. ReguLattice is the self-driving GRC engine that maps your evidence, monitors your posture, and keeps you ready globally — across every framework your business operates under.
+          Designed around the world's most rigorous AI governance guidelines. ReguLattice is the self-driving engine that maps your AI system configurations, discovers shadow models, and monitors compliance continuously.
         </p>
       </motion.div>
 

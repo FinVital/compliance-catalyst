@@ -61,9 +61,9 @@ const FounderSection = () => (
             <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
               <Quote className="w-10 h-10 text-blue-500/30 mb-6" />
               <blockquote className="text-slate-300 text-lg leading-relaxed italic">
-                "As the Founder & CEO of ReguLattice, I bring over 16 years of hands-on expertise in Software Engineering and Artificial Intelligence. Having witnessed firsthand the immense friction companies face when proving their security posture to close enterprise deals, I realized the compliance industry needed a paradigm shift.
+                "As the Founder & CEO of ReguLattice, I bring over 16 years of hands-on expertise in Software Engineering and Artificial Intelligence. Having witnessed firsthand the immense friction companies face when managing AI risks and meeting governance requirements as AI adoption accelerates, I realized organizations needed a breakthrough solution.
                 <br /><br />
-                ReguLattice was engineered as a 100% air-gapped, sovereign Autonomous GRC Engine. It acts as your ultimate vCISO force multiplier — continuously mapping evidence, validating controls with our localized AI architecture, and keeping you audit-ready across multiple global frameworks. Our mission is to make compliance an automated accelerator for your business growth, not a roadblock."
+                ReguLattice was engineered as a sovereign, AI-native Governance Platform. It acts as an autonomous compliance force multiplier — using intelligent AI agents to discover AI systems, assess risks, generate custom policies, perform impact assessments, and continuously monitor alignment with leading standards like ISO/IEC 42001 and the NIST AI RMF. Our mission is to help you build sovereign trust and manage AI responsibly and with complete confidence."
               </blockquote>
             </div>
           </div>
