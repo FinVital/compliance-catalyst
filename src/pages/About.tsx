@@ -15,7 +15,7 @@ export default function About() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "About Us | ReguLattice | AI-Native Governance Platform";
+    document.title = "ReguLattice | AI-Native Governance Risk Compliance Platform";
   }, []);
 
   const openBooking = () => {
