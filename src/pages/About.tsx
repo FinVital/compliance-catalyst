@@ -711,7 +711,7 @@ export default function About() {
               {/* Bottom-left: Frameworks */}
               <motion.div 
                 className="absolute z-30 data-blink-4"
-                style={{ bottom: "5%", left: "-6%" }}
+                style={{ top: "42%", left: "-8%" }}
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: 1,
