@@ -38,11 +38,11 @@ export default function About() {
     return () => clearInterval(interval);
   }, []);
 
-  // Sync node focus state with 18s radar sweep duration (3s per node)
+  // Sync node focus state with 36s radar sweep duration (6s per node)
   useEffect(() => {
     const nodeInterval = setInterval(() => {
       setActiveNodeIndex((prev) => (prev + 1) % 6);
-    }, 3000);
+    }, 6000);
     return () => clearInterval(nodeInterval);
   }, []);
 
@@ -105,15 +105,15 @@ export default function About() {
         }
         .circuit-path {
           stroke-dasharray: 8, 4;
-          animation: dash-flow 2s linear infinite;
+          animation: dash-flow 6s linear infinite;
         }
         .circuit-path-reverse {
           stroke-dasharray: 8, 4;
-          animation: dash-flow 2s linear infinite reverse;
+          animation: dash-flow 6s linear infinite reverse;
         }
         .circuit-path-fast {
           stroke-dasharray: 6, 3;
-          animation: dash-flow 1.2s linear infinite;
+          animation: dash-flow 4s linear infinite;
         }
         .glow-filter {
           filter: drop-shadow(0 0 10px rgba(62, 207, 178, 0.6));
@@ -128,10 +128,10 @@ export default function About() {
           filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
         }
         .pulse-orb {
-          animation: radar-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+          animation: radar-pulse 6s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
         .pulse-orb-slow {
-          animation: radar-pulse-slow 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+          animation: radar-pulse-slow 9s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
         .float-animation {
           animation: float-subtle 6s ease-in-out infinite;
@@ -148,13 +148,13 @@ export default function About() {
           animation: hex-breathe 3s ease-in-out infinite;
         }
         .scanner-line {
-          animation: scanner-sweep 18s linear infinite;
+          animation: scanner-sweep 28s linear infinite;
           transform-origin: center;
         }
-        .data-blink-1 { animation: data-blink 2s ease-in-out infinite; }
-        .data-blink-2 { animation: data-blink 2s ease-in-out infinite 0.5s; }
-        .data-blink-3 { animation: data-blink 2s ease-in-out infinite 1s; }
-        .data-blink-4 { animation: data-blink 2s ease-in-out infinite 1.5s; }
+        .data-blink-1 { animation: data-blink 5s ease-in-out infinite; }
+        .data-blink-2 { animation: data-blink 5s ease-in-out infinite 1s; }
+        .data-blink-3 { animation: data-blink 5s ease-in-out infinite 2s; }
+        .data-blink-4 { animation: data-blink 5s ease-in-out infinite 3s; }
       `}</style>
 
       {/* ──────────────────────────────────────────────────────────────── */}
@@ -317,36 +317,36 @@ export default function About() {
 
                 {/* Concentric Resonance Rings (breathing background ripples) */}
                 <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(62,207,178,0.08)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="8s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="8s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="30;220" dur="16s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="16s" repeatCount="indefinite" />
                 </circle>
                 <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(59,130,246,0.06)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="8s" begin="2.66s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="8s" begin="2.66s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="30;220" dur="16s" begin="5.33s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="16s" begin="5.33s" repeatCount="indefinite" />
                 </circle>
                 <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(168,85,247,0.04)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="8s" begin="5.33s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="8s" begin="5.33s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="30;220" dur="16s" begin="10.66s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.8;0" dur="16s" begin="10.66s" repeatCount="indefinite" />
                 </circle>
 
                 {/* Traveling glowing particles following connections */}
                 <circle r={activeNodeIndex === 0 ? "5.5" : "3"} fill="#3ecfb2" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 0 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 L 220,30" />
+                  <animateMotion dur={activeNodeIndex === 0 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 L 220,30" />
                 </circle>
                 <circle r={activeNodeIndex === 1 ? "5.5" : "3"} fill="#ef4444" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 1 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 320 V 65 H 385" />
+                  <animateMotion dur={activeNodeIndex === 1 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 320 V 65 H 385" />
                 </circle>
                 <circle r={activeNodeIndex === 2 ? "5.5" : "3"} fill="#3b82f6" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 2 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 320 V 375 H 385" />
+                  <animateMotion dur={activeNodeIndex === 2 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 320 V 375 H 385" />
                 </circle>
                 <circle r={activeNodeIndex === 3 ? "5.5" : "3"} fill="#a855f7" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 3 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 L 220,410" />
+                  <animateMotion dur={activeNodeIndex === 3 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 L 220,410" />
                 </circle>
                 <circle r={activeNodeIndex === 4 ? "5.5" : "3"} fill="#f59e0b" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 4 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 120 V 375 H 55" />
+                  <animateMotion dur={activeNodeIndex === 4 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 120 V 375 H 55" />
                 </circle>
                 <circle r={activeNodeIndex === 5 ? "5.5" : "3"} fill="#06b6d4" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 5 ? "1.5s" : "3.5s"} repeatCount="indefinite" path="M 220,220 H 120 V 65 H 55" />
+                  <animateMotion dur={activeNodeIndex === 5 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 120 V 65 H 55" />
                 </circle>
 
                 {/* Outer hexagonal connecting path between nodes */}
@@ -529,8 +529,8 @@ export default function About() {
                       <path d="M9 12l2 2 4-4" stroke="#93c5fd" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-blue-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Compliance</span>
-                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-blue-400 border border-blue-500/30 data-blink-1" style={{ background: "rgba(59,130,246,0.1)" }}>SOC2</div>
+                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-blue-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Registry</span>
+                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-blue-400 border border-blue-500/30 data-blink-1" style={{ background: "rgba(59,130,246,0.1)" }}>Models</div>
                 </div>
               </motion.div>
 
@@ -573,8 +573,8 @@ export default function About() {
                       <path d="M4,12 c0,1.9 3.6,3.5 8,3.5 s8-1.6 8-3.5" stroke="#c4b5fd" strokeWidth="0.8" opacity="0.5" />
                     </svg>
                   </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-purple-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Evidence</span>
-                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-purple-400 border border-purple-500/30 data-blink-3" style={{ background: "rgba(168,85,247,0.1)" }}>247</div>
+                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-purple-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Safety</span>
+                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-purple-400 border border-purple-500/30 data-blink-3" style={{ background: "rgba(168,85,247,0.1)" }}>Align</div>
                 </div>
               </motion.div>
 
@@ -623,7 +623,7 @@ export default function About() {
                       <line x1="14.5" y1="14.5" x2="20" y2="20" stroke="#fcd34d" strokeWidth="1.8" strokeLinecap="round" />
                     </svg>
                   </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-amber-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Audit</span>
+                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-amber-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Impact</span>
                 </div>
               </motion.div>
 
@@ -699,11 +699,11 @@ export default function About() {
                 }}
               >
                 <div className="px-3 py-2 rounded-xl border border-[#3ecfb2]/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-[#3ecfb2]" style={{ fontFamily: "'Plus Jakarta Sans'" }}>98.7%</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">Posture</div>
+                  <div className="text-[10px] font-black text-[#3ecfb2]" style={{ fontFamily: "'Plus Jakarta Sans'" }}>99.2%</div>
+                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">Model Alignment</div>
                   {/* Mini progress bar */}
                   <div className="w-12 h-[3px] rounded-full bg-slate-800 mt-1">
-                    <div className="h-full rounded-full" style={{ width: "98.7%", background: "linear-gradient(90deg, #3ecfb2, #2563eb)" }} />
+                    <div className="h-full rounded-full" style={{ width: "99.2%", background: "linear-gradient(90deg, #3ecfb2, #2563eb)" }} />
                   </div>
                 </div>
               </motion.div>
@@ -728,8 +728,8 @@ export default function About() {
                 }}
               >
                 <div className="px-3 py-2 rounded-xl border border-amber-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-amber-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>6 Active</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">Frameworks</div>
+                  <div className="text-[10px] font-black text-amber-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>12 Active</div>
+                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">AI Policies</div>
                   <div className="flex gap-0.5 mt-1">
                     {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />)}
                   </div>
@@ -756,8 +756,8 @@ export default function About() {
                 }}
               >
                 <div className="px-3 py-2 rounded-xl border border-blue-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-blue-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>342</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">Controls</div>
+                  <div className="text-[10px] font-black text-blue-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>45 Discovered</div>
+                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">AI Models</div>
                 </div>
               </motion.div>
 
