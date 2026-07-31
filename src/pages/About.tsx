@@ -359,30 +359,30 @@ export default function About() {
                 <div className="absolute w-[130px] h-[130px] rounded-full border border-[#3ecfb2]/30 pulse-orb" />
                 <div className="absolute w-[130px] h-[130px] rounded-full border border-[#3ecfb2]/15 pulse-orb-slow" />
                 
-                {/* Core hexagonal container */}
+                {/* Core AI engine container */}
                 <div 
-                  className="relative w-[110px] h-[110px] flex items-center justify-center"
+                  className="relative w-[110px] h-[110px] flex items-center justify-center rounded-full"
                   style={{ 
                     background: "linear-gradient(135deg, #0d1520 0%, #111c2e 100%)",
-                    clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-                    boxShadow: "0 0 40px rgba(62,207,178,0.15), inset 0 0 20px rgba(62,207,178,0.05)",
+                    border: "2px solid rgba(62,207,178,0.5)",
+                    boxShadow: "0 0 40px rgba(62,207,178,0.25), inset 0 0 20px rgba(62,207,178,0.05)",
                   }}
                 >
-                  {/* Inner hex border */}
+                  {/* Inner container */}
                   <div 
-                    className="absolute inset-[3px] flex flex-col items-center justify-center hex-shield"
+                    className="absolute inset-[3px] flex flex-col items-center justify-center rounded-full hex-shield"
                     style={{
-                      clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-                      border: "1.5px solid rgba(62,207,178,0.5)",
-                      background: "linear-gradient(180deg, rgba(62,207,178,0.06) 0%, rgba(13,21,32,0.95) 100%)",
+                      background: "linear-gradient(180deg, rgba(62,207,178,0.08) 0%, rgba(13,21,32,0.95) 100%)",
                     }}
                   >
-                    {/* Shield SVG icon */}
-                    <svg viewBox="0 0 32 32" className="w-8 h-8 mb-0.5" fill="none">
-                      <path d="M16 3L6 8v7c0 6.5 4.3 12.6 10 14 5.7-1.4 10-7.5 10-14V8L16 3z" stroke="#3ecfb2" strokeWidth="1.5" fill="rgba(62,207,178,0.06)" />
-                      <path d="M12 16l3 3 6-7" stroke="#3ecfb2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    {/* Chip SVG icon */}
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 mb-1" fill="none" stroke="#3ecfb2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="4" y="4" width="16" height="16" rx="2" fill="rgba(62,207,178,0.06)" />
+                      <path d="M9 9h6v6H9z" fill="rgba(62,207,178,0.2)" />
+                      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
+                      <circle cx="12" cy="12" r="1.5" fill="#3ecfb2" />
                     </svg>
-                    <span className="text-[10px] font-black tracking-[0.3em] text-[#3ecfb2] uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>GOVERNANCE</span>
+                    <span className="text-[9px] font-black tracking-[0.2em] text-[#3ecfb2] uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>AI ENGINE</span>
                   </div>
                 </div>
               </div>
