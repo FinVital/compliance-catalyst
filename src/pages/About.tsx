@@ -150,25 +150,66 @@ export default function About() {
         .regulattice-site em {
           font-family: "Newsreader", Georgia, serif !important;
           font-style: italic !important;
+          font-weight: 400 !important;
+          letter-spacing: -.01em !important;
         }
 
         .regulattice-site .mono,
         .regulattice-site code {
           font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+          font-size: 11px !important;
+          letter-spacing: .14em !important;
+          text-transform: uppercase !important;
+          font-weight: 500 !important;
+        }
+
+        .regulattice-site h1,
+        .regulattice-site h2,
+        .regulattice-site h3,
+        .regulattice-site h4 {
+          margin: 0 !important;
+          font-weight: 700 !important;
+          letter-spacing: -.032em !important;
+          line-height: 1.06 !important;
         }
 
         .regulattice-site h1 {
-          font-weight: 800 !important;
+          font-size: clamp(38px,5.6vw,66px) !important;
+          letter-spacing: -.04em !important;
         }
-        .regulattice-site h2,
-        .regulattice-site h3,
-        .regulattice-site h4,
+
+        .regulattice-site h2 {
+          font-size: clamp(28px,3.6vw,45px) !important;
+        }
+
+        .regulattice-site h3 {
+          font-size: clamp(19px,1.55vw,22px) !important;
+          letter-spacing: -.022em !important;
+          line-height: 1.25 !important;
+        }
+
+        .regulattice-site p {
+          margin: 0 !important;
+        }
+
+        .regulattice-site .lead {
+          font-size: clamp(16.5px,1.35vw,19px) !important;
+          line-height: 1.62 !important;
+        }
+
+        .regulattice-site .small {
+          font-size: 14.5px !important;
+          line-height: 1.55 !important;
+        }
+
         .regulattice-site strong {
           font-weight: 700 !important;
         }
+
         .regulattice-site b {
           font-weight: 800 !important;
         }
+
         .regulattice-site th,
         .regulattice-site .btn,
         .regulattice-site .strip-item,
