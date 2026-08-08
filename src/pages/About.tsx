@@ -332,7 +332,7 @@ export default function About() {
                     <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
                     <div className="text-left">
                       <div className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Registry</div>
-                      <div className="text-xs font-semibold text-slate-200">LLaMA-3-8B</div>
+                      <div className="text-xs font-semibold text-slate-200">Custom SLM</div>
                     </div>
                   </div>
                   {/* GPT API */}
@@ -340,7 +340,7 @@ export default function About() {
                     <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse" />
                     <div className="text-left">
                       <div className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">AI API</div>
-                      <div className="text-xs font-semibold text-slate-200">GPT-4o Integration</div>
+                      <div className="text-xs font-semibold text-slate-200">External LLM API</div>
                     </div>
                   </div>
                   {/* Custom ML Database */}
@@ -348,7 +348,7 @@ export default function About() {
                     <div className="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse" />
                     <div className="text-left">
                       <div className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Vector DB</div>
-                      <div className="text-xs font-semibold text-slate-200">Corporate RAG</div>
+                      <div className="text-xs font-semibold text-slate-200">Internal RAG Pipeline</div>
                     </div>
                   </div>
                 </div>
@@ -949,7 +949,7 @@ export default function About() {
           >
             <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Key Business Metrics:</div>
             <div className="text-sm md:text-base font-extrabold text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #3ecfb2, #3b82f6)" }}>
-              75%+ Gross Margin &bull; $200 ARPU &bull; 18.2x LTV/CAC &bull; Zero Cloud Dependency (Local Ollama SLMs)
+              75%+ Gross Margin &bull; $200 ARPU &bull; 18.2x LTV/CAC &bull; Zero Cloud Dependency (Local Sovereign SLMs)
             </div>
           </motion.div>
 
