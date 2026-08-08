@@ -112,8 +112,46 @@ export default function About() {
   };
 
   return (
-    <div className="bg-[#F6F7F5] text-[#0B1F2A]">
+    <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site">
       <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+        body, #root {
+          background: #F6F7F5 !important;
+        }
+
+        .regulattice-site {
+          font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif !important;
+          font-size: 16.5px !important;
+          line-height: 1.6 !important;
+          letter-spacing: -0.005em !important;
+          color: #0B1F2A !important;
+          background: #F6F7F5 !important;
+        }
+
+        .regulattice-site h1,
+        .regulattice-site h2,
+        .regulattice-site h3,
+        .regulattice-site h4,
+        .regulattice-site p,
+        .regulattice-site span,
+        .regulattice-site a,
+        .regulattice-site button,
+        .regulattice-site td,
+        .regulattice-site th,
+        .regulattice-site div {
+          font-family: inherit;
+        }
+
+        .regulattice-site .em {
+          font-family: "Newsreader", Georgia, serif !important;
+          font-style: italic !important;
+        }
+
+        .regulattice-site .mono {
+          font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+        }
+
         /* ============================================================
            ReguLattice — design tokens
            Palette: petrol navy ink, pale archival paper, brand teal,
@@ -3067,6 +3105,11 @@ export default function About() {
               <div className="foot-contact">
                 <span>Karachi, Pakistan</span>
                 <a href="mailto:hello@regulattice.com">hello@regulattice.com</a>
+                <div style={{ marginTop: "10px", display: "flex", gap: "12px" }}>
+                  <a href="https://www.linkedin.com/company/regulattice/" target="_blank" rel="noopener noreferrer" style={{ color: "#7FD9C4" }}>LinkedIn</a>
+                  <span style={{ color: "#7F9490" }}>·</span>
+                  <a href="https://www.instagram.com/regulattice/" target="_blank" rel="noopener noreferrer" style={{ color: "#7FD9C4" }}>Instagram</a>
+                </div>
               </div>
             </div>
             <div>
@@ -3094,6 +3137,8 @@ export default function About() {
               <ul>
                 <li><a href="#demo">Book a demo</a></li>
                 <li><a href="#demo">Contact</a></li>
+                <li><a href="https://www.linkedin.com/company/regulattice/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://www.instagram.com/regulattice/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="#">Privacy policy</a></li>
                 <li><a href="#">Terms of service</a></li>
                 <li><a href="#">Security</a></li>
