@@ -2370,7 +2370,7 @@ export default function About() {
         <section className="sec--dark insight">
           <div className="wrap">
             <span className="mono">The premise</span>
-            <q>Most organisations are deploying AI far faster than they can <span className="em">see, classify, or account for it.</span></q>
+            <q>Most organisations are deploying AI far faster <br />than they can <span className="em">see, classify, or account for it.</span></q>
             <p>ReguLattice closes that gap by making governance continuous, machine-assisted and audit-ready — with people still accountable for the decisions that matter.</p>
           </div>
         </section>
