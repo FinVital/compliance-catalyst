@@ -1,17 +1,159 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactFormModal from "@/components/ContactFormModal";
-import PricingSection from "@/components/PricingSection";
-import { Sparkles, Award, ArrowRight, CheckCircle2, Target, Eye, Heart, Globe, Lock, Bot, BarChart3, Shield, CreditCard, HeartPulse, Landmark, Coins, Scale } from "lucide-react";
+import { 
+  Sparkles, Award, ArrowRight, CheckCircle2, Target, Eye, Heart, 
+  Globe, Lock, Bot, BarChart3, Shield, Scale, Info, Check, HelpCircle, AlertTriangle
+} from "lucide-react";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (opts: { url: string }) => void;
+    };
+  }
+}
+
+// 7 Autonomous Agents Data
+const agentsList = [
+  {
+    id: "01",
+    name: "Discovery Agent",
+    tag: "Continuous Asset Discovery",
+    icon: Eye,
+    desc: "Continuously scans repositories, model registries, cloud infrastructure, and internal networks to map every active AI model, LLM, custom agent, and third-party API in use. Instantly identifies shadow AI deployments.",
+    status: "Active Scanning",
+    color: "text-teal-400",
+    glowColor: "rgba(20,184,166,0.15)",
+    borderColor: "border-teal-500/20",
+    standard: "ISO 42001 A.8.2.1 (AI Cataloging)"
+  },
+  {
+    id: "02",
+    name: "Classification Agent",
+    tag: "Autonomous Risk Tiering",
+    icon: Target,
+    desc: "Analyzes model purpose, training datasets, and system boundaries to assign risk tiers (e.g., Annex III High Risk under the EU AI Act) and regulatory scopes without requiring manual questionnaires.",
+    status: "Analyzing Models",
+    color: "text-indigo-400",
+    glowColor: "rgba(99,102,241,0.15)",
+    borderColor: "border-indigo-500/20",
+    standard: "EU AI Act Title III Compliance"
+  },
+  {
+    id: "03",
+    name: "Control Agent",
+    tag: "Automated Control Mapping",
+    icon: Shield,
+    desc: "Translates high-level legal guidelines and safety standards into technical guardrails and mappings, ensuring a single control satisfies multiple standards (ISO 42001, NIST, EU AI Act) simultaneously.",
+    status: "Enforcing Controls",
+    color: "text-rose-400",
+    glowColor: "rgba(244,63,94,0.15)",
+    borderColor: "border-rose-500/20",
+    standard: "NIST AI RMF Gov & Map"
+  },
+  {
+    id: "04",
+    name: "Evidence Agent",
+    tag: "Immutable Cryptographic Proof",
+    icon: Lock,
+    desc: "Collects model evaluation data, training logs, and runtime inputs, creating cryptographically timestamped evidence chains that record conformity as work happens, eliminating audit-prep panic.",
+    status: "Logging Evidence",
+    color: "text-purple-400",
+    glowColor: "rgba(168,85,247,0.15)",
+    borderColor: "border-purple-500/20",
+    standard: "ISO 42001 A.9 (Evaluation)"
+  },
+  {
+    id: "05",
+    name: "Monitoring Agent",
+    tag: "Drift & Safety Telemetry",
+    icon: BarChart3,
+    desc: "Watches inference logs in real-time, tracking semantic drift, output bias, toxicity alerts, and policy violations to re-trigger risk evaluation automatically in production.",
+    status: "Monitoring Signals",
+    color: "text-emerald-400",
+    glowColor: "rgba(16,185,129,0.15)",
+    borderColor: "border-emerald-500/20",
+    standard: "EU AI Act Post-Market Monitor"
+  },
+  {
+    id: "06",
+    name: "Authority Agent",
+    tag: "Decision Reversibility Ledger",
+    icon: Scale,
+    desc: "Tracks the level of autonomy delegated to each agentic pipeline, recording human-in-the-loop sign-offs, authority escalations, and verifying active paths for reversing decisions.",
+    status: "Ledger Synced",
+    color: "text-cyan-400",
+    glowColor: "rgba(6,182,212,0.15)",
+    borderColor: "border-cyan-500/20",
+    standard: "ISO 38507 (Corporate Governance)"
+  },
+  {
+    id: "07",
+    name: "Assurance Agent",
+    tag: "Conformity Docs Generator",
+    icon: Award,
+    desc: "Autonomously drafts model cards, system descriptions, and compliance conformity packs, outputting audit-ready Statements of Applicability and legal files in seconds.",
+    status: "Ready to Export",
+    color: "text-amber-400",
+    glowColor: "rgba(245,158,11,0.15)",
+    borderColor: "border-amber-500/20",
+    standard: "ISO 42001 Statement of Applicability"
+  }
+];
+
+// Interactive Systems for the Authority Matrix
+const mockSystems = [
+  {
+    id: "rag-kb",
+    name: "Internal Helpdesk RAG Bot",
+    desc: "Provides customer support agents with manual query assistance from internal documents. Has no autonomous write access.",
+    authority: "retained",
+    reversibility: "reversible",
+    quadrant: "MONITOR",
+    control: "Log all prompt histories and sample 5% of responses weekly for bias or hallucinations. Minimal deployment friction."
+  },
+  {
+    id: "clinical-copilot",
+    name: "Clinical Cancer Diagnostic Assistant",
+    desc: "Assists oncologists by recommending tumor treatment therapy options based on research database matches.",
+    authority: "retained",
+    reversibility: "irreversible",
+    quadrant: "SIGN-OFF",
+    control: "AI provides options, but a certified clinical physician must review, edit, and sign off on all drug therapy prescriptions before execution."
+  },
+  {
+    id: "purchase-agent",
+    name: "Autonomous Purchase Order Agent",
+    desc: "Automated agent that evaluates supply inventory and issues vendor purchase orders up to $5,000.",
+    authority: "delegated",
+    reversibility: "reversible",
+    quadrant: "GUARDRAIL",
+    control: "Strict transaction cap at $5k; real-time validation checks verify merchant metadata before payment. Transactions >$5k auto-escalate."
+  },
+  {
+    id: "fx-trader",
+    name: "Algorithmic FX Trading Bot",
+    desc: "High-frequency autonomous agent that executes currency trades directly on external exchanges.",
+    authority: "delegated",
+    reversibility: "irreversible",
+    quadrant: "BLOCKED",
+    control: "Hard stop. Autonomous execution disabled due to lack of real-time human rollback guarantees. Requires board-level override."
+  }
+];
 
 export default function About() {
   const [contactOpen, setContactOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("Talk to an Expert");
   const [modalDesc, setModalDesc] = useState("We'll get back to you within 24 hours.");
-  const [activeLifecycleStep, setActiveLifecycleStep] = useState<number>(0);
-  const [activeNodeIndex, setActiveNodeIndex] = useState<number>(0);
+  
+  const [activeAgentIndex, setActiveAgentIndex] = useState<number>(0);
+  const [selectedSystemId, setSelectedSystemId] = useState<string>("rag-kb");
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,7 +161,7 @@ export default function About() {
   }, []);
 
   const openBooking = () => {
-    setModalTitle("Booking Demo");
+    setModalTitle("Book a Live Demo");
     setModalDesc("Schedule a 15-minute live walkthrough of the platform.");
     setContactOpen(true);
   };
@@ -30,138 +172,60 @@ export default function About() {
     setContactOpen(true);
   };
 
-  // Continuous step rotation for the GRC Lifecycle circle
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveLifecycleStep((prev) => (prev + 1) % lifecycleSteps.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  const openAssessment = () => {
+    navigate("/assessment");
+  };
 
-  // Sync node focus state with 36s radar sweep duration (6s per node)
-  useEffect(() => {
-    const nodeInterval = setInterval(() => {
-      setActiveNodeIndex((prev) => (prev + 1) % 6);
-    }, 6000);
-    return () => clearInterval(nodeInterval);
-  }, []);
+  const selectedSystem = mockSystems.find(s => s.id === selectedSystemId) || mockSystems[0];
 
   return (
-    <div className="min-h-screen bg-[#0d111c] text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-[#0d111c] text-white">
       <Navbar onBooking={openBooking} onContact={openContact} />
 
       <style>{`
         @keyframes dash-flow {
           to { stroke-dashoffset: -40; }
         }
-        @keyframes radar-pulse {
-          0% { transform: scale(0.9); opacity: 0.8; }
-          100% { transform: scale(1.5); opacity: 0; }
+        @keyframes pulse-ring {
+          0% { transform: scale(0.95); opacity: 0.8; }
+          50% { transform: scale(1.15); opacity: 0.3; }
+          100% { transform: scale(0.95); opacity: 0.8; }
         }
-        @keyframes radar-pulse-slow {
-          0% { transform: scale(0.95); opacity: 0.6; }
-          100% { transform: scale(1.8); opacity: 0; }
-        }
-        @keyframes float-subtle {
+        @keyframes float-card {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
+          50% { transform: translateY(-10px); }
         }
-        @keyframes orbit-cw {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        @keyframes float-card-reverse {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(8px); }
         }
-        @keyframes orbit-ccw {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
+        @keyframes radial-pulse {
+          0% { transform: scale(0.9); opacity: 0.8; }
+          100% { transform: scale(1.6); opacity: 0; }
         }
-        @keyframes particle-travel {
-          0% { offset-distance: 0%; opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { offset-distance: 100%; opacity: 0; }
+        .animate-float {
+          animation: float-card 6s ease-in-out infinite;
         }
-        @keyframes hex-breathe {
-          0%, 100% { 
-            filter: drop-shadow(0 0 8px rgba(62,207,178,0.3));
-            stroke-opacity: 0.6;
-          }
-          50% { 
-            filter: drop-shadow(0 0 20px rgba(62,207,178,0.7));
-            stroke-opacity: 1;
-          }
+        .animate-float-delayed {
+          animation: float-card-reverse 7s ease-in-out infinite;
         }
-        @keyframes scanner-sweep {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes data-blink {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-        @keyframes node-appear {
-          0% { transform: scale(0); opacity: 0; }
-          60% { transform: scale(1.15); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-        .circuit-path {
-          stroke-dasharray: 8, 4;
-          animation: dash-flow 6s linear infinite;
-        }
-        .circuit-path-reverse {
-          stroke-dasharray: 8, 4;
-          animation: dash-flow 6s linear infinite reverse;
-        }
-        .circuit-path-fast {
-          stroke-dasharray: 6, 3;
+        .circuit-wire {
+          stroke-dasharray: 6, 4;
           animation: dash-flow 4s linear infinite;
         }
-        .glow-filter {
-          filter: drop-shadow(0 0 10px rgba(62, 207, 178, 0.6));
-        }
-        .glow-blue {
-          filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
-        }
-        .glow-cyan {
-          filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
-        }
-        .glow-emerald {
-          filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));
-        }
         .pulse-orb {
-          animation: radar-pulse 6s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+          animation: radial-pulse 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
-        .pulse-orb-slow {
-          animation: radar-pulse-slow 9s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        .pulse-circle {
+          animation: pulse-ring 4s ease-in-out infinite;
         }
-        .float-animation {
-          animation: float-subtle 6s ease-in-out infinite;
-        }
-        .orbit-ring-cw {
-          animation: orbit-cw 20s linear infinite;
-          transform-origin: center;
-        }
-        .orbit-ring-ccw {
-          animation: orbit-ccw 25s linear infinite;
-          transform-origin: center;
-        }
-        .hex-shield {
-          animation: hex-breathe 3s ease-in-out infinite;
-        }
-        .scanner-line {
-          animation: scanner-sweep 28s linear infinite;
-          transform-origin: center;
-        }
-        .data-blink-1 { animation: data-blink 5s ease-in-out infinite; }
-        .data-blink-2 { animation: data-blink 5s ease-in-out infinite 1s; }
-        .data-blink-3 { animation: data-blink 5s ease-in-out infinite 2s; }
-        .data-blink-4 { animation: data-blink 5s ease-in-out infinite 3s; }
       `}</style>
 
       {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 1. HERO - Interactive GRC Command Center                       */}
+      {/* SECTION A: HERO SECTION                                        */}
       {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-24 overflow-hidden bg-[#0d111c] border-b border-slate-800/60">
-        {/* Subtle grid overlay */}
+      <section className="relative pt-32 pb-20 overflow-hidden border-b border-slate-800/60 bg-[#0d111c]">
+        {/* Subtle grid backdrop */}
         <div
           className="absolute inset-0 pointer-events-none z-0"
           style={{
@@ -169,13 +233,12 @@ export default function About() {
             backgroundSize: "80px 80px",
           }}
         />
-        {/* Ambient glow */}
-        <div className="absolute top-0 left-1/4 w-[700px] h-[350px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(62,207,178,0.04) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 left-1/4 w-[700px] h-[350px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(62,207,178,0.03) 0%, transparent 70%)" }} />
 
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-6 relative z-10 max-w-7xl">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             
-            {/* Left Content */}
+            {/* Hero Left Content */}
             <div className="w-full lg:w-1/2 text-left">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -183,743 +246,245 @@ export default function About() {
                 transition={{ duration: 0.6 }}
               >
                 <div 
-                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest mb-6" 
+                  className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-widest mb-6" 
                   style={{ background: "rgba(62,207,178,0.08)", borderColor: "rgba(62,207,178,0.2)", color: "#7ee8d5" }}
                 >
-                  <Sparkles className="w-3 h-3 text-[#3ecfb2]" /> Sovereign AI Governance
+                  <Sparkles className="w-3.5 h-3.5 text-[#3ecfb2]" /> SOVEREIGN AI GOVERNANCE
                 </div>
                 
                 <h1 
-                  className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6 text-white uppercase"
+                  className="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-6 text-white"
                   style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
                 >
-                  Reimagining Governance <br />
-                  for the <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #3ecfb2, #2563eb)" }}>AI Era</span>
+                  Continuous AI Governance <br />
+                  Powered by <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #3ecfb2, #3b82f6)" }}>7 Autonomous Agents</span>
                 </h1>
                 
-                <p className="text-slate-400 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-                  ReguLattice operates a sovereign, AI-native Governance platform. We discover models, assess compliance, and automate impact reports dynamically.
+                <p className="text-slate-400 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+                  From Shadow AI discovery to continuous evidence & authority ledgers. ReguLattice auto-discovers models, enforces decision boundaries, and keeps you audit-ready for ISO/IEC 42001 and the EU AI Act.
                 </p>
 
-                <div className="flex gap-4 flex-wrap">
-                  <a 
-                    href="#how-it-works" 
-                    className="px-6 py-3 rounded-full bg-[#3ecfb2] hover:bg-[#2ebfa2] text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#3ecfb2]/10"
-                  >
-                    Explore Lifecycle
-                  </a>
+                <div className="flex flex-col sm:flex-row gap-4">
                   <button 
-                    onClick={openContact}
-                    className="px-6 py-3 rounded-full border border-slate-700 hover:border-slate-500 text-white font-semibold text-sm tracking-wide transition-all"
+                    onClick={openAssessment}
+                    className="px-7 py-3.5 rounded-full bg-[#3ecfb2] hover:bg-[#2ebfa2] text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-[#3ecfb2]/10"
                   >
-                    Consult an Expert
+                    Start Free 14-Day Trial
+                  </button>
+                  <button 
+                    onClick={openBooking}
+                    className="px-7 py-3.5 rounded-full border border-slate-700 hover:border-slate-500 text-white font-semibold text-sm tracking-wide transition-all"
+                  >
+                    Schedule Live Demo
                   </button>
                 </div>
               </motion.div>
             </div>
 
-            {/* Right Content: Holographic GRC Command Center v3 */}
-            <motion.div 
-              className="w-full lg:w-1/2 flex items-center justify-center relative"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ minHeight: "520px" }}
-            >
-              {/* ── Ambient glow backdrop ── */}
-              <div className="absolute w-[450px] h-[450px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(62,207,178,0.08) 0%, rgba(37,99,235,0.04) 50%, transparent 80%)" }} />
-              
-              {/* ── Outer Rotating Ring with tick marks ── */}
-              <div 
-                className="absolute w-[440px] h-[440px] rounded-full border border-[#3ecfb2]/[0.06] orbit-ring-cw"
-                style={{ borderStyle: "dashed", borderWidth: "1px" }}
-              />
-              <div 
-                className="absolute w-[380px] h-[380px] rounded-full border border-blue-500/[0.06] orbit-ring-ccw"
-              />
-              <div 
-                className="absolute w-[320px] h-[320px] rounded-full border border-[#3ecfb2]/[0.04]"
-                style={{ borderStyle: "dotted" }}
-              />
-
-              {/* ── Scanner sweep (CSS animated) ── */}
-              <div className="absolute w-[440px] h-[440px] rounded-full overflow-hidden pointer-events-none">
-                <div 
-                  className="w-full h-full scanner-line"
-                  style={{ 
-                    background: "conic-gradient(from 0deg, transparent 0deg, transparent 340deg, rgba(62,207,178,0.12) 355deg, rgba(62,207,178,0.25) 360deg)",
-                    borderRadius: "50%",
-                  }}
-                />
-              </div>
-
-              {/* ── Connection Beams (gradient lines from center to nodes) ── */}
-              <svg className="absolute w-[440px] h-[440px] pointer-events-none" viewBox="0 0 440 440" style={{ zIndex: 1 }}>
-                <defs>
-                  <linearGradient id="beam1" x1="50%" y1="50%" x2="50%" y2="0%">
-                    <stop offset="0%" stopColor="#3ecfb2" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#3ecfb2" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="beam2" x1="50%" y1="50%" x2="88%" y2="15%">
-                    <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="beam3" x1="50%" y1="50%" x2="88%" y2="85%">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="beam4" x1="50%" y1="50%" x2="50%" y2="100%">
-                    <stop offset="0%" stopColor="#a855f7" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="beam5" x1="50%" y1="50%" x2="12%" y2="85%">
-                    <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="beam6" x1="50%" y1="50%" x2="12%" y2="15%">
-                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
-                  </linearGradient>
-                  
-                  {/* Neon Glow Filter */}
-                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur stdDeviation="4" result="blur" />
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                {/* Orthogonal Circuit Tracks */}
-                {/* 1. Governance */}
-                <path d="M 220,220 L 220,30" fill="none" stroke="url(#beam1)" strokeWidth="2" />
-                <path d="M 220,220 L 220,30" fill="none" stroke="#3ecfb2" strokeWidth={activeNodeIndex === 0 ? "2.5" : "1.5"} className="circuit-path-fast" opacity={activeNodeIndex === 0 ? "0.85" : "0.3"} />
-                
-                {/* 2. Risk */}
-                <path d="M 220,220 H 320 V 65 H 385" fill="none" stroke="url(#beam2)" strokeWidth="2" />
-                <path d="M 220,220 H 320 V 65 H 385" fill="none" stroke="#ef4444" strokeWidth={activeNodeIndex === 1 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 1 ? "0.85" : "0.25"} />
-                
-                {/* 3. Compliance */}
-                <path d="M 220,220 H 320 V 375 H 385" fill="none" stroke="url(#beam3)" strokeWidth="2" />
-                <path d="M 220,220 H 320 V 375 H 385" fill="none" stroke="#3b82f6" strokeWidth={activeNodeIndex === 2 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 2 ? "0.85" : "0.25"} />
-                
-                {/* 4. Evidence */}
-                <path d="M 220,220 L 220,410" fill="none" stroke="url(#beam4)" strokeWidth="2" />
-                <path d="M 220,220 L 220,410" fill="none" stroke="#a855f7" strokeWidth={activeNodeIndex === 3 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 3 ? "0.85" : "0.25"} />
-                
-                {/* 5. Audit */}
-                <path d="M 220,220 H 120 V 375 H 55" fill="none" stroke="url(#beam5)" strokeWidth="2" />
-                <path d="M 220,220 H 120 V 375 H 55" fill="none" stroke="#f59e0b" strokeWidth={activeNodeIndex === 4 ? "2.5" : "1.5"} className="circuit-path-reverse" opacity={activeNodeIndex === 4 ? "0.85" : "0.25"} />
-                
-                {/* 6. Policy */}
-                <path d="M 220,220 H 120 V 65 H 55" fill="none" stroke="url(#beam6)" strokeWidth="2" />
-                <path d="M 220,220 H 120 V 65 H 55" fill="none" stroke="#06b6d4" strokeWidth={activeNodeIndex === 5 ? "2.5" : "1.5"} className="circuit-path" opacity={activeNodeIndex === 5 ? "0.85" : "0.25"} />
-
-                {/* Concentric Resonance Rings (breathing background ripples) */}
-                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(62,207,178,0.08)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="16s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="16s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(59,130,246,0.06)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="16s" begin="5.33s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="16s" begin="5.33s" repeatCount="indefinite" />
-                </circle>
-                <circle cx="220" cy="220" r="10" fill="none" stroke="rgba(168,85,247,0.04)" strokeWidth="1.5">
-                  <animate attributeName="r" values="30;220" dur="16s" begin="10.66s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.8;0" dur="16s" begin="10.66s" repeatCount="indefinite" />
-                </circle>
-
-                {/* Traveling glowing particles following connections */}
-                <circle r={activeNodeIndex === 0 ? "5.5" : "3"} fill="#3ecfb2" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 0 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 L 220,30" />
-                </circle>
-                <circle r={activeNodeIndex === 1 ? "5.5" : "3"} fill="#ef4444" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 1 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 320 V 65 H 385" />
-                </circle>
-                <circle r={activeNodeIndex === 2 ? "5.5" : "3"} fill="#3b82f6" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 2 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 320 V 375 H 385" />
-                </circle>
-                <circle r={activeNodeIndex === 3 ? "5.5" : "3"} fill="#a855f7" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 3 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 L 220,410" />
-                </circle>
-                <circle r={activeNodeIndex === 4 ? "5.5" : "3"} fill="#f59e0b" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 4 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 120 V 375 H 55" />
-                </circle>
-                <circle r={activeNodeIndex === 5 ? "5.5" : "3"} fill="#06b6d4" filter="url(#glow)">
-                  <animateMotion dur={activeNodeIndex === 5 ? "3s" : "7s"} repeatCount="indefinite" path="M 220,220 H 120 V 65 H 55" />
-                </circle>
-
-                {/* Outer hexagonal connecting path between nodes */}
-                <path d="M 220,30 L 385,65 L 385,375 L 220,410 L 55,375 L 55,65 Z" fill="none" stroke="rgba(62,207,178,0.06)" strokeWidth="1" strokeDasharray="4,8" />
-              </svg>
-
-              {/* ── CENTRAL CORE ── */}
-              <div className="absolute z-20 flex items-center justify-center">
-                {/* Pulse rings */}
-                <div className="absolute w-[130px] h-[130px] rounded-full border border-[#3ecfb2]/30 pulse-orb" />
-                <div className="absolute w-[130px] h-[130px] rounded-full border border-[#3ecfb2]/15 pulse-orb-slow" />
-                
-                {/* Core AI engine container */}
-                <div 
-                  className="relative w-[110px] h-[110px] flex items-center justify-center rounded-full"
-                  style={{ 
-                    background: "linear-gradient(135deg, #0d1520 0%, #111c2e 100%)",
-                    border: "2px solid rgba(62,207,178,0.5)",
-                    boxShadow: "0 0 40px rgba(62,207,178,0.25), inset 0 0 20px rgba(62,207,178,0.05)",
-                  }}
-                >
-                  {/* Inner container */}
-                  <div 
-                    className="absolute inset-[3px] flex flex-col items-center justify-center rounded-full hex-shield"
-                    style={{
-                      background: "linear-gradient(180deg, rgba(62,207,178,0.08) 0%, rgba(13,21,32,0.95) 100%)",
-                    }}
-                  >
-                    {/* Chip SVG icon */}
-                    <svg viewBox="0 0 24 24" className="w-8 h-8 mb-1" fill="none" stroke="#3ecfb2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="4" y="4" width="16" height="16" rx="2" fill="rgba(62,207,178,0.06)" />
-                      <path d="M9 9h6v6H9z" fill="rgba(62,207,178,0.2)" />
-                      <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3" />
-                      <circle cx="12" cy="12" r="1.5" fill="#3ecfb2" />
-                    </svg>
-                    <span className="text-[9px] font-black tracking-[0.2em] text-[#3ecfb2] uppercase" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>AI ENGINE</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── SATELLITE NODE CARDS ── */}
-              {/* Each node is a glassmorphic card with icon, label, and arc progress */}
-              
-              {/* 1. Governance — Top */}
+            {/* Hero Right Content: Visual Mapping Pipeline Animation */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[380px]">
               <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ top: "2%", left: "50%", transform: "translateX(-50%)" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, -6, 0],
-                  scale: activeNodeIndex === 0 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 0.5, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  {/* Glow ring */}
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%)", opacity: activeNodeIndex === 0 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 0 ? "rgba(62,207,178,0.9)" : "rgba(62,207,178,0.3)",
-                      boxShadow: activeNodeIndex === 0 ? "0 0 25px rgba(62,207,178,0.45), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(62,207,178,0.1), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 0 ? "linear-gradient(135deg, rgba(62,207,178,0.25) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(62,207,178,0.1) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <path d="M12 2L4 6v5c0 5.5 3.4 10.6 8 12 4.6-1.4 8-6.5 8-12V6L12 2z" stroke="#3ecfb2" strokeWidth="1.5" fill="rgba(62,207,178,0.08)" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-[#7ee8d5] uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Governance</span>
-                </div>
-              </motion.div>
-
-              {/* 2. Risk — Top Right */}
-              <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ top: "10%", right: "2%" }}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, 5, 0],
-                  x: [0, -5, 0],
-                  scale: activeNodeIndex === 1 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.5,
-                    ease: "easeInOut"
-                  },
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.5,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 0.6, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(239,68,68,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 1 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 1 ? "rgba(239,68,68,0.8)" : "rgba(239,68,68,0.3)",
-                      boxShadow: activeNodeIndex === 1 ? "0 0 25px rgba(239,68,68,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(239,68,68,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 1 ? "linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <path d="M12 3L2 21h20L12 3z" stroke="#fca5a5" strokeWidth="1.5" fill="rgba(239,68,68,0.06)" />
-                      <line x1="12" y1="10" x2="12" y2="14" stroke="#fca5a5" strokeWidth="1.5" strokeLinecap="round" />
-                      <circle cx="12" cy="17" r="0.8" fill="#fca5a5" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-red-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Risk</span>
-                  {/* Mini metric badge */}
-                  <div className="absolute -top-1 -right-3 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-red-400 border border-red-500/30 data-blink-2" style={{ background: "rgba(239,68,68,0.1)" }}>2</div>
-                </div>
-              </motion.div>
-
-              {/* 3. Compliance — Bottom Right */}
-              <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ bottom: "10%", right: "2%" }}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, -5, 0],
-                  x: [0, 5, 0],
-                  scale: activeNodeIndex === 2 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.2,
-                    ease: "easeInOut"
-                  },
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.2,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 0.7, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 2 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 2 ? "rgba(59,130,246,0.8)" : "rgba(59,130,246,0.3)",
-                      boxShadow: activeNodeIndex === 2 ? "0 0 25px rgba(59,130,246,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(59,130,246,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 2 ? "linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <circle cx="12" cy="12" r="9" stroke="#93c5fd" strokeWidth="1.5" fill="rgba(59,130,246,0.06)" />
-                      <path d="M9 12l2 2 4-4" stroke="#93c5fd" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-blue-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Registry</span>
-                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-blue-400 border border-blue-500/30 data-blink-1" style={{ background: "rgba(59,130,246,0.1)" }}>Models</div>
-                </div>
-              </motion.div>
-
-              {/* 4. Evidence — Bottom */}
-              <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ bottom: "2%", left: "50%", transform: "translateX(-50%)" }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, 6, 0],
-                  scale: activeNodeIndex === 3 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 3.8,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 0.8, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 3 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 3 ? "rgba(168,85,247,0.8)" : "rgba(168,85,247,0.3)",
-                      boxShadow: activeNodeIndex === 3 ? "0 0 25px rgba(168,85,247,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 3 ? "linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <ellipse cx="12" cy="7" rx="8" ry="3.5" stroke="#c4b5fd" strokeWidth="1.3" fill="rgba(168,85,247,0.06)" />
-                      <path d="M4,7 v10 c0,1.9 3.6,3.5 8,3.5 s8-1.6 8-3.5 V7" stroke="#c4b5fd" strokeWidth="1.3" />
-                      <path d="M4,12 c0,1.9 3.6,3.5 8,3.5 s8-1.6 8-3.5" stroke="#c4b5fd" strokeWidth="0.8" opacity="0.5" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-purple-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Safety</span>
-                  <div className="absolute -top-1 -right-5 px-1.5 py-0.5 rounded-md text-[7px] font-bold text-purple-400 border border-purple-500/30 data-blink-3" style={{ background: "rgba(168,85,247,0.1)" }}>Align</div>
-                </div>
-              </motion.div>
-
-              {/* 5. Audit — Bottom Left */}
-              <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ bottom: "10%", left: "2%" }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, -5, 0],
-                  x: [0, -5, 0],
-                  scale: activeNodeIndex === 4 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.7,
-                    ease: "easeInOut"
-                  },
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.7,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 0.9, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 4 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 4 ? "rgba(245,158,11,0.8)" : "rgba(245,158,11,0.3)",
-                      boxShadow: activeNodeIndex === 4 ? "0 0 25px rgba(245,158,11,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(245,158,11,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 4 ? "linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <circle cx="10" cy="10" r="6" stroke="#fcd34d" strokeWidth="1.3" fill="rgba(245,158,11,0.06)" />
-                      <line x1="14.5" y1="14.5" x2="20" y2="20" stroke="#fcd34d" strokeWidth="1.8" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-amber-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Impact</span>
-                </div>
-              </motion.div>
-
-              {/* 6. Policy — Top Left */}
-              <motion.div 
-                className="absolute z-10 group cursor-pointer"
-                style={{ top: "10%", left: "2%" }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, 5, 0],
-                  x: [0, 5, 0],
-                  scale: activeNodeIndex === 5 ? 1.15 : 1
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.3,
-                    ease: "easeInOut"
-                  },
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.3,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 1.0, duration: 0.6 },
-                  scale: { duration: 0.25 }
-                }}
-                whileHover={{ scale: 1.08 }}
-              >
-                <div className="relative flex flex-col items-center">
-                  <div className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)", opacity: activeNodeIndex === 5 ? 1 : undefined }} />
-                  <div 
-                    className="relative w-[62px] h-[62px] rounded-2xl flex items-center justify-center border transition-all duration-300"
-                    style={{ 
-                      borderColor: activeNodeIndex === 5 ? "rgba(6,182,212,0.8)" : "rgba(6,182,212,0.3)",
-                      boxShadow: activeNodeIndex === 5 ? "0 0 25px rgba(6,182,212,0.35), inset 0 1px 0 rgba(255,255,255,0.1)" : "0 0 20px rgba(6,182,212,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-                      background: activeNodeIndex === 5 ? "linear-gradient(135deg, rgba(6,182,212,0.2) 0%, rgba(13,17,28,0.98) 100%)" : "linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,17,28,0.95) 100%)",
-                      backdropFilter: "blur(12px)"
-                    }}
-                  >
-                    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-                      <rect x="5" y="3" width="14" height="18" rx="2" stroke="#67e8f9" strokeWidth="1.3" fill="rgba(6,182,212,0.06)" />
-                      <line x1="9" y1="8" x2="15" y2="8" stroke="#67e8f9" strokeWidth="0.8" />
-                      <line x1="9" y1="11" x2="14" y2="11" stroke="#67e8f9" strokeWidth="0.8" />
-                      <line x1="9" y1="14" x2="15" y2="14" stroke="#67e8f9" strokeWidth="0.8" />
-                    </svg>
-                  </div>
-                  <span className="mt-1.5 text-[9px] font-bold tracking-widest text-cyan-300 uppercase" style={{ fontFamily: "Inter, sans-serif" }}>Policy</span>
-                </div>
-              </motion.div>
-
-              {/* ── Floating HUD Metric Cards ── */}
-              {/* Top-right: Posture score */}
-              <motion.div 
-                className="absolute z-30 data-blink-1"
-                style={{ top: "0%", right: "-4%" }}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, -6, 0] 
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 5,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 1.3, duration: 0.5 }
-                }}
-              >
-                <div className="px-3 py-2 rounded-xl border border-[#3ecfb2]/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-[#3ecfb2]" style={{ fontFamily: "'Plus Jakarta Sans'" }}>99.2%</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">Model Alignment</div>
-                  {/* Mini progress bar */}
-                  <div className="w-12 h-[3px] rounded-full bg-slate-800 mt-1">
-                    <div className="h-full rounded-full" style={{ width: "99.2%", background: "linear-gradient(90deg, #3ecfb2, #2563eb)" }} />
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Bottom-left: Frameworks */}
-              <motion.div 
-                className="absolute z-30 data-blink-4"
-                style={{ top: "42%", left: "-8%" }}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, 5, 0] 
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 5.5,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 1.5, duration: 0.5 }
-                }}
-              >
-                <div className="px-3 py-2 rounded-xl border border-amber-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-amber-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>12 Active</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">AI Policies</div>
-                  <div className="flex gap-0.5 mt-1">
-                    {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />)}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right-center: Controls mapped */}
-              <motion.div 
-                className="absolute z-30 data-blink-2"
-                style={{ top: "42%", right: "-8%" }}
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: 1,
-                  y: [0, -5, 0] 
-                }}
-                transition={{ 
-                  y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 4.8,
-                    ease: "easeInOut"
-                  },
-                  opacity: { delay: 1.4, duration: 0.5 }
-                }}
-              >
-                <div className="px-3 py-2 rounded-xl border border-blue-500/20" style={{ background: "rgba(17,22,37,0.9)", backdropFilter: "blur(10px)" }}>
-                  <div className="text-[10px] font-black text-blue-400" style={{ fontFamily: "'Plus Jakarta Sans'" }}>45 Discovered</div>
-                  <div className="text-[7px] font-semibold text-slate-500 tracking-widest uppercase">AI Models</div>
-                </div>
-              </motion.div>
-
-              {/* ── Orbiting particles ── */}
-              <div className="absolute w-[440px] h-[440px] orbit-ring-cw pointer-events-none" style={{ zIndex: 5 }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#3ecfb2] shadow-[0_0_8px_rgba(62,207,178,0.8)]" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(59,130,246,0.6)]" />
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(168,85,247,0.6)]" />
-              </div>
-              <div className="absolute w-[320px] h-[320px] orbit-ring-ccw pointer-events-none" style={{ zIndex: 5 }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-400 shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.6)]" />
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.6)]" />
-              </div>
-
-            </motion.div>
-            
-          </div>
-        </div>
-      </section>
-
-      {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 2. THREE PILLARS — Vision, Mission, Values                     */}
-      {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#111625] relative">
-        {/* Subtle ambient glow */}
-        <div className="absolute top-0 right-0 w-[500px] h-[300px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(37,99,235,0.03) 0%, transparent 70%)" }} />
-        
-        <div className="container mx-auto px-6 max-w-6xl relative z-10">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-14"
-          >
-            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">Who We Are</span>
-            <h2 
-              className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
-              style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
-            >
-              Our Foundation
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pillarsList.map((pillar, idx) => (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="rounded-2xl p-8 border text-center flex flex-col items-center justify-start group hover:-translate-y-1 transition-all duration-300"
-                style={{ background: "#1e2538", borderColor: "rgba(62, 207, 178, 0.15)" }}
-              >
-                <div 
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-[#3ecfb2] mb-6 transition-all duration-300 group-hover:scale-110"
-                  style={{ background: "rgba(62, 207, 178, 0.1)" }}
-                >
-                  <pillar.icon className="w-7 h-7" />
-                </div>
-                <h3 
-                  className="text-xl font-bold text-white mb-3 tracking-wide uppercase"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  {pillar.title}
-                </h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{pillar.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 3. WHY REGULATTICE — Stats + Key Differentiators               */}
-      {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0d111c] relative overflow-hidden border-t border-slate-800/40">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(62,207,178,0.03) 0%, transparent 70%)" }} />
-        
-        <div className="container mx-auto px-6 max-w-6xl relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">Why ReguLattice</span>
-            <h2 
-              className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
-              style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
-            >
-              What Sets Us Apart
-            </h2>
-          </motion.div>
-
-          {/* Stats row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            {statsList.map((stat, idx) => (
-              <motion.div
-                key={stat.label}
+                className="w-full max-w-[540px] aspect-[4/3] relative flex items-center justify-center"
                 initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="text-center p-6 rounded-2xl border"
-                style={{ background: "#141927", borderColor: "rgba(62,207,178,0.1)" }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.15 }}
               >
-                <div 
-                  className="text-3xl md:text-4xl font-black text-transparent bg-clip-text mb-2"
-                  style={{ backgroundImage: "linear-gradient(135deg, #3ecfb2, #2563eb)", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                >
-                  {stat.value}
-                </div>
-                <div className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
+                {/* SVG Connections and Glow particles */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 500 350" fill="none">
+                  {/* Left connections to Center */}
+                  <path d="M 90,80 Q 180,80 250,175" stroke="rgba(59,130,246,0.2)" strokeWidth="1.5" className="circuit-wire" />
+                  <path d="M 90,175 H 250" stroke="rgba(6,182,212,0.2)" strokeWidth="1.5" className="circuit-wire" />
+                  <path d="M 90,270 Q 180,270 250,175" stroke="rgba(168,85,247,0.2)" strokeWidth="1.5" className="circuit-wire" />
+                  
+                  {/* Center to Right connections */}
+                  <path d="M 250,175 H 410" stroke="rgba(16,185,129,0.25)" strokeWidth="1.5" className="circuit-wire" />
 
-          {/* Differentiators grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {differentiatorsList.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="flex items-start gap-5 p-6 rounded-2xl border group hover:border-[#3ecfb2]/30 transition-all duration-300"
-                style={{ background: "#1e2538", borderColor: "rgba(255,255,255,0.06)" }}
-              >
-                <div 
-                  className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-                  style={{ background: "rgba(62,207,178,0.08)" }}
-                >
-                  <item.icon className="w-6 h-6 text-[#3ecfb2]" />
+                  {/* Flow Particles */}
+                  <circle r="3.5" fill="#3b82f6" filter="url(#hero-glow)">
+                    <animateMotion dur="4.2s" repeatCount="indefinite" path="M 90,80 Q 180,80 250,175" />
+                  </circle>
+                  <circle r="3.5" fill="#06b6d4" filter="url(#hero-glow)">
+                    <animateMotion dur="3.5s" repeatCount="indefinite" path="M 90,175 H 250" />
+                  </circle>
+                  <circle r="3.5" fill="#a855f7" filter="url(#hero-glow)">
+                    <animateMotion dur="4.8s" repeatCount="indefinite" path="M 90,270 Q 180,270 250,175" />
+                  </circle>
+                  <circle r="4" fill="#10b981" filter="url(#hero-glow)">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" path="M 250,175 H 410" />
+                  </circle>
+
+                  {/* Glow filter definition */}
+                  <defs>
+                    <filter id="hero-glow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+                </svg>
+
+                {/* Left Side: Discovered AI models */}
+                <div className="absolute left-[2%] flex flex-col gap-8">
+                  {/* HF Model */}
+                  <div className="animate-float flex items-center gap-3 px-4 py-2.5 rounded-xl border border-blue-500/20 bg-[#141927]/90 shadow-lg" style={{ backdropFilter: "blur(8px)" }}>
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+                    <div className="text-left">
+                      <div className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Registry</div>
+                      <div className="text-xs font-semibold text-slate-200">LLaMA-3-8B</div>
+                    </div>
+                  </div>
+                  {/* GPT API */}
+                  <div className="animate-float-delayed flex items-center gap-3 px-4 py-2.5 rounded-xl border border-cyan-500/20 bg-[#141927]/90 shadow-lg" style={{ backdropFilter: "blur(8px)" }}>
+                    <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse" />
+                    <div className="text-left">
+                      <div className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">AI API</div>
+                      <div className="text-xs font-semibold text-slate-200">GPT-4o Integration</div>
+                    </div>
+                  </div>
+                  {/* Custom ML Database */}
+                  <div className="animate-float flex items-center gap-3 px-4 py-2.5 rounded-xl border border-purple-500/20 bg-[#141927]/90 shadow-lg" style={{ backdropFilter: "blur(8px)" }}>
+                    <div className="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse" />
+                    <div className="text-left">
+                      <div className="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Vector DB</div>
+                      <div className="text-xs font-semibold text-slate-200">Corporate RAG</div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h4 
-                    className="text-white font-bold text-base mb-1.5"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                  >
-                    {item.title}
-                  </h4>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+
+                {/* Center: Pulsing AI Engine Core */}
+                <div className="absolute z-10 flex items-center justify-center">
+                  <div className="absolute w-[120px] h-[120px] rounded-full border border-emerald-500/30 pulse-orb" />
+                  <div className="absolute w-[120px] h-[120px] rounded-full border border-emerald-500/15 pulse-circle" />
+                  
+                  <div className="relative w-24 h-24 rounded-full flex flex-col items-center justify-center border-2 border-emerald-500 bg-[#0f172a] shadow-[0_0_35px_rgba(16,185,129,0.3)]">
+                    <Bot className="w-8 h-8 text-emerald-400 mb-0.5" />
+                    <div className="text-[8px] font-black text-emerald-400 tracking-widest uppercase">7 AGENTS</div>
+                  </div>
                 </div>
+
+                {/* Right Side: Conformity Documents */}
+                <div className="absolute right-[4%] animate-float">
+                  <div className="px-5 py-4 rounded-xl border border-emerald-500/20 bg-[#141927]/95 shadow-xl w-48 text-left" style={{ backdropFilter: "blur(10px)" }}>
+                    <div className="flex items-center gap-2 mb-3 pb-2 border-b border-slate-800">
+                      <Award className="w-4 h-4 text-emerald-400" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300">Conformity Pack</span>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 text-[10px] text-slate-300">
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>ISO 42001 Mapped</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-300">
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>EU AI Act Artifacts</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-300">
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>NIST AI RMF Synced</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </motion.div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 4. GRC LIFECYCLE — Circular Workflow                           */}
+      {/* SECTION B: THE 3-STEP GOVERNANCE FLYWHEEL BANNER                 */}
       {/* ──────────────────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-24 bg-[#111625] relative overflow-hidden border-t border-slate-800/40">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-blue-600/5 blur-3xl pointer-events-none" />
+      <section className="py-20 bg-[#111625] relative border-b border-slate-800/40">
+        <div className="container mx-auto px-6 max-w-6xl text-center relative z-10">
+          
+          {/* Quote Block */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-14 max-w-2xl mx-auto"
+          >
+            <span className="text-[32px] text-slate-500 font-serif leading-none block mb-2">“</span>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white leading-relaxed italic px-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              You can't govern AI you don't know exists.
+            </h2>
+            <div className="text-slate-400 text-xs font-semibold uppercase tracking-widest mt-4">
+              Value Statement: <span className="text-[#3ecfb2]">Governance becomes continuous, machine-executed, and provable.</span>
+            </div>
+          </motion.div>
 
-        <div className="container mx-auto px-6 relative z-10 max-w-6xl">
+          <h3 className="text-xs font-black uppercase tracking-[0.25em] text-slate-500 mb-8">The 3-Step Governance Flywheel</h3>
+
+          {/* Horizontal Step Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            {/* Step 1 */}
+            <motion.div 
+              className="bg-[#141927] border border-slate-800 rounded-2xl p-6 text-left hover:border-slate-700 transition-all group relative"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 font-bold flex items-center justify-center text-sm">01</div>
+                <h4 className="text-base font-bold text-white uppercase tracking-wider">SEE IT</h4>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Autonomous discovery of every model, agent, copilot, and third-party AI API across the enterprise estate.
+              </p>
+            </motion.div>
+
+            {/* Step 2 */}
+            <motion.div 
+              className="bg-[#141927] border border-slate-800 rounded-2xl p-6 text-left hover:border-slate-700 transition-all group relative"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-[#3ecfb2] font-bold flex items-center justify-center text-sm">02</div>
+                <h4 className="text-base font-bold text-white uppercase tracking-wider">GOVERN IT</h4>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Automated risk tiering, model card registry applications, and decision authority control mapped continuously.
+              </p>
+            </motion.div>
+
+            {/* Step 3 */}
+            <motion.div 
+              className="bg-[#141927] border border-slate-800 rounded-2xl p-6 text-left hover:border-slate-700 transition-all group relative"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 font-bold flex items-center justify-center text-sm">03</div>
+                <h4 className="text-base font-bold text-white uppercase tracking-wider">PROVE IT</h4>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Conformity packs, compliance logs, and cryptographically verified evidence logs generated dynamically on demand.
+              </p>
+            </motion.div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────── */}
+      {/* SECTION C: THE 7 AUTONOMOUS AGENTS                              */}
+      {/* ──────────────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-[#0d111c] relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(37,99,235,0.02) 0%, transparent 70%)" }} />
+
+        <div className="container mx-auto px-6 max-w-6xl relative z-10">
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -927,51 +492,72 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">AI Governance Lifecycle</span>
+            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">Governance that runs itself</span>
             <h2 
               className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
               style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
             >
-              Continual Improvement for AI Governance
+              C. The 7 Autonomous Agents
             </h2>
+            <p className="text-slate-400 text-sm mt-3 max-w-lg mx-auto">
+              One platform. Seven agents. Autonomous processes handling asset cataloging, mapping, and monitoring without human overhead.
+            </p>
           </motion.div>
 
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-16">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             
-            {/* Left: Interactive Circular Diagram */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center relative">
-              <div className="w-[300px] h-[300px] md:w-[360px] md:h-[360px] rounded-full border border-slate-800/60 relative flex items-center justify-center">
-                {/* Central Status Core */}
-                <div className="w-[140px] h-[140px] md:w-[160px] md:h-[160px] rounded-full bg-[#111625] border border-[#3ecfb2]/30 flex flex-col items-center justify-center text-center p-3 shadow-lg shadow-[#3ecfb2]/5 relative z-10">
-                  <div className="w-8 h-8 rounded-lg bg-[#3ecfb2]/10 text-[#3ecfb2] flex items-center justify-center mb-2">
-                    <Award className="w-5 h-5" />
+            {/* Left: Interactive Semicircle Arc (Visible on large screens) */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[360px] md:min-h-[420px] order-2 lg:order-1">
+              {/* Outer Orbit loop line */}
+              <div className="w-[280px] h-[280px] md:w-[350px] md:h-[350px] rounded-full border border-slate-800/40 relative flex items-center justify-center">
+                
+                {/* Central Status Node */}
+                <div className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] rounded-full bg-[#111625] border border-slate-800 flex flex-col items-center justify-center text-center p-3 shadow-xl relative z-10">
+                  <div className="w-8 h-8 rounded-lg bg-slate-800 text-[#3ecfb2] flex items-center justify-center mb-2">
+                    <Sparkles className="w-4 h-4" />
                   </div>
-                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Step</h4>
-                  <p className="text-xs font-bold text-[#3ecfb2] mt-0.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    {lifecycleSteps[activeLifecycleStep].name}
+                  <h4 className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active Agent</h4>
+                  <p className="text-[11px] font-black text-white mt-0.5 uppercase tracking-wide" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                    {agentsList[activeAgentIndex].name}
                   </p>
+                  <div className="mt-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+                    <span className="w-1 h-1 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="text-[7.5px] font-bold text-slate-400 uppercase tracking-wider">{agentsList[activeAgentIndex].status}</span>
+                  </div>
                 </div>
 
-                {/* Orbital nodes */}
-                {lifecycleSteps.map((step, idx) => {
-                  const angle = (idx * 360) / lifecycleSteps.length;
-                  const isActive = activeLifecycleStep === idx;
+                {/* Semicircular orbital buttons */}
+                {agentsList.map((agent, idx) => {
+                  const total = agentsList.length;
+                  // Map nodes along an arc spanning from 180 (left) to 360 (right) degrees
+                  const angle = 180 + (idx * 180) / (total - 1);
+                  const angleRad = (angle * Math.PI) / 180;
+                  const isActive = activeAgentIndex === idx;
+                  const Icon = agent.icon;
+                  
+                  // Radius of orbit in pixels
+                  const radius = 135; // default for mobile
+                  const mdRadius = 175; // for desktop
+
                   return (
                     <button
-                      key={step.name}
-                      onClick={() => setActiveLifecycleStep(idx)}
-                      className="absolute w-12 h-12 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 focus:outline-none z-20 group"
+                      key={agent.id}
+                      onClick={() => setActiveAgentIndex(idx)}
+                      className={`absolute w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all duration-300 focus:outline-none z-20 group`}
                       style={{
-                        transform: `rotate(${angle}deg) translate(150px) rotate(-${angle}deg)`,
-                        background: isActive ? "#3ecfb2" : "#111625",
+                        // Coordinates calculated via trigonometry
+                        left: `calc(50% + ${Math.cos(angleRad) * 50}% - 20px)`,
+                        top: `calc(50% + ${Math.sin(angleRad) * 50}% - 20px)`,
+                        transform: `translate(${Math.cos(angleRad) * (radius - 50)}px, ${Math.sin(angleRad) * (radius - 50)}px)`,
+                        background: isActive ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "#141927",
                         color: isActive ? "#0d111c" : "#94a3b8",
-                        borderColor: isActive ? "#3ecfb2" : "rgba(255,255,255,0.08)",
-                        boxShadow: isActive ? "0 0 15px rgba(62,207,178,0.4)" : "none",
+                        borderColor: isActive ? "#10b981" : "rgba(255,255,255,0.06)",
+                        boxShadow: isActive ? "0 0 20px rgba(16,185,129,0.3)" : "none",
                       }}
                     >
-                      <span className="group-hover:scale-110 transition-transform">{idx + 1}</span>
-                      <span className="absolute bottom-14 left-1/2 -translate-x-1/2 bg-slate-900 border border-slate-700 text-white text-[9px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-30">
-                        {step.name}
+                      <Icon className="w-4.5 h-4.5 group-hover:scale-110 transition-transform" />
+                      <span className="absolute bottom-12 bg-slate-900 border border-slate-700 text-white text-[8px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-30">
+                        {agent.id} {agent.name}
                       </span>
                     </button>
                   );
@@ -979,175 +565,404 @@ export default function About() {
               </div>
             </div>
 
-            {/* Right: Step Explanations */}
-            <div className="w-full lg:w-1/2 text-left">
-              <div className="bg-[#1e2538] border border-slate-800/80 rounded-3xl p-8 max-w-lg shadow-xl relative">
-                <AnimatePresence mode="wait">
-                  {lifecycleSteps.map((step, idx) => {
-                    if (idx !== activeLifecycleStep) return null;
-                    return (
-                      <motion.div
-                        key={step.name}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.4 }}
-                      >
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="w-8 h-8 rounded-lg bg-[#3ecfb2]/10 text-[#3ecfb2] font-black text-sm flex items-center justify-center">
-                            {idx + 1}
-                          </div>
-                          <h3 
-                            className="text-2xl font-bold text-white tracking-wide uppercase"
-                            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                          >
-                            {step.name}
-                          </h3>
-                        </div>
-                        <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                          {step.desc}
-                        </p>
-                        <div className="space-y-3">
-                          <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Key Deliverable:</h4>
-                          <div className="flex items-center gap-2.5 text-xs text-[#7ee8d5]">
-                            <CheckCircle2 className="w-4 h-4 text-[#3ecfb2]" />
-                            <span>{step.deliverable}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </AnimatePresence>
+            {/* Right: Active Agent Details Description Card */}
+            <div className="w-full lg:w-1/2 text-left order-1 lg:order-2">
+              <div className="bg-[#1e2538] border border-slate-800 rounded-3xl p-8 max-w-lg shadow-2xl relative min-h-[300px] flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xs font-extrabold uppercase px-2 py-1 rounded bg-[#3ecfb2]/10 text-[#3ecfb2] tracking-wider">
+                      AGENT {agentsList[activeAgentIndex].id}
+                    </span>
+                    <h3 
+                      className="text-2xl font-bold text-white tracking-wide uppercase"
+                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    >
+                      {agentsList[activeAgentIndex].name}
+                    </h3>
+                  </div>
+                  
+                  <div className="text-slate-200 text-sm font-semibold mb-3">
+                    {agentsList[activeAgentIndex].tag}
+                  </div>
+
+                  <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                    {agentsList[activeAgentIndex].desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-800/80 space-y-3">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Regulatory Mapping:</div>
+                  <div className="flex items-center gap-2.5 text-xs text-[#7ee8d5]">
+                    <CheckCircle2 className="w-4 h-4 text-[#3ecfb2]" />
+                    <span>{agentsList[activeAgentIndex].standard}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
           </div>
+
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 5. TECHNOLOGY & FRAMEWORKS GRID                                */}
+      {/* SECTION D: THE AI AUTHORITY & REVERSIBILITY ENGINE MATRIX        */}
       {/* ──────────────────────────────────────────────────────────────── */}
-      <section id="frameworks" className="py-24 bg-[#0d111c] relative border-t border-slate-800/40">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Grid of Framework Badges */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4 order-2 lg:order-1"
+      <section className="py-24 bg-[#111625] relative border-t border-slate-800/40">
+        <div className="container mx-auto px-6 max-w-6xl relative z-10">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">Unique Control Capability</span>
+            <h2 
+              className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
+              style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
             >
-              {complianceList.map((item) => {
-                const c = colorMap[item.color] || colorMap.teal;
-                const IconComponent = item.icon;
-                return (
+              D. The AI Authority & Reversibility Engine Matrix
+            </h2>
+            <p className="text-slate-400 text-sm mt-3 max-w-xl mx-auto">
+              "The control nobody else ships." Every AI system is placed on two axes: **how much authority it holds**, and **whether its decisions can be undone**. The quadrant determines the security control.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left/Middle: The 2x2 Matrix Grid (8 cols on desktop) */}
+            <div className="lg:col-span-8 flex flex-col items-center">
+              
+              {/* Matrix Layout */}
+              <div className="relative w-full max-w-[500px] aspect-square flex flex-col justify-between border-l-2 border-b-2 border-slate-600 p-2">
+                
+                {/* Y-Axis Label: Authority */}
+                <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 flex gap-12">
+                  <span>Delegated</span>
+                  <span>Authority</span>
+                  <span>Retained</span>
+                </div>
+
+                {/* X-Axis Label: Actions */}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 flex gap-12">
+                  <span>Reversible</span>
+                  <span>Actions</span>
+                  <span>Irreversible</span>
+                </div>
+
+                {/* Quadrants Row 1 (Retained Authority) */}
+                <div className="flex h-[48%] justify-between mb-[4%]">
+                  {/* MONITOR Quadrant */}
                   <div 
-                    key={item.name}
-                    className={`group rounded-xl p-5 border ${c.border} bg-[#141927] ${c.hoverBorder} hover:bg-[#1a2133] ${c.hoverGlow} transition-all duration-300 flex flex-col justify-between`}
+                    className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "MONITOR" ? "border-blue-500 bg-blue-950/20 shadow-[0_0_20px_rgba(59,130,246,0.15)]" : "border-slate-800 bg-[#141927]/60"}`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${c.tagBg} ${c.tagText}`}>
-                          {item.tag}
-                        </span>
-                        <div className={`w-8 h-8 rounded-lg ${c.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                          <IconComponent className={`w-4 h-4 ${c.text}`} />
-                        </div>
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-400 mb-1">
+                        <Eye className="w-3.5 h-3.5" /> MONITOR
                       </div>
-                      <div 
-                        className="text-base font-extrabold text-white tracking-wide mb-1.5"
-                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                      >
-                        {item.name}
-                      </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
-                        {item.desc}
-                      </p>
+                      <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Retained + Reversible</div>
                     </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      Log and sample model outputs. Minimal integration friction.
+                    </p>
                   </div>
-                );
-              })}
+
+                  {/* SIGN-OFF Quadrant */}
+                  <div 
+                    className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "SIGN-OFF" ? "border-cyan-500 bg-cyan-950/20 shadow-[0_0_20px_rgba(6,182,212,0.15)]" : "border-slate-800 bg-[#141927]/60"}`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-400 mb-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> SIGN-OFF
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Retained + Irreversible</div>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      A named human practitioner must sign off before execution.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quadrants Row 2 (Delegated Authority) */}
+                <div className="flex h-[48%] justify-between">
+                  {/* GUARDRAIL Quadrant */}
+                  <div 
+                    className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "GUARDRAIL" ? "border-purple-500 bg-purple-950/20 shadow-[0_0_20px_rgba(168,85,247,0.15)]" : "border-slate-800 bg-[#141927]/60"}`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-purple-400 mb-1">
+                        <Shield className="w-3.5 h-3.5" /> GUARDRAIL
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Delegated + Reversible</div>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      Automated limits, circuit breakers, and continuous telemetry checks.
+                    </p>
+                  </div>
+
+                  {/* BLOCKED Quadrant */}
+                  <div 
+                    className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "BLOCKED" ? "border-rose-500 bg-rose-950/20 shadow-[0_0_20px_rgba(244,63,94,0.15)]" : "border-slate-800 bg-[#141927]/60"}`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-rose-400 mb-1">
+                        <AlertTriangle className="w-3.5 h-3.5" /> BLOCKED
+                      </div>
+                      <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Delegated + Irreversible</div>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-relaxed">
+                      Hard stop until authority is manually escalated and verified.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Animated active tracer node inside the matrix */}
+                <div 
+                  className="absolute w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] transition-all duration-700 ease-out z-10"
+                  style={{
+                    // Map positions: Monitor (25%, 25%), Sign-off (75%, 25%), Guardrail (25%, 75%), Blocked (75%, 75%)
+                    left: selectedSystem.quadrant === "MONITOR" || selectedSystem.quadrant === "GUARDRAIL" ? "25%" : "75%",
+                    top: selectedSystem.quadrant === "MONITOR" || selectedSystem.quadrant === "SIGN-OFF" ? "25%" : "75%",
+                    transform: "translate(-8px, -8px)"
+                  }}
+                />
+
+              </div>
+
+            </div>
+
+            {/* Right: Dynamic System Selector Tool (4 cols on desktop) */}
+            <div className="lg:col-span-4 text-left">
+              <div className="bg-[#1e2538] border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6">
+                
+                <div>
+                  <h4 className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-3">Live System Tracer</h4>
+                  <div className="flex flex-col gap-2.5">
+                    {mockSystems.map((s) => (
+                      <button
+                        key={s.id}
+                        onClick={() => setSelectedSystemId(s.id)}
+                        className={`w-full text-left px-4 py-3 rounded-xl border text-xs font-semibold tracking-wide transition-all ${selectedSystemId === s.id ? "bg-emerald-500 text-slate-950 border-emerald-500 font-bold" : "bg-[#141927] text-slate-300 border-slate-800 hover:border-slate-700"}`}
+                      >
+                        {s.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Result Control Output */}
+                <div className="pt-5 border-t border-slate-800/80 space-y-3">
+                  <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Enforced Control Strategy:</div>
+                  <div className="bg-slate-900/60 rounded-xl p-4 border border-slate-800">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-white mb-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      <span>{selectedSystem.quadrant} Pack Control</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                      {selectedSystem.control}
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────── */}
+      {/* SECTION E: REDESIGNED PRICING & BUSINESS MODEL                  */}
+      {/* ──────────────────────────────────────────────────────────────── */}
+      <section id="pricing" className="py-24 bg-[#0d111c] relative overflow-hidden border-t border-slate-800/40">
+        <div className="container mx-auto px-6 max-w-6xl relative z-10">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
+          >
+            <span className="text-[#3ecfb2] font-bold uppercase tracking-wider text-xs block mb-3">Pricing Models</span>
+            <h2 
+              className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight"
+              style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
+            >
+              E. Transparent Pricing & Business Model
+            </h2>
+            <p className="text-slate-400 text-sm mt-3">
+              Start governing immediately. Select the capacity fits your engineering footprint.
+            </p>
+          </motion.div>
+
+          {/* Pricing Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            
+            {/* Starter Plan */}
+            <motion.div 
+              className="bg-[#141927] border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-all text-left"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">Starter</h3>
+                <div className="text-xs text-slate-400 mb-6">Tier deculling, ontlox and teamonogystat features.</div>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl font-black text-white">$79</span>
+                  <span className="text-slate-500 text-sm">/month</span>
+                </div>
+                <ul className="space-y-4 text-xs text-slate-300">
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Shadow AI discovery</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>EU AI Risk Tiering</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>EU AI Risk Tiering</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Continuous Dependency</span>
+                  </li>
+                </ul>
+              </div>
+              <button onClick={openContact} className="mt-8 w-full py-3 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900 text-xs font-bold text-white transition-all uppercase tracking-wider">
+                Start Trial
+              </button>
             </motion.div>
 
-            {/* Right details */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+            {/* Pro Plan */}
+            <motion.div 
+              className="bg-[#1e2538] border-2 border-emerald-500/80 rounded-3xl p-8 flex flex-col justify-between shadow-2xl text-left relative"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-left order-1 lg:order-2"
+              transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <span className="font-bold uppercase tracking-wider text-xs block mb-3 text-[#3ecfb2]">Global Standards</span>
-              <h2 
-                className="text-3xl md:text-4xl font-extrabold text-white uppercase mb-6 tracking-tight"
-                style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
-              >
-                Our Technology and Expertise
-              </h2>
-              <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                ReguLattice automates evidence mapping and continuous audit validation across leading compliance frameworks. Our system works seamlessly, keeping you secure globally.
-              </p>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Our advisors hold top cybersecurity credentials, assuring our localized automation engine aligns with standard auditing protocols globally.
-              </p>
+              <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 font-bold text-[9px] uppercase tracking-wider">Recommended</div>
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
+                <div className="text-xs text-slate-400 mb-6">Business offler, enming, and quanrity trace leetons.</div>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl font-black text-white">$219</span>
+                  <span className="text-slate-500 text-sm">/month</span>
+                </div>
+                <ul className="space-y-4 text-xs text-slate-300">
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Local RAG Mapping</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Risk Risk Tiering</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Multi-Framework Ring</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>TTL Continuous</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Drift & Behaviouring</span>
+                  </li>
+                </ul>
+              </div>
+              <button onClick={openContact} className="mt-8 w-full py-3 rounded-xl bg-emerald-500 hover:bg-[#2ebfa2] text-xs font-bold text-slate-950 transition-all uppercase tracking-wider">
+                Start Trial
+              </button>
+            </motion.div>
+
+            {/* Partner/Enterprise Plan */}
+            <motion.div 
+              className="bg-[#141927] border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-all text-left"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+            >
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">Partner / Enterprise</h3>
+                <div className="text-xs text-slate-400 mb-6">Partner / Enterprise and acconitable oranperionring.</div>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl font-black text-white">$349</span>
+                  <span className="text-slate-500 text-sm">/month</span>
+                </div>
+                <ul className="space-y-4 text-xs text-slate-300">
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Zero Execution (Isolated)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>EU AI Risk Tiering</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Multi-Framework Writs</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>TTL Behaviour</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Monitoring</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Auto Conformity</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>Zero Cloud Enterprise</span>
+                  </li>
+                </ul>
+              </div>
+              <button onClick={openContact} className="mt-8 w-full py-3 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900 text-xs font-bold text-white transition-all uppercase tracking-wider">
+                Talk to Sales
+              </button>
             </motion.div>
 
           </div>
-        </div>
-      </section>
 
-      <div id="pricing">
-        <PricingSection onBooking={openContact} />
-      </div>
-
-      {/* ──────────────────────────────────────────────────────────────── */}
-      {/* 7. BOTTOM CTA                                                  */}
-      {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="py-24 relative overflow-hidden bg-[#0d111c]">
-        {/* Subtle grid */}
-        <div
-          className="absolute inset-0 pointer-events-none z-0"
-          style={{
-            backgroundImage: `linear-gradient(rgba(62,207,178,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(62,207,178,0.02) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] pointer-events-none" style={{ background: "radial-gradient(ellipse at center, rgba(62,207,178,0.04) 0%, transparent 70%)" }} />
-
-        <div className="container mx-auto px-6 text-center relative z-10 max-w-4xl">
+          {/* Key Business Metrics Panel */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="rounded-3xl p-12 border bg-[#1e2538] shadow-2xl relative overflow-hidden"
+            transition={{ duration: 0.5 }}
+            className="rounded-2xl p-6 border bg-[#141927] shadow-xl text-center max-w-4xl mx-auto space-y-4"
             style={{ borderColor: "rgba(255, 255, 255, 0.08)" }}
           >
-            {/* Glow orbs */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#3ecfb2]/10 blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
-
-            <h2 
-              className="text-3xl md:text-5xl font-black text-white mb-6 uppercase relative z-10"
-              style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}
-            >
-              Ready to experience autonomous compliance?
-            </h2>
-            <p className="text-slate-400 text-lg mb-8 max-w-2xl mx-auto relative z-10">
-              Take a 15-minute mock audit to see how ReguLattice evaluates your security posture in real-time.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center relative z-10">
-              <button onClick={openBooking} className="btn-amber text-sm gap-2">
-                Book a Demo
-              </button>
-              <a href="/assessment" className="flex items-center gap-2 font-semibold text-[#3ecfb2] hover:text-[#7ee8d5] transition-colors text-sm">
-                Start Assessment <ArrowRight className="w-4 h-4" />
-              </a>
+            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Key Business Metrics:</div>
+            <div className="text-sm md:text-base font-extrabold text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(90deg, #3ecfb2, #3b82f6)" }}>
+              75%+ Gross Margin &bull; $200 ARPU &bull; 18.2x LTV/CAC &bull; Zero Cloud Dependency (Local Ollama SLMs)
             </div>
           </motion.div>
+
+          {/* Bottom Call to Action */}
+          <div className="mt-16 text-center">
+            <button 
+              onClick={openBooking}
+              className="px-8 py-4 rounded-xl bg-emerald-500 hover:bg-[#2ebfa2] text-slate-950 font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/10"
+            >
+              Get ReguLattice and Automate Your AI GRC
+            </button>
+          </div>
+
         </div>
       </section>
 
@@ -1156,172 +971,3 @@ export default function About() {
     </div>
   );
 }
-
-/* ─── DATA ────────────────────────────────────────────────────────────── */
-
-const pillarsList = [
-  {
-    icon: Eye,
-    title: "Our Vision",
-    desc: "To deliver zero-friction, sovereign AI governance infrastructure that runs autonomously on customer premises without leaking metadata.",
-  },
-  {
-    icon: Target,
-    title: "Our Mission",
-    desc: "To automate 100% of AI system discovery, risk assessments, policy drafts, and impact reports, accelerating safe AI adoption.",
-  },
-  {
-    icon: Heart,
-    title: "Our Core Values",
-    desc: "We stand on absolute engineering excellence, metadata isolation (sovereignty), and continuous AI policy alignment.",
-  },
-];
-
-const statsList = [
-  { value: "5+", label: "AI Standards Supported" },
-  { value: "100%", label: "Sovereign Trust & Control" },
-  { value: "24/7", label: "Autonomous AI Scanning" },
-  { value: "10x", label: "Faster Deployment Cycles" },
-];
-
-const differentiatorsList = [
-  {
-    icon: Lock,
-    title: "Sovereign & Localized",
-    desc: "Your data never leaves your infrastructure. Deployed fully on-premises or private cloud with zero external dependency.",
-  },
-  {
-    icon: Bot,
-    title: "Autonomous AI Agents",
-    desc: "Intelligent agents that continuously discover shadow AI models, evaluate risk, and draft policy card documentation.",
-  },
-  {
-    icon: Globe,
-    title: "AI Standards Coverage",
-    desc: "Designed for leading frameworks including ISO 42001, NIST AI RMF, the EU AI Act, OECD, and UNESCO.",
-  },
-  {
-    icon: BarChart3,
-    title: "Live Governance Dashboard",
-    desc: "Track active models, bias assessments, alignment scores, and documentation readiness in real-time.",
-  },
-];
-
-const lifecycleSteps = [
-  {
-    name: "AI System Discovery",
-    desc: "We scan current stack infrastructure, repos, and model registries to map and catalog all AI systems immediately.",
-    deliverable: "Automated AI Inventory & Model Registry Map",
-  },
-  {
-    name: "Risk & Bias Assessment",
-    desc: "Our engine evaluates active AI models against bias, safety, privacy, and compliance requirements.",
-    deliverable: "Model Bias & Risk Analysis Report",
-  },
-  {
-    name: "Policy Generation",
-    desc: "Agents autonomously generate custom AI governance policies, data usage terms, and model cards.",
-    deliverable: "Secure policy documents & model cards",
-  },
-  {
-    name: "Impact Assessment",
-    desc: "Perform automated AI/Algorithmic Impact Assessments required by global legal frameworks.",
-    deliverable: "Algorithmic Impact Assessment (AIA)",
-  },
-  {
-    name: "Live Alignment Simulation",
-    desc: "Run simulations against regulations to test system behavior and compliance thresholds.",
-    deliverable: "Simulated Model Alignment Scorecard",
-  },
-  {
-    name: "Continuous Monitoring",
-    desc: "Once aligned, the system continuously logs model updates, drift indicators, and compliance trails.",
-    deliverable: "Always-on posture dashboard",
-  },
-];
-
-const complianceList = [
-  {
-    name: "ISO/IEC 42001",
-    tag: "AI Management System",
-    desc: "AI Governance — structural guidelines for managing safe and responsible AI system deployments.",
-    icon: Bot,
-    color: "teal",
-  },
-  {
-    name: "NIST AI RMF",
-    tag: "Risk Management",
-    desc: "Trustworthiness Considerations — standard protocols for assessing and mitigating AI system risks.",
-    icon: Shield,
-    color: "indigo",
-  },
-  {
-    name: "EU AI Act",
-    tag: "Legal Regulation",
-    desc: "World's First Horizontal AI Law — comprehensive legal mandates categorizing systems by risk levels.",
-    icon: Scale,
-    color: "rose",
-  },
-  {
-    name: "OECD AI Principles",
-    tag: "Global Guidance",
-    desc: "Global Trustworthy AI — international values promoting accountability, safety, and transparency.",
-    icon: Globe,
-    color: "emerald",
-  },
-  {
-    name: "UNESCO Recommendation",
-    tag: "Ethical Standard",
-    desc: "Ethical AI Framework — the first global standard-setting instrument on the ethics of AI.",
-    icon: Landmark,
-    color: "cyan",
-  },
-];
-
-const colorMap: Record<string, { bg: string; text: string; border: string; tagBg: string; tagText: string; hoverBorder: string; hoverGlow: string }> = {
-  teal: { 
-    bg: "bg-teal-500/10", 
-    text: "text-teal-400", 
-    border: "border-teal-500/20", 
-    tagBg: "bg-teal-500/10", 
-    tagText: "text-teal-400",
-    hoverBorder: "hover:border-teal-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(20,184,166,0.15)]"
-  },
-  indigo: { 
-    bg: "bg-indigo-500/10", 
-    text: "text-indigo-400", 
-    border: "border-indigo-500/20", 
-    tagBg: "bg-indigo-500/10", 
-    tagText: "text-indigo-400",
-    hoverBorder: "hover:border-indigo-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
-  },
-  rose: { 
-    bg: "bg-rose-500/10", 
-    text: "text-rose-400", 
-    border: "border-rose-500/20", 
-    tagBg: "bg-rose-500/10", 
-    tagText: "text-rose-400",
-    hoverBorder: "hover:border-rose-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(244,63,94,0.15)]"
-  },
-  emerald: { 
-    bg: "bg-emerald-500/10", 
-    text: "text-emerald-400", 
-    border: "border-emerald-500/20", 
-    tagBg: "bg-emerald-500/10", 
-    tagText: "text-emerald-400",
-    hoverBorder: "hover:border-emerald-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
-  },
-  cyan: { 
-    bg: "bg-cyan-500/10", 
-    text: "text-cyan-400", 
-    border: "border-cyan-500/20", 
-    tagBg: "bg-cyan-500/10", 
-    tagText: "text-cyan-400",
-    hoverBorder: "hover:border-cyan-500/40",
-    hoverGlow: "group-hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
-  },
-};
