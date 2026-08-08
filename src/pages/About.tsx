@@ -897,6 +897,7 @@ export default function About() {
           margin: 20px auto 0;
           color: #A9BDB8;
           font-size: 16px;
+          text-align: center !important;
         }
 
         /* problem list */
@@ -2371,7 +2372,7 @@ export default function About() {
           <div className="wrap">
             <span className="mono">The premise</span>
             <q>Most organisations are deploying AI far faster <br />than they can <span className="em">see, classify, or account for it.</span></q>
-            <p>ReguLattice closes that gap by making governance continuous, machine-assisted and audit-ready — with people still accountable for the decisions that matter.</p>
+            <p className="text-center" style={{ textAlign: "center" }}>ReguLattice closes that gap by making governance continuous, machine-assisted and audit-ready — with people still accountable for the decisions that matter.</p>
           </div>
         </section>
 
