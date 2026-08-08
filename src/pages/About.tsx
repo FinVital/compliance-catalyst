@@ -561,23 +561,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────── */}
-      {/* QUOTE BANNER (Repeated, Dark Navy Theme)                         */}
-      {/* ──────────────────────────────────────────────────────────────── */}
-      <section className="py-8 bg-[#0b1629] border-y border-[#1e293b]">
-        <div className="container mx-auto px-6 max-w-6xl text-center">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
-            <span className="text-emerald-400 text-lg md:text-xl font-serif">“</span>
-            <span className="text-base md:text-lg font-bold text-white italic tracking-wide">
-              Continuous compliance is not a static check-box; it is an active state of being.
-            </span>
-            <span className="text-emerald-400 text-lg md:text-xl font-serif">”</span>
-          </div>
-          <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2">
-            ReguLattice Principle: <span className="text-[#3ecfb2]">“The platform remains machine-executed, provable, and always-on.”</span>
-          </div>
-        </div>
-      </section>
 
       {/* ──────────────────────────────────────────────────────────────── */}
       {/* SECTION E: PRICING & BUSINESS MODEL                             */}
