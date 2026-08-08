@@ -213,6 +213,57 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
             Home
           </a>
 
+          {/* Platform Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => toggle("platform")}
+              className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors flex items-center gap-1 focus:outline-none"
+            >
+              <span>Platform</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeMenu === "platform" ? "rotate-180" : ""}`} />
+            </button>
+            <AnimatePresence>
+              {activeMenu === "platform" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute left-0 mt-2 w-48 rounded-lg bg-white border border-gray-100 shadow-xl py-1.5 z-50 text-left"
+                >
+                  <a
+                    href="https://www.regulattice.com/#features"
+                    onClick={() => setActiveMenu(null)}
+                    className="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    AI Engine
+                  </a>
+                  <a
+                    href="https://www.regulattice.com/#frameworks"
+                    onClick={() => setActiveMenu(null)}
+                    className="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Integrations
+                  </a>
+                  <a
+                    href="https://www.regulattice.com/#features"
+                    onClick={() => setActiveMenu(null)}
+                    className="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Security
+                  </a>
+                  <a
+                    href="https://www.regulattice.com/#how-it-works"
+                    onClick={() => setActiveMenu(null)}
+                    className="block px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    How It Works
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           {/* Pricing */}
           <a href="/#pricing" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
             Pricing
@@ -255,6 +306,18 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
         <div className="absolute top-16 left-0 right-0 lg:hidden bg-white border-t border-gray-100 shadow-2xl z-50 overflow-y-auto max-h-[calc(100vh-4rem)]">
           <div className="max-w-7xl mx-auto px-6 py-6 space-y-4">
             <a href="/" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Home</a>
+            
+            {/* Mobile Platform Section */}
+            <div className="py-2 border-b border-gray-100">
+              <span className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Platform</span>
+              <div className="pl-3 space-y-2.5">
+                <a href="https://www.regulattice.com/#features" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>AI Engine</a>
+                <a href="https://www.regulattice.com/#frameworks" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>Integrations</a>
+                <a href="https://www.regulattice.com/#features" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>Security</a>
+                <a href="https://www.regulattice.com/#how-it-works" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>How It Works</a>
+              </div>
+            </div>
+
             <a href="/#pricing" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Pricing</a>
             <a href="/#how-it-works" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>How It Works</a>
             <a href="/#frameworks" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Frameworks</a>
