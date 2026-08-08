@@ -674,10 +674,6 @@ export default function About() {
 
           </div>
 
-          {/* Business Metrics text */}
-          <div className="text-center py-4 text-sm font-black text-slate-500 uppercase tracking-widest max-w-4xl mx-auto">
-            75%+ Gross Margin &bull; 18.2x LTV/CAC &bull; Zero Cloud Dependency
-          </div>
 
           {/* Bottom Green CTA Banner Button */}
           <div className="mt-10 text-center">
