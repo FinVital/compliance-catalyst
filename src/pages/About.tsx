@@ -416,144 +416,114 @@ export default function About() {
       {/* SECTION D: THE AI AUTHORITY & REVERSIBILITY ENGINE MATRIX        */}
       {/* ──────────────────────────────────────────────────────────────── */}
       <section className="py-24 relative border-t border-slate-200/40">
-        <div className="container mx-auto px-6 max-w-6xl relative z-10">
+        <div className="container mx-auto px-6 max-w-5xl relative z-10">
           
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 
               className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-wider"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
               The AI Authority & Reversibility Engine Matrix
             </h2>
-            <p className="text-slate-500 text-xs mt-3 max-w-xl mx-auto">
-              Every system is evaluated on its decision delegation level and the operational reversibility of its actions.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Matrix Container Card */}
+          <div className="w-full max-w-4xl mx-auto bg-white border border-blue-200 rounded-3xl p-8 md:p-12 shadow-lg relative">
             
-            {/* Left: 2x2 Matrix with Light Mode styling */}
-            <div className="lg:col-span-8 flex flex-col items-center">
+            {/* Top Column Headers */}
+            <div className="flex justify-between mb-4 pl-12 md:pl-16 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-[#0f2e5c]">
+              <div className="w-[47%] text-center">AUTHORITY RETAINED</div>
+              <div className="w-[47%] text-center">REVERSIBLE</div>
+            </div>
+
+            {/* Main Grid with Left Vertical Labels */}
+            <div className="flex gap-4 md:gap-6">
               
-              <div className="relative w-full max-w-[480px] aspect-square flex flex-col justify-between border-l-2 border-b-2 border-slate-400 p-2 bg-white rounded-r-2xl rounded-t-2xl shadow-lg border-t border-r border-slate-100">
-                
-                {/* Y-Axis labels */}
-                <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[9px] font-black uppercase tracking-widest text-slate-400 flex gap-12">
-                  <span>DELEGATED</span>
-                  <span>AUTHORITY</span>
-                  <span>RETAINED</span>
-                </div>
-
-                {/* X-Axis labels */}
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[9px] font-black uppercase tracking-widest text-slate-400 flex gap-12">
-                  <span>REVERSIBLE</span>
-                  <span>ACTIONS</span>
-                  <span>IRREVERSIBLE</span>
-                </div>
-
-                {/* Row 1 */}
-                <div className="flex h-[48%] justify-between mb-[4%]">
-                  {/* MONITOR (Light Blue-Green Tint) */}
-                  <div className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "MONITOR" ? "border-emerald-500 bg-emerald-50/60 shadow-md" : "border-slate-200 bg-slate-50/50"}`}>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 mb-1">
-                        <Eye className="w-3.5 h-3.5" /> MONITOR
-                      </div>
-                      <div className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Retained + Reversible</div>
-                    </div>
-                    <p className="text-[10px] text-slate-600 leading-relaxed font-normal">
-                      Log all prompt histories and sample outputs. Minimal integration friction.
-                    </p>
-                  </div>
-
-                  {/* SIGN-OFF (Light Teal Tint) */}
-                  <div className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "SIGN-OFF" ? "border-teal-500 bg-teal-50/60 shadow-md" : "border-slate-200 bg-slate-50/50"}`}>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-teal-600 mb-1">
-                        <CheckCircle2 className="w-3.5 h-3.5" /> SIGN-OFF
-                      </div>
-                      <div className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Retained + Irreversible</div>
-                    </div>
-                    <p className="text-[10px] text-slate-600 leading-relaxed font-normal">
-                      A named human practitioner must sign off on prescriptions before execution.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Row 2 */}
-                <div className="flex h-[48%] justify-between">
-                  {/* GUARDRAIL (Light Green Tint) */}
-                  <div className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "GUARDRAIL" ? "border-emerald-500 bg-emerald-50/60 shadow-md" : "border-slate-200 bg-slate-50/50"}`}>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 mb-1">
-                        <Shield className="w-3.5 h-3.5" /> GUARDRAIL
-                      </div>
-                      <div className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Delegated + Reversible</div>
-                    </div>
-                    <p className="text-[10px] text-slate-600 leading-relaxed font-normal">
-                      Automated caps, circuit breakers, and verification before API submission.
-                    </p>
-                  </div>
-
-                  {/* BLOCKED (Light Rose Tint) */}
-                  <div className={`w-[48%] h-full rounded-xl p-4 flex flex-col justify-between border transition-all duration-300 ${selectedSystem.quadrant === "BLOCKED" ? "border-rose-400 bg-rose-50/65 shadow-md" : "border-slate-200 bg-slate-50/50"}`}>
-                    <div>
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-rose-600 mb-1">
-                        <AlertTriangle className="w-3.5 h-3.5" /> BLOCKED
-                      </div>
-                      <div className="text-[8px] text-slate-400 font-semibold uppercase tracking-wider">Delegated + Irreversible</div>
-                    </div>
-                    <p className="text-[10px] text-slate-600 leading-relaxed font-normal">
-                      Hard stop until authority is manually escalated and verified.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Glowing Tracer cursor node */}
+              {/* Left Vertical Labels column */}
+              <div className="w-12 md:w-16 flex flex-col justify-between shrink-0 text-[10px] md:text-xs font-black uppercase tracking-widest text-[#0f2e5c]">
+                {/* Row 1 Label: DELAUNEY / DELEGATED */}
                 <div 
-                  className="absolute w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] transition-all duration-700 ease-out z-10"
-                  style={{
-                    left: selectedSystem.quadrant === "MONITOR" || selectedSystem.quadrant === "GUARDRAIL" ? "25%" : "75%",
-                    top: selectedSystem.quadrant === "MONITOR" || selectedSystem.quadrant === "SIGN-OFF" ? "25%" : "75%",
-                    transform: "translate(-8px, -8px)"
-                  }}
-                />
+                  className="h-[47%] flex items-center justify-center border-r-2 border-slate-300 pr-2 select-none"
+                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                >
+                  DELAUNEY / DELEGATED
+                </div>
+                {/* Row 2 Label: IRREVERSIBLE */}
+                <div 
+                  className="h-[47%] flex items-center justify-center border-r-2 border-slate-300 pr-2 select-none"
+                  style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                >
+                  IRREVERSIBLE
+                </div>
+              </div>
+
+              {/* The 2x2 Quadrant Grid */}
+              <div className="flex-1 grid grid-cols-2 gap-4 md:gap-6">
+                
+                {/* Quadrant 1: MONITOR */}
+                <div className="rounded-2xl p-5 md:p-6 bg-[#f4f7fb] border border-slate-200/80 shadow-sm flex flex-col justify-between min-h-[160px] relative hover:shadow-md transition-shadow text-left">
+                  <div>
+                    <h3 className="text-sm md:text-base font-black text-slate-800 uppercase tracking-wider mb-2">MONITOR</h3>
+                    <p className="text-slate-500 text-[11px] md:text-xs leading-relaxed">
+                      Discovery spouse models enforces revenue asset; retaint and autoresation. nons to authority and assec assets.
+                    </p>
+                  </div>
+                  <div className="self-end mt-4">
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">
+                      <Eye className="w-4.5 h-4.5" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quadrant 2: SIGN-OFF */}
+                <div className="rounded-2xl p-5 md:p-6 bg-[#f4f7fb] border border-slate-200/80 shadow-sm flex flex-col justify-between min-h-[160px] relative hover:shadow-md transition-shadow text-left">
+                  <div className="absolute top-5 right-5 text-teal-500">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <div className="pr-8">
+                    <h3 className="text-sm md:text-base font-black text-slate-800 uppercase tracking-wider mb-2">SIGN-OFF</h3>
+                    <p className="text-slate-500 text-[11px] md:text-xs leading-relaxed">
+                      ReguLattice auto-discovers models, enforces assumes connection ar loriess decision boundaries.
+                    </p>
+                  </div>
+                  <div className="mt-4 h-6"></div> {/* Spacer for symmetry */}
+                </div>
+
+                {/* Quadrant 3: GUARDRAIL */}
+                <div className="rounded-2xl p-5 md:p-6 bg-[#f0fbf7] border border-emerald-100 shadow-sm flex flex-col justify-between min-h-[160px] relative hover:shadow-md transition-shadow text-left">
+                  <div className="absolute top-5 right-5 text-emerald-600">
+                    <Settings className="w-6 h-6" />
+                  </div>
+                  <div className="pr-8">
+                    <h3 className="text-sm md:text-base font-black text-slate-800 uppercase tracking-wider mb-2">GUARDRAIL</h3>
+                    <p className="text-slate-500 text-[11px] md:text-xs leading-relaxed">
+                      Dotalsrate marouriontion needeii to garirdeate recording on vontoct algorithm and authority boundarylaty.
+                    </p>
+                  </div>
+                  <div className="mt-4 h-6"></div>
+                </div>
+
+                {/* Quadrant 4: BLOCKED */}
+                <div className="rounded-2xl p-5 md:p-6 bg-[#fff2f2] border border-rose-100 shadow-sm flex flex-col justify-between min-h-[160px] relative hover:shadow-md transition-shadow text-left">
+                  <div className="absolute top-5 left-5 text-rose-600">
+                    <AlertTriangle className="w-6 h-6" />
+                  </div>
+                  <div className="pl-8">
+                    <h3 className="text-sm md:text-base font-black text-rose-700 uppercase tracking-wider mb-2">BLOCKED</h3>
+                    <p className="text-slate-600 text-[11px] md:text-xs leading-relaxed">
+                      Blocked auto acrnse monitors of authority modele and assecnt towns accounting to assorseilie peilnology.
+                    </p>
+                  </div>
+                  <div className="mt-4 h-6"></div>
+                </div>
 
               </div>
 
             </div>
 
-            {/* Right: System selector tracer */}
-            <div className="lg:col-span-4 text-left">
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-6">
-                <div>
-                  <h4 className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3">System Tracer</h4>
-                  <div className="flex flex-col gap-2.5">
-                    {mockSystems.map((s) => (
-                      <button
-                        key={s.id}
-                        onClick={() => setSelectedSystemId(s.id)}
-                        className={`w-full text-left px-4 py-3 rounded-xl border text-xs font-semibold tracking-wide transition-all ${selectedSystemId === s.id ? "bg-emerald-600 text-white border-emerald-600 font-bold" : "bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300"}`}
-                      >
-                        {s.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-5 border-t border-slate-200 space-y-3">
-                  <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Enforced Control strategy:</div>
-                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span>{selectedSystem.quadrant} Pack Control</span>
-                    </div>
-                    <p className="text-[11px] text-slate-500 leading-relaxed font-normal">
-                      {selectedSystem.control}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {/* Bottom Row Header */}
+            <div className="mt-4 pl-12 md:pl-16 text-center text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-[#0f2e5c]">
+              REVERSIBLE
             </div>
 
           </div>
