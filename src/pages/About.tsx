@@ -3126,7 +3126,7 @@ export default function About() {
               <p className="foot-about">An AI-native governance platform. We help organisations see, govern and prove their AI — continuously, with humans accountable for the decisions that matter.</p>
               <div className="foot-contact">
                 <span>Karachi, Pakistan</span>
-                <a href="mailto:hello@regulattice.com">hello@regulattice.com</a>
+                <a href="mailto:info@regulattice.com">info@regulattice.com</a>
                 <div style={{ marginTop: "10px", display: "flex", gap: "12px" }}>
                   <a href="https://www.linkedin.com/company/regulattice/" target="_blank" rel="noopener noreferrer" style={{ color: "#7FD9C4" }}>LinkedIn</a>
                   <span style={{ color: "#7F9490" }}>·</span>
