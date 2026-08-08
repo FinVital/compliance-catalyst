@@ -1745,12 +1745,13 @@ export default function About() {
           color: var(--slate-2);
         }
         .plans-note {
-          margin-top: 22px;
-          text-align: center;
-          font-size: 14.6px;
-          color: var(--slate);
-          max-width: 760px;
-          margin-inline: auto;
+          margin-top: 22px !important;
+          text-align: center !important;
+          font-size: 14.6px !important;
+          color: var(--slate) !important;
+          max-width: 760px !important;
+          margin-inline: auto !important;
+          display: block !important;
         }
         .shared {
           margin-top: 20px;
@@ -3001,7 +3002,7 @@ export default function About() {
               </div>
             </div>
 
-            <p className="plans-note">Starter gets you a real inventory and your first framework. Pro is where governance becomes continuous. Enterprise is for when the data can't leave the building.</p>
+            <p className="plans-note text-center" style={{ textAlign: "center", margin: "22px auto 0", display: "block" }}>Starter gets you a real inventory and your first framework. Pro is where governance becomes continuous. Enterprise is for when the data can't leave the building.</p>
             <div className="shared">
               <span>Seat-based access with role permissions</span>
               <span>Continuous product updates</span>
