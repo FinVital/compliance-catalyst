@@ -114,7 +114,7 @@ export default function About() {
   return (
     <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site">
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Newsreader:ital,wght@0,300..700;1,300..700&family=IBM+Plex+Mono:ital,wght@0,300..700;1,300..700&display=swap');
 
         body, #root {
           background: #F6F7F5 !important;
@@ -134,21 +134,26 @@ export default function About() {
         .regulattice-site h3,
         .regulattice-site h4,
         .regulattice-site p,
-        .regulattice-site span,
         .regulattice-site a,
         .regulattice-site button,
         .regulattice-site td,
         .regulattice-site th,
         .regulattice-site div {
-          font-family: inherit;
+          font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif !important;
         }
 
-        .regulattice-site .em {
+        .regulattice-site span:not(.em):not(.mono) {
+          font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        .regulattice-site .em,
+        .regulattice-site em {
           font-family: "Newsreader", Georgia, serif !important;
           font-style: italic !important;
         }
 
-        .regulattice-site .mono {
+        .regulattice-site .mono,
+        .regulattice-site code {
           font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
         }
 
