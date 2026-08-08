@@ -152,6 +152,28 @@ export default function About() {
           font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
         }
 
+        .regulattice-site h1 {
+          font-weight: 800 !important;
+        }
+        .regulattice-site h2,
+        .regulattice-site h3,
+        .regulattice-site h4,
+        .regulattice-site strong {
+          font-weight: 700 !important;
+        }
+        .regulattice-site b {
+          font-weight: 800 !important;
+        }
+        .regulattice-site th,
+        .regulattice-site .btn,
+        .regulattice-site .strip-item,
+        .regulattice-site .opt.sel,
+        .regulattice-site .score-band,
+        .regulattice-site .faq summary,
+        .regulattice-site .q-label p {
+          font-weight: 600 !important;
+        }
+
         /* ============================================================
            ReguLattice — design tokens
            Palette: petrol navy ink, pale archival paper, brand teal,
