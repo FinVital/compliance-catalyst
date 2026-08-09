@@ -262,6 +262,13 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
                   >
                     How It Works
                   </a>
+                  <a
+                    href="/solutions/iso-42001-compliance-software"
+                    onClick={() => setActiveMenu(null)}
+                    className="block px-4 py-2 text-xs font-bold text-[#0E7C6B] hover:bg-gray-50 transition-colors"
+                  >
+                    ISO 42001 Software
+                  </a>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -323,6 +330,7 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
                 <a href="https://www.regulattice.com/#frameworks" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>Integrations</a>
                 <a href="https://www.regulattice.com/#features" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>Security</a>
                 <a href="https://www.regulattice.com/#how-it-works" className="block text-sm font-medium text-gray-700" onClick={() => setMobileOpen(false)}>How It Works</a>
+                <a href="/solutions/iso-42001-compliance-software" className="block text-sm font-bold text-[#0E7C6B]" onClick={() => setMobileOpen(false)}>ISO 42001 Software</a>
               </div>
             </div>
 

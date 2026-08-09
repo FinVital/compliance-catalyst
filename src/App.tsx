@@ -14,6 +14,7 @@ const Contact = lazy(() => import("./pages/Contact.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 const Pillar = lazy(() => import("./pages/ai-governance/Pillar.tsx"));
 const Subtopic = lazy(() => import("./pages/ai-governance/Subtopic.tsx"));
+const Iso42001ComplianceSoftware = lazy(() => import("./pages/solutions/Iso42001ComplianceSoftware.tsx"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -35,6 +36,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<About />} />
             <Route path="/solutions" element={<Index />} />
+            <Route path="/solutions/iso-42001-compliance-software" element={<Iso42001ComplianceSoftware />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
