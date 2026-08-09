@@ -23,7 +23,7 @@ export default function Pillar() {
     }
   };
 
-  const schema = {
+  const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "AI Governance and Compliance Resource Hub",
@@ -36,12 +36,31 @@ export default function Pillar() {
     }))
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.regulattice.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Governance Hub",
+        "item": "https://www.regulattice.com/ai-governance"
+      }
+    ]
+  };
+
   return (
     <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site min-h-screen flex flex-col justify-between">
       <SEO 
         title="AI Governance & Compliance Hub | ISO 42001, NIST, EU AI Act Guides"
         description="Access comprehensive guides on ISO/IEC 42001, NIST AI Risk Management Framework, and the EU AI Act compliance. Discover shadow AI, manage risk, and automate audits."
-        schema={schema}
+        schema={[collectionSchema, breadcrumbSchema]}
       />
       
       <Navbar onBooking={() => {}} onContact={() => {}} />

@@ -62,13 +62,38 @@ export default function Iso42001ComplianceSoftware() {
     }
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.regulattice.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Governance Hub",
+        "item": "https://www.regulattice.com/ai-governance"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "ISO 42001 Compliance Software",
+        "item": "https://www.regulattice.com/solutions/iso-42001-compliance-software"
+      }
+    ]
+  };
+
   return (
     <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site min-h-screen flex flex-col justify-between">
       <SEO 
         title="ISO 42001 Compliance Software | Continuous AIMS Audit Automation"
         description="Automate your Artificial Intelligence Management System (AIMS) with ReguLattice ISO 42001 compliance software. Discover shadow AI, map controls, and collect audit evidence."
         canonicalPath="/solutions/iso-42001-compliance-software"
-        schema={[faqSchema, productSchema]}
+        schema={[faqSchema, productSchema, breadcrumbSchema]}
       />
 
       <Navbar onBooking={() => {}} onContact={() => {}} />

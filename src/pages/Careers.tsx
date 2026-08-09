@@ -31,12 +31,32 @@ export default function Careers() {
       <SEO 
         title="Careers at ReguLattice | Join the Next-Gen AI GRC Platform Team"
         description="Join the ReguLattice team. Explore open roles in AI, Software Engineering, and GRC compliance automation."
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          "name": "ReguLattice Careers",
-          "description": "Join our mission to secure sovereign trust and continuous automated compliance for enterprise AI deployments."
-        }}
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "ReguLattice Careers",
+            "description": "Join our mission to secure sovereign trust and continuous automated compliance for enterprise AI deployments."
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.regulattice.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Careers",
+                "item": "https://www.regulattice.com/careers"
+              }
+            ]
+          }
+        ]}
       />
       <Navbar onBooking={openBooking} onContact={openContact} />
 

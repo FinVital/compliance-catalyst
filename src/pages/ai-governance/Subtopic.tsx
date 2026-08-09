@@ -25,7 +25,7 @@ export default function Subtopic() {
 
   const allArticles = Object.values(articlesData);
 
-  const schema = {
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": article.schemaType === "HowTo" ? "HowTo" : "Article",
     "mainEntityOfPage": {
@@ -49,13 +49,38 @@ export default function Subtopic() {
     "datePublished": "2026-08-09"
   };
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.regulattice.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Governance Hub",
+        "item": "https://www.regulattice.com/ai-governance"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": article.breadcrumbName,
+        "item": `https://www.regulattice.com/ai-governance/${article.slug}`
+      }
+    ]
+  };
+
   return (
     <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site min-h-screen flex flex-col justify-between">
       <SEO 
         title={`${article.title} | ReguLattice`}
         description={article.description}
         canonicalPath={`/ai-governance/${article.slug}`}
-        schema={schema}
+        schema={[articleSchema, breadcrumbSchema]}
       />
       
       <Navbar onBooking={() => {}} onContact={() => {}} />

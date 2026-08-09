@@ -84,13 +84,33 @@ export default function Contact() {
       <SEO 
         title="Contact ReguLattice | AI-Native Governance Platform Support"
         description="Get in touch with the ReguLattice AI governance support team, book a demonstration, or reach out with inquiries."
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "ContactPage",
-          "name": "Contact ReguLattice",
-          "description": "Get in touch with the ReguLattice AI governance support team, book a demonstration, or reach out with inquiries.",
-          "url": "https://www.regulattice.com/contact"
-        }}
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact ReguLattice",
+            "description": "Get in touch with the ReguLattice AI governance support team, book a demonstration, or reach out with inquiries.",
+            "url": "https://www.regulattice.com/contact"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.regulattice.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Contact",
+                "item": "https://www.regulattice.com/contact"
+              }
+            ]
+          }
+        ]}
       />
       <Navbar onBooking={openBooking} onContact={() => setContactModalOpen(true)} />
 
