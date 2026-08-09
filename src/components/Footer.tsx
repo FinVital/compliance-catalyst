@@ -38,6 +38,9 @@ const Footer = ({ onContact }: FooterProps) => (
                 src="/logo.jpg" 
                 alt="ReguLattice Shield Logo" 
                 className="w-full h-full object-cover"
+                loading="lazy"
+                width={40}
+                height={40}
               />
             </div>
             <span className="text-white font-bold text-xl tracking-tight">ReguLattice</span>

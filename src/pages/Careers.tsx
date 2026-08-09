@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import ContactFormModal from "@/components/ContactFormModal";
 
 export default function Careers() {
@@ -27,6 +28,16 @@ export default function Careers() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col justify-between">
+      <SEO 
+        title="Careers at ReguLattice | Join the Next-Gen AI GRC Platform Team"
+        description="Join the ReguLattice team. Explore open roles in AI, Software Engineering, and GRC compliance automation."
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "ReguLattice Careers",
+          "description": "Join our mission to secure sovereign trust and continuous automated compliance for enterprise AI deployments."
+        }}
+      />
       <Navbar onBooking={openBooking} onContact={openContact} />
 
       {/* Centered Coming Soon message */}

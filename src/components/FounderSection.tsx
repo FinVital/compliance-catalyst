@@ -47,6 +47,9 @@ const FounderSection = () => (
                   alt="Moazzam Waheed, Founder & CEO"
                   className="relative w-36 h-36 rounded-full object-cover ring-4"
                   style={{ ringColor: "rgba(30,64,175,0.3)" }}
+                  loading="lazy"
+                  width={144}
+                  height={144}
                 />
               </div>
               <p className="font-bold text-white text-lg text-center">Moazzam Waheed</p>

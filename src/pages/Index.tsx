@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import IntegrationStrip from "@/components/IntegrationStrip";
@@ -100,6 +101,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="ReguLattice AI Solutions — Enterprise GRC & Compliance Frameworks"
+        description="Explore the ReguLattice GRC solutions. Automate risk mapping, continuous evidence collection, and alignment for ISO 42001, NIST AI RMF, and the EU AI Act."
+      />
       <Navbar onBooking={openBooking} onContact={openContact} />
       {/* Hero — dark navy */}
       <Hero onBooking={openBooking} onContact={openContact} />

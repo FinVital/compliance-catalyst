@@ -167,6 +167,9 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
                 src="/logo.jpg" 
                 alt="ReguLattice Shield Logo" 
                 className="logo-image"
+                loading="lazy"
+                width={40}
+                height={40}
               />
               <div className="sheen" />
               <div className="radar-ring" />

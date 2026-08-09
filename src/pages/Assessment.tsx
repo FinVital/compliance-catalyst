@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2, Clock, Activity, ShieldAlert, Users, Loader2 } from "lucide-react";
+import SEO from "@/components/SEO";
 import { initPixel, trackPageview, trackPixelEvent } from "@/lib/pixels";
 import { initGA, trackGAPageview, trackGAEvent } from "@/lib/google-analytics";
 
@@ -142,6 +143,10 @@ const Assessment = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-teal-500/30">
+      <SEO 
+        title="Free AI Governance Assessment | ReguLattice Platform"
+        description="Take the free 60-second AI Governance Assessment. Evaluate your readiness across ISO 42001, NIST AI RMF, and the EU AI Act."
+      />
       {/* Simple Header */}
       <header className="border-b border-slate-200 bg-white">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">

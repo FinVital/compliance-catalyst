@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import ContactFormModal from "@/components/ContactFormModal";
 import { 
   Send, User, Mail, Building2, Phone, MessageSquare, 
@@ -80,6 +81,17 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-[#0d111c] text-white flex flex-col justify-between overflow-x-hidden" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <SEO 
+        title="Contact ReguLattice | AI-Native Governance Platform Support"
+        description="Get in touch with the ReguLattice AI governance support team, book a demonstration, or reach out with inquiries."
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact ReguLattice",
+          "description": "Get in touch with the ReguLattice AI governance support team, book a demonstration, or reach out with inquiries.",
+          "url": "https://www.regulattice.com/contact"
+        }}
+      />
       <Navbar onBooking={openBooking} onContact={() => setContactModalOpen(true)} />
 
       <style>{`

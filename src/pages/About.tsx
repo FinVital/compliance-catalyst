@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import SEO from "@/components/SEO";
 
 export default function About() {
   const [isStuck, setIsStuck] = useState(false);
@@ -111,8 +112,120 @@ export default function About() {
     }
   };
 
+  const seoSchema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "ReguLattice AI Governance Platform",
+      "description": "An AI-native governance platform that discovers, governs, and evidences AI systems continuously across ISO/IEC 42001, NIST AI RMF, and the EU AI Act.",
+      "brand": {
+        "@type": "Brand",
+        "name": "ReguLattice"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "79",
+        "highPrice": "349",
+        "offerCount": "3"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long until we see our first real inventory?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most teams connect their first sources and see a populated inventory in the same session. A full sweep across cloud, SaaS and code typically settles within the first week, and classification follows as owners confirm what the agents propose."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does ReguLattice replace our auditor or consultant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. It replaces the six weeks of evidence gathering that happens before they arrive. Auditors and advisory firms use the partner mode to work inside the same workspace, which is usually faster for everyone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What actually runs on our infrastructure in on-premise mode?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both containers — the governance core and the agent runtime — plus private inference for the language models the agents use. Nothing about your models, evidence or findings egresses your network."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "We already have ISO 27001 and SOC 2. Isn't this covered?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Those cover how you protect information, not how you govern AI decisions. ISO/IEC 42001 and the EU AI Act ask different questions: intended purpose, risk tier, human oversight, transparency, and what happens when a model drifts. ReguLattice is built for that second set."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can we start with one framework and add more later?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and that's the usual path. Because everything maps to a single control library, adding the EU AI Act or ISO 23894 later shows you existing coverage immediately rather than starting you at zero."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much of this is automated versus human?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Agents do the finding, mapping, collecting and watching. People decide. Autonomy is configurable per agent, and any irreversible high-impact action requires a named approver before it executes."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "AI Governance Lifecycle Process",
+      "description": "How to implement continuous AI governance from discovery to audit-ready compliance using ReguLattice.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Discover: Find it all",
+          "text": "Connect your cloud, SaaS, code and network sources. The inventory populates itself, including systems nobody declared."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Assess: Tier the risk",
+          "text": "Each system gets a purpose, an owner, a risk tier and its regulatory scope — agent-assisted, confirmed by a human."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Govern: Apply controls",
+          "text": "Required controls, policies and decision boundaries are applied across every framework in scope simultaneously."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Monitor: Watch for change",
+          "text": "Drift, retraining, policy breaches and expiring evidence raise alerts and land on a remediation board with an owner."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Improve: Close the gap",
+          "text": "Maturity and gap reporting shows what moved, what regressed, and what to fix next — then the loop restarts."
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="bg-[#F6F7F5] text-[#0B1F2A] regulattice-site">
+      <SEO 
+        title="ReguLattice — AI-Native Governance Platform | ISO/IEC 42001, NIST AI RMF, EU AI Act"
+        description="ReguLattice discovers every AI system you run — including shadow AI — then governs and evidences it continuously across ISO/IEC 42001, NIST AI RMF and the EU AI Act. Cloud or fully on-premise."
+        schema={seoSchema}
+      />
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Newsreader:ital,wght@0,300..700;1,300..700&family=IBM+Plex+Mono:ital,wght@0,300..700;1,300..700&display=swap');
 
