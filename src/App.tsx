@@ -12,6 +12,8 @@ const About = lazy(() => import("./pages/About.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const Contact = lazy(() => import("./pages/Contact.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const Pillar = lazy(() => import("./pages/ai-governance/Pillar.tsx"));
+const Subtopic = lazy(() => import("./pages/ai-governance/Subtopic.tsx"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -37,6 +39,8 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/ai-governance" element={<Pillar />} />
+            <Route path="/ai-governance/:slug" element={<Subtopic />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

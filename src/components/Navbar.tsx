@@ -281,6 +281,11 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
           <a href="/#frameworks" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
             Frameworks
           </a>
+
+          {/* AI Governance Hub */}
+          <a href="/ai-governance" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-[#0E7C6B] hover:text-[#07463D] hover:bg-gray-50 rounded-md transition-colors font-semibold">
+            Governance Hub
+          </a>
         </nav>
 
         {/* Right buttons */}
@@ -324,6 +329,7 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
             <a href="/#pricing" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Pricing</a>
             <a href="/#how-it-works" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>How It Works</a>
             <a href="/#frameworks" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Frameworks</a>
+            <a href="/ai-governance" className="block text-sm font-semibold text-[#0E7C6B] py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>AI Governance Hub</a>
             <a href="/careers" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Careers & Openings</a>
             {onContact && (
               <button 
