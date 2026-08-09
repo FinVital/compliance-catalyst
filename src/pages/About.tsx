@@ -893,11 +893,12 @@ export default function About() {
           margin-top: 22px;
         }
         .insight p {
-          max-width: 640px;
-          margin: 20px auto 0;
-          color: #A9BDB8;
-          font-size: 16px;
+          max-width: 640px !important;
+          margin: 20px auto 0 !important;
+          color: #A9BDB8 !important;
+          font-size: 16px !important;
           text-align: center !important;
+          display: block !important;
         }
 
         /* problem list */
@@ -2372,7 +2373,7 @@ export default function About() {
           <div className="wrap">
             <span className="mono">The premise</span>
             <q>Most organisations are deploying AI far faster <br />than they can <span className="em">see, classify, or account for it.</span></q>
-            <p className="text-center" style={{ textAlign: "center" }}>ReguLattice closes that gap by making governance continuous, machine-assisted and audit-ready — with people still accountable for the decisions that matter.</p>
+            <p className="text-center mx-auto" style={{ textAlign: "center", margin: "20px auto 0", display: "block", maxWidth: "640px" }}>ReguLattice closes that gap by making governance continuous, machine-assisted and audit-ready — with people still accountable for the decisions that matter.</p>
           </div>
         </section>
 
