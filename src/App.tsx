@@ -15,6 +15,7 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 const Pillar = lazy(() => import("./pages/ai-governance/Pillar.tsx"));
 const Subtopic = lazy(() => import("./pages/ai-governance/Subtopic.tsx"));
 const Iso42001ComplianceSoftware = lazy(() => import("./pages/solutions/Iso42001ComplianceSoftware.tsx"));
+const RoiCalculator = lazy(() => import("./pages/resources/RoiCalculator.tsx"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/resources/roi-calculator" element={<RoiCalculator />} />
             <Route path="/ai-governance" element={<Pillar />} />
             <Route path="/ai-governance/:slug" element={<Subtopic />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
