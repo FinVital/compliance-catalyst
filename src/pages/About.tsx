@@ -270,7 +270,7 @@ export default function About() {
         @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Newsreader:ital,wght@0,300..700;1,300..700&family=IBM+Plex+Mono:ital,wght@0,300..700;1,300..700&display=swap');
 
         body, #root {
-          background: #F6F7F5 !important;
+          background: #F7F9FB !important;
         }
 
         .regulattice-site {
@@ -279,7 +279,7 @@ export default function About() {
           line-height: 1.6 !important;
           letter-spacing: -0.005em !important;
           color: #0B1F2A !important;
-          background: #F6F7F5 !important;
+          background: #F7F9FB !important;
         }
 
         .regulattice-site h1,
@@ -379,9 +379,9 @@ export default function About() {
            logo mint. Signal amber/rust reserved for the authority matrix.
            ============================================================ */
         :root {
-          --navy: #0B1F2A;
+          --navy: #0F2233;
           --navy-2: #123240;
-          --paper: #F6F7F5;
+          --paper: #F7F9FB;
           --white: #FFFFFF;
           --mint: #E4EFEA;
           --mint-2: #F1F7F4;
@@ -428,9 +428,10 @@ export default function About() {
         .sec {
           padding: clamp(74px, 8.5vw, 124px) 0;
           position: relative;
+          background: #F7F9FB;
         }
         .sec--white {
-          background: var(--white);
+          background: #FFFFFF;
           border-block: 1px solid var(--line);
         }
         .sec--mint {
@@ -438,11 +439,59 @@ export default function About() {
           border-block: 1px solid #DCE8E2;
         }
         .sec--dark {
-          background: var(--navy);
+          background-color: #0F2233;
+          background-image: 
+            linear-gradient(rgba(14, 124, 107, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(14, 124, 107, 0.05) 1px, transparent 1px);
+          background-size: 36px 36px;
+          background-position: center;
           color: #EAF1EE;
+          position: relative;
+        }
+        .sec--dark::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 50%, rgba(14, 124, 107, 0.1) 0%, transparent 70%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        .sec--dark h2,
+        .sec--dark h3,
+        .sec--dark h4 {
+          color: #FFFFFF !important;
+        }
+        .sec--dark .lead {
+          color: #A9BDB8 !important;
+        }
+        .sec--dark .eyebrow {
+          color: #7FD9C4 !important;
         }
         .sec--tight {
           padding-block: clamp(56px, 6vw, 86px);
+        }
+
+        /* Hero radial glow with animation */
+        .hero {
+          background: #F7F9FB;
+          position: relative;
+          overflow: hidden;
+        }
+        @keyframes softGlowFade {
+          0% { opacity: 0; transform: scale(0.9) translate(-50px, -50px); }
+          100% { opacity: 1; transform: scale(1) translate(0, 0); }
+        }
+        .hero::before {
+          content: "";
+          position: absolute;
+          width: 900px;
+          height: 900px;
+          top: -150px;
+          left: -150px;
+          background: radial-gradient(circle, rgba(8, 145, 178, 0.05) 0%, transparent 70%);
+          pointer-events: none;
+          z-index: 0;
+          animation: softGlowFade 5s ease-out forwards;
         }
 
         /* section heading block */
@@ -1176,6 +1225,7 @@ export default function About() {
           padding: 22px;
           display: flex;
           flex-direction: column;
+          box-shadow: var(--shadow-1);
           transition: .25s var(--ease);
         }
         .agent:hover {
@@ -1423,11 +1473,12 @@ export default function About() {
         .fw h3 {
           font-size: 16.5px;
           letter-spacing: -.02em;
+          color: #0F2233 !important;
         }
         .fw p {
           grid-column: 2;
           font-size: 14.2px;
-          color: var(--slate);
+          color: var(--slate) !important;
           line-height: 1.55;
         }
         .map {
@@ -1437,6 +1488,7 @@ export default function About() {
           border-radius: var(--r);
           padding: clamp(24px, 3vw, 38px);
           text-align: center;
+          color: #0F2233 !important;
         }
         .map-node {
           display: inline-block;
@@ -1457,6 +1509,7 @@ export default function About() {
           letter-spacing: -.02em;
           line-height: 1.4;
           display: block;
+          color: #0F2233 !important;
         }
         .map-stem {
           width: 1px;
@@ -1495,6 +1548,7 @@ export default function About() {
           font-weight: 500;
           background: var(--white);
           position: relative;
+          color: #0F2233 !important;
         }
         .chip::before {
           content: "";
@@ -1510,7 +1564,7 @@ export default function About() {
           margin-top: 24px;
           font-style: normal;
           font-size: 14.5px;
-          color: var(--slate);
+          color: var(--slate) !important;
         }
 
         /* ---------- capabilities ---------- */
@@ -1793,6 +1847,7 @@ export default function About() {
           padding: 28px;
           display: flex;
           flex-direction: column;
+          box-shadow: var(--shadow-1);
           transition: .25s var(--ease);
         }
         .plan:hover {
@@ -2531,7 +2586,7 @@ export default function About() {
         </section>
 
         {/* ============ PROBLEM ============ */}
-        <section className="sec" id="problem">
+        <section className="sec sec--white" id="problem">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Why now</span>
@@ -2580,7 +2635,7 @@ export default function About() {
         </section>
 
         {/* ============ FLYWHEEL ============ */}
-        <section className="sec sec--white">
+        <section className="sec">
           <div className="wrap">
             <div className="head head--center">
               <span class="eyebrow mono">The model</span>
@@ -2610,7 +2665,7 @@ export default function About() {
         </section>
 
         {/* ============ 7 AGENTS ============ */}
-        <section class="sec" id="agents">
+        <section className="sec sec--white" id="agents">
           <div className="wrap">
             <div className="head head--center">
               <span className="eyebrow mono">The platform</span>
@@ -2697,7 +2752,7 @@ export default function About() {
         </section>
 
         {/* ============ AUTHORITY & REVERSIBILITY ============ */}
-        <section className="sec sec--white" id="authority">
+        <section className="sec" id="authority">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">The differentiator</span>
@@ -2747,7 +2802,7 @@ export default function About() {
         </section>
 
         {/* ============ HOW IT WORKS ============ */}
-        <section className="sec">
+        <section className="sec sec--white">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">How it works</span>
@@ -2789,7 +2844,7 @@ export default function About() {
         </section>
 
         {/* ============ FRAMEWORKS ============ */}
-        <section className="sec sec--mint" id="frameworks">
+        <section className="sec sec--dark" id="frameworks">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Coverage</span>
@@ -2866,7 +2921,7 @@ export default function About() {
         </section>
 
         {/* ============ TRUST & DEPLOYMENT ============ */}
-        <section className="sec sec--mint">
+        <section className="sec">
           <div className="wrap trust text-left">
             <div>
               <span className="eyebrow mono">Trust &amp; deployment</span>
@@ -2890,7 +2945,7 @@ export default function About() {
         </section>
 
         {/* ============ READINESS SNAPSHOT ============ */}
-        <section className="sec" id="snapshot">
+        <section className="sec sec--white" id="snapshot">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Free · 60 seconds · no login</span>
@@ -3076,7 +3131,7 @@ export default function About() {
         </section>
 
         {/* ============ PRICING ============ */}
-        <section className="sec sec--white" id="pricing">
+        <section className="sec" id="pricing">
           <div className="wrap">
             <div className="head head--center">
               <span className="eyebrow mono">Pricing</span>
@@ -3175,7 +3230,7 @@ export default function About() {
         </section>
 
         {/* ============ COMPETITIVE ============ */}
-        <section className="sec">
+        <section className="sec sec--dark">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Where we sit</span>
