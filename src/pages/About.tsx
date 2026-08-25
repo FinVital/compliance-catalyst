@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import SEO from "@/components/SEO";
+import { initPixel, trackPageview, trackPixelEvent } from "@/lib/pixels";
+import { initGA, trackGAPageview, trackGAEvent } from "@/lib/google-analytics";
 
 export default function About() {
   const [isStuck, setIsStuck] = useState(false);
@@ -27,6 +29,19 @@ export default function About() {
     {min:65, label:'Managed',       copy:'You are governing deliberately. The remaining gaps are usually monitoring between reviews and a defensible record of who authorised what.'},
     {min:85, label:'Audit-ready',   copy:'Strong position. Focus now shifts to proving it on demand across multiple frameworks, and to authority and reversibility for your highest-impact systems.'}
   ];
+
+  // Initialize tracking on mount
+  useEffect(() => {
+    initPixel();
+    trackPageview();
+    initGA();
+    trackGAPageview();
+  }, []);
+
+  const handleConversionClick = (section: string, action: string, label: string) => {
+    trackPixelEvent("ClickCTA", { section, action, label });
+    trackGAEvent("click_cta", { section, action, label });
+  };
 
   // stuck nav on scroll
   useEffect(() => {
@@ -98,6 +113,18 @@ export default function About() {
     e.preventDefault();
     if (quizFormRef.current && quizFormRef.current.checkValidity()) {
       setQuizSent(true);
+      trackPixelEvent("CompleteRegistration", { 
+        category: "Readiness Assessment",
+        label: "Quiz Submission",
+        name: quizName,
+        email: quizEmail,
+        score: pct
+      });
+      trackGAEvent("submit_readiness_assessment", {
+        category: "Readiness Assessment",
+        label: "Quiz Submission",
+        score: pct
+      });
     } else if (quizFormRef.current) {
       quizFormRef.current.reportValidity();
     }
@@ -107,6 +134,19 @@ export default function About() {
     e.preventDefault();
     if (demoFormRef.current && demoFormRef.current.checkValidity()) {
       setDemoSent(true);
+      trackPixelEvent("Lead", { 
+        category: "Demo Booking",
+        label: "Demo Submit Form",
+        name: demoName,
+        email: demoEmail,
+        company: demoCompany,
+        role: demoRole,
+        systems: demoSystems
+      });
+      trackGAEvent("submit_demo", {
+        category: "Demo Booking",
+        label: "Demo Submit Form"
+      });
     } else if (demoFormRef.current) {
       demoFormRef.current.reportValidity();
     }
@@ -2369,8 +2409,8 @@ export default function About() {
             <a href="#pricing">Pricing</a>
           </nav>
           <div className="nav-cta">
-            <a className="btn btn--ghost" href="#snapshot">Check my readiness</a>
-            <a class="btn btn--pri" href="#demo">Book a demo</a>
+            <a className="btn btn--ghost" href="#snapshot" onClick={() => handleConversionClick("HeaderNav", "free_scan", "Header Check Readiness")}>Check my readiness</a>
+            <a className="btn btn--pri" href="#demo" onClick={() => handleConversionClick("HeaderNav", "book_a_demo", "Header Book Demo")}>Book a demo</a>
           </div>
           <button 
             className="burger" 
@@ -2388,7 +2428,7 @@ export default function About() {
           <a href="#authority" onClick={() => setMobileOpen(false)}>Authority Engine</a>
           <a href="#frameworks" onClick={() => setMobileOpen(false)}>Frameworks</a>
           <a href="#pricing" onClick={() => setMobileOpen(false)}>Pricing</a>
-          <a className="btn btn--pri btn--wide" href="#demo" onClick={() => setMobileOpen(false)}>Book a demo</a>
+          <a className="btn btn--pri btn--wide" href="#demo" onClick={() => { setMobileOpen(false); handleConversionClick("MobileNav", "book_a_demo", "Mobile Book Demo"); }}>Book a demo</a>
         </div>
       </header>
 
@@ -2407,8 +2447,8 @@ export default function About() {
               </div>
 
               <div className="btn-row">
-                <a className="btn btn--pri" href="#demo">Book a 20-minute demo <svg className="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
-                <a className="btn btn--ghost" href="#snapshot">Score my AI governance in 60 seconds</a>
+                <a className="btn btn--pri" href="#demo" onClick={() => handleConversionClick("Hero", "book_a_demo", "Hero Primary Demo")}>Book a 20-minute demo <svg className="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
+                <a className="btn btn--ghost" href="#snapshot" onClick={() => handleConversionClick("Hero", "free_scan", "Hero Secondary Scan")}>Score my AI governance in 60 seconds</a>
               </div>
 
               <div className="microtrust">
@@ -2742,6 +2782,9 @@ export default function About() {
                 <p>Maturity and gap reporting shows what moved, what regressed, and what to fix next — then the loop restarts.</p>
               </div>
             </div>
+            <div className="btn-row mt-8 text-left">
+              <a className="btn btn--pri" href="#snapshot" onClick={() => handleConversionClick("HowItWorks", "free_scan", "HowItWorks Take Assessment")}>Take the 2-minute readiness assessment</a>
+            </div>
           </div>
         </section>
 
@@ -3022,7 +3065,7 @@ export default function About() {
                     onChange={(e) => setQuizEmail(e.target.value)}
                   />
                   <button className="btn btn--onDark btn--wide" type="submit" disabled={quizSent}>
-                    {quizSent ? "Sent" : "Send me the full gap report"}
+                    {quizSent ? "Sent" : "Get your full readiness report"}
                   </button>
                   <p className="score-hint">We'll email a breakdown of the gaps behind your score. No spam, and you can opt out in one click.</p>
                   <p className={`ok-msg ${quizSent ? "show" : ""}`} id="snapOk">Thanks — your gap report is on its way. We'll follow up within one working day.</p>
@@ -3048,7 +3091,7 @@ export default function About() {
                 <p className="plan-for">For startups and small teams getting AI governance off the ground.</p>
                 <div className="price"><b>$79</b><span>/ month</span></div>
                 <p className="price-note">Cloud-hosted · self-serve</p>
-                <a className="btn btn--ghost btn--wide" href="#demo">Start free trial</a>
+                <a className="btn btn--ghost btn--wide" href="#snapshot" onClick={() => handleConversionClick("Pricing", "free_scan", "Pricing Starter Scan")}>Start free scan</a>
                 <span className="feat-title mono">Includes</span>
                 <ul className="feats">
                   <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>Up to 5 AI systems in the Inventory</li>
@@ -3075,7 +3118,7 @@ export default function About() {
                 <p className="plan-for">For growing companies with real AI in production and audit pressure on the calendar.</p>
                 <div className="price"><b>$219</b><span>/ month</span></div>
                 <p className="price-note">Everything in Starter, plus:</p>
-                <a className="btn btn--pri btn--wide" href="#demo">Start Pro trial</a>
+                <a className="btn btn--pri btn--wide" href="#snapshot" onClick={() => handleConversionClick("Pricing", "free_scan", "Pricing Pro Scan")}>Start free scan</a>
                 <span className="feat-title mono">Includes</span>
                 <ul className="feats">
                   <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Up to 25 AI systems in the Inventory</li>
@@ -3100,7 +3143,7 @@ export default function About() {
                 <p className="plan-for">For regulated organisations, audit firms and multi-team deployments.</p>
                 <div className="price"><b>$349</b><span>/ month</span></div>
                 <p className="price-note">Or custom annual · everything in Pro, plus:</p>
-                <a className="btn btn--dark btn--wide" href="#demo">Contact sales</a>
+                <a className="btn btn--dark btn--wide" href="#demo" onClick={() => handleConversionClick("Pricing", "book_a_demo", "Pricing Enterprise Talk")}>Talk to us</a>
                 <span className="feat-title mono">Includes</span>
                 <ul className="feats">
                   <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Higher or unlimited AI systems (fair use / custom)</li>
@@ -3124,6 +3167,9 @@ export default function About() {
               <span>Continuous product updates</span>
               <span>Humans accountable for high-impact approvals</span>
               <span>No training on customer data by default</span>
+            </div>
+            <div className="btn-row mt-8 text-center" style={{ display: "flex", justifyContent: "center" }}>
+              <a className="btn btn--pri" href="#demo" onClick={() => handleConversionClick("PricingFooter", "book_a_demo", "Pricing Footer Demo")}>Book a demo</a>
             </div>
           </div>
         </section>
@@ -3152,6 +3198,9 @@ export default function About() {
                   <tr><th scope="row">Deployment</th><td>Vendor cloud</td><td>Vendor cloud</td><td className="own">Cloud, hybrid, on-premise or air-gapped</td></tr>
                 </tbody>
               </table>
+            </div>
+            <div className="mt-8 text-center" style={{ display: "flex", justifyContent: "center" }}>
+              <a href="#demo" onClick={() => handleConversionClick("Differentiation", "compare_in_detail", "Differentiation Compare In Detail")} className="mono hover:underline" style={{ color: "#0E7C6B", fontSize: "12px", fontWeight: "bold", display: "inline-flex", alignItems: "center", gap: "6px" }}>Compare us in detail <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg></a>
             </div>
           </div>
         </section>
@@ -3339,8 +3388,8 @@ export default function About() {
       </footer>
 
       <div className="stickybar">
-        <a className="btn btn--ghost" href="#snapshot">Score my readiness</a>
-        <a className="btn btn--pri" href="#demo">Book a demo</a>
+        <a className="btn btn--ghost" href="#snapshot" onClick={() => handleConversionClick("StickyBar", "free_scan", "StickyBar Score Readiness")}>Score my readiness</a>
+        <a className="btn btn--pri" href="#demo" onClick={() => handleConversionClick("StickyBar", "book_a_demo", "StickyBar Book Demo")}>Book a demo</a>
       </div>
     </div>
   );
