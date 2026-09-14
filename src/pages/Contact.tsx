@@ -662,7 +662,7 @@ const topicChips = [
   "EU AI Act Compliance",
   "AI System Discovery",
   "AI Impact Assessments",
-  "Pricing Inquiry",
+  "Enterprise Custom Quote",
   "Partnership",
 ];
 
@@ -688,7 +688,7 @@ const faqItems = [
     a: "Of course! Click the 'Book a Live Demo' button above to schedule a 15-minute call with our compliance architects at a time that works for you.",
   },
   {
-    q: "Do you support enterprise and startup plans?",
-    a: "Yes, we have flexible pricing for startups, mid-market, and enterprise. Contact us with your team size and requirements for a custom quote.",
+    q: "Do you support custom enterprise deployments?",
+    a: "Yes, we support startups, mid-market, and enterprise environments with custom air-gapped or cloud deployments. Contact us for a tailored solution.",
   },
 ];
