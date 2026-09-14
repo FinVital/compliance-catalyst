@@ -18,7 +18,7 @@ const footerLinks = [
     title: "Company",
     links: [
       { label: "Home", href: "/" },
-      { label: "Pricing", href: "/#pricing" },
+      { label: "Governance Hub", href: "/ai-governance" },
       { label: "Privacy Policy", href: "#" },
       { label: "Terms of Service", href: "#" },
     ],

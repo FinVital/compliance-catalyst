@@ -281,10 +281,6 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
             </AnimatePresence>
           </div>
 
-          {/* Pricing */}
-          <a href="/#pricing" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
-            Pricing
-          </a>
 
           {/* How It Works */}
           <a href="/#how-it-works" onClick={() => setActiveMenu(null)} className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
@@ -342,7 +338,6 @@ export default function Navbar({ onBooking, onContact }: NavbarProps) {
               </div>
             </div>
 
-            <a href="/#pricing" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Pricing</a>
             <a href="/#how-it-works" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>How It Works</a>
             <a href="/#frameworks" className="block text-sm font-medium text-gray-700 py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>Frameworks</a>
             <a href="/ai-governance" className="block text-sm font-semibold text-[#0E7C6B] py-2 border-b border-gray-100" onClick={() => setMobileOpen(false)}>AI Governance Hub</a>

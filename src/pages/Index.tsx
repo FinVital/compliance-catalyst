@@ -4,12 +4,11 @@ import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import IntegrationStrip from "@/components/IntegrationStrip";
-import FounderSection from "@/components/FounderSection";
+import ProblemSolutionSection from "@/components/ProblemSolutionSection";
+import SevenAgentsSection from "@/components/SevenAgentsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import FrameworksSection from "@/components/FrameworksSection";
-import HowItWorks from "@/components/HowItWorks";
 import UseCasesSection from "@/components/UseCasesSection";
-import PricingSection from "@/components/PricingSection";
 import BottomCTA from "@/components/BottomCTA";
 import Footer from "@/components/Footer";
 import ContactFormModal from "@/components/ContactFormModal";
@@ -77,10 +76,10 @@ const Index = () => {
   }, []);
 
   const openBooking = () => {
-    trackPixelEvent("ClickCTA", { label: "Book Call", location: "Pricing Section" });
-    trackGAEvent("click_cta", { label: "Book Call", location: "Pricing Section" });
+    trackPixelEvent("ClickCTA", { label: "Book Call", location: "Demo Modal" });
+    trackGAEvent("click_cta", { label: "Book Call", location: "Demo Modal" });
     setModalTitle("Book a Live Demo");
-    setModalDesc("We will response within an hour.");
+    setModalDesc("We will respond within an hour.");
     setContactOpen(true);
   };
 
@@ -98,41 +97,45 @@ const Index = () => {
     navigate("/assessment");
   };
 
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F0F6F8]">
       <SEO 
-        title="ReguLattice AI Solutions — Enterprise GRC & Compliance Frameworks"
-        description="Explore the ReguLattice GRC solutions. Automate risk mapping, continuous evidence collection, and alignment for ISO 42001, NIST AI RMF, and the EU AI Act."
+        title="ReguLattice AI Governance Platform — Autonomous Control & Residency"
+        description="ReguLattice is the autonomous AI governance platform providing zero-touch footprint tracking, host-based inference routing (Ollama), and continuous audit validation."
       />
       <Navbar onBooking={openBooking} onContact={openContact} />
-      {/* Hero — dark navy */}
+      
+      {/* 1. Hero Section */}
       <Hero onBooking={openBooking} onContact={openContact} />
-      {/* Integration strip — white */}
+      
+      {/* 2. Integration Logos Strip */}
       <IntegrationStrip />
-      {/* Features — white */}
+
+      {/* 3. Problem & Solution Pipeline */}
+      <ProblemSolutionSection />
+
+      {/* 4. Seven Autonomous Agents, One Loop */}
+      <div id="pillars">
+        <SevenAgentsSection />
+      </div>
+
+      {/* 5. Platform Core Capabilities */}
       <div id="features">
         <FeaturesSection />
       </div>
-      {/* How It Works — dark navy */}
-      <div id="how-it-works">
-        <HowItWorks />
-      </div>
-      {/* Frameworks — white */}
+
+      {/* 6. Global Standards Frameworks */}
       <div id="frameworks">
         <FrameworksSection />
       </div>
-      {/* Founder — dark navy */}
-      <FounderSection />
-      {/* Use Cases — white */}
+
+      {/* 7. Stakeholder Use Cases */}
       <UseCasesSection />
-      {/* Pricing — dark navy */}
-      <div id="pricing">
-        <PricingSection onBooking={openBooking} />
-      </div>
-      {/* Bottom CTA — white */}
+
+      {/* 8. Bottom CTA Banner */}
       <BottomCTA onBooking={openAssessment} onContact={openContact} />
-      {/* Footer — dark */}
+
+      {/* 9. Footer */}
       <Footer onContact={openContact} />
 
       <ContactFormModal isOpen={contactOpen} onClose={() => setContactOpen(false)} title={modalTitle} description={modalDesc} />

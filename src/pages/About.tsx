@@ -270,7 +270,7 @@ export default function About() {
         @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Newsreader:ital,wght@0,300..700;1,300..700&family=IBM+Plex+Mono:ital,wght@0,300..700;1,300..700&display=swap');
 
         body, #root {
-          background: #F7F9FB !important;
+          background: #F6F7F5 !important;
         }
 
         .regulattice-site {
@@ -279,7 +279,7 @@ export default function About() {
           line-height: 1.6 !important;
           letter-spacing: -0.005em !important;
           color: #0B1F2A !important;
-          background: #F7F9FB !important;
+          background: #F6F7F5 !important;
         }
 
         .regulattice-site h1,
@@ -379,9 +379,9 @@ export default function About() {
            logo mint. Signal amber/rust reserved for the authority matrix.
            ============================================================ */
         :root {
-          --navy: #0F2233;
+          --navy: #0B1F2A;
           --navy-2: #123240;
-          --paper: #F7F9FB;
+          --paper: #F6F7F5;
           --white: #FFFFFF;
           --mint: #E4EFEA;
           --mint-2: #F1F7F4;
@@ -428,10 +428,9 @@ export default function About() {
         .sec {
           padding: clamp(74px, 8.5vw, 124px) 0;
           position: relative;
-          background: #F7F9FB;
         }
         .sec--white {
-          background: #FFFFFF;
+          background: var(--white);
           border-block: 1px solid var(--line);
         }
         .sec--mint {
@@ -439,59 +438,11 @@ export default function About() {
           border-block: 1px solid #DCE8E2;
         }
         .sec--dark {
-          background-color: #0F2233;
-          background-image: 
-            linear-gradient(rgba(14, 124, 107, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14, 124, 107, 0.05) 1px, transparent 1px);
-          background-size: 36px 36px;
-          background-position: center;
+          background: var(--navy);
           color: #EAF1EE;
-          position: relative;
-        }
-        .sec--dark::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle at 50% 50%, rgba(14, 124, 107, 0.1) 0%, transparent 70%);
-          pointer-events: none;
-          z-index: 1;
-        }
-        .sec--dark h2,
-        .sec--dark h3,
-        .sec--dark h4 {
-          color: #FFFFFF !important;
-        }
-        .sec--dark .lead {
-          color: #A9BDB8 !important;
-        }
-        .sec--dark .eyebrow {
-          color: #7FD9C4 !important;
         }
         .sec--tight {
           padding-block: clamp(56px, 6vw, 86px);
-        }
-
-        /* Hero radial glow with animation */
-        .hero {
-          background: #F7F9FB;
-          position: relative;
-          overflow: hidden;
-        }
-        @keyframes softGlowFade {
-          0% { opacity: 0; transform: scale(0.9) translate(-50px, -50px); }
-          100% { opacity: 1; transform: scale(1) translate(0, 0); }
-        }
-        .hero::before {
-          content: "";
-          position: absolute;
-          width: 900px;
-          height: 900px;
-          top: -150px;
-          left: -150px;
-          background: radial-gradient(circle, rgba(8, 145, 178, 0.05) 0%, transparent 70%);
-          pointer-events: none;
-          z-index: 0;
-          animation: softGlowFade 5s ease-out forwards;
         }
 
         /* section heading block */
@@ -1225,7 +1176,6 @@ export default function About() {
           padding: 22px;
           display: flex;
           flex-direction: column;
-          box-shadow: var(--shadow-1);
           transition: .25s var(--ease);
         }
         .agent:hover {
@@ -1473,12 +1423,11 @@ export default function About() {
         .fw h3 {
           font-size: 16.5px;
           letter-spacing: -.02em;
-          color: #0F2233 !important;
         }
         .fw p {
           grid-column: 2;
           font-size: 14.2px;
-          color: var(--slate) !important;
+          color: var(--slate);
           line-height: 1.55;
         }
         .map {
@@ -1488,7 +1437,6 @@ export default function About() {
           border-radius: var(--r);
           padding: clamp(24px, 3vw, 38px);
           text-align: center;
-          color: #0F2233 !important;
         }
         .map-node {
           display: inline-block;
@@ -1509,7 +1457,6 @@ export default function About() {
           letter-spacing: -.02em;
           line-height: 1.4;
           display: block;
-          color: #0F2233 !important;
         }
         .map-stem {
           width: 1px;
@@ -1548,7 +1495,6 @@ export default function About() {
           font-weight: 500;
           background: var(--white);
           position: relative;
-          color: #0F2233 !important;
         }
         .chip::before {
           content: "";
@@ -1564,7 +1510,7 @@ export default function About() {
           margin-top: 24px;
           font-style: normal;
           font-size: 14.5px;
-          color: var(--slate) !important;
+          color: var(--slate);
         }
 
         /* ---------- capabilities ---------- */
@@ -1847,7 +1793,6 @@ export default function About() {
           padding: 28px;
           display: flex;
           flex-direction: column;
-          box-shadow: var(--shadow-1);
           transition: .25s var(--ease);
         }
         .plan:hover {
@@ -2461,7 +2406,6 @@ export default function About() {
             <a href="#agents">Agents</a>
             <a href="#authority">Authority Engine</a>
             <a href="#frameworks">Frameworks</a>
-            <a href="#pricing">Pricing</a>
           </nav>
           <div className="nav-cta">
             <a className="btn btn--ghost" href="#snapshot" onClick={() => handleConversionClick("HeaderNav", "free_scan", "Header Check Readiness")}>Check my readiness</a>
@@ -2482,7 +2426,6 @@ export default function About() {
           <a href="#agents" onClick={() => setMobileOpen(false)}>Agents</a>
           <a href="#authority" onClick={() => setMobileOpen(false)}>Authority Engine</a>
           <a href="#frameworks" onClick={() => setMobileOpen(false)}>Frameworks</a>
-          <a href="#pricing" onClick={() => setMobileOpen(false)}>Pricing</a>
           <a className="btn btn--pri btn--wide" href="#demo" onClick={() => { setMobileOpen(false); handleConversionClick("MobileNav", "book_a_demo", "Mobile Book Demo"); }}>Book a demo</a>
         </div>
       </header>
@@ -2586,7 +2529,7 @@ export default function About() {
         </section>
 
         {/* ============ PROBLEM ============ */}
-        <section className="sec sec--white" id="problem">
+        <section className="sec" id="problem">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Why now</span>
@@ -2635,7 +2578,7 @@ export default function About() {
         </section>
 
         {/* ============ FLYWHEEL ============ */}
-        <section className="sec">
+        <section className="sec sec--white">
           <div className="wrap">
             <div className="head head--center">
               <span class="eyebrow mono">The model</span>
@@ -2665,7 +2608,7 @@ export default function About() {
         </section>
 
         {/* ============ 7 AGENTS ============ */}
-        <section className="sec sec--white" id="agents">
+        <section class="sec" id="agents">
           <div className="wrap">
             <div className="head head--center">
               <span className="eyebrow mono">The platform</span>
@@ -2752,7 +2695,7 @@ export default function About() {
         </section>
 
         {/* ============ AUTHORITY & REVERSIBILITY ============ */}
-        <section className="sec" id="authority">
+        <section className="sec sec--white" id="authority">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">The differentiator</span>
@@ -2802,7 +2745,7 @@ export default function About() {
         </section>
 
         {/* ============ HOW IT WORKS ============ */}
-        <section className="sec sec--white">
+        <section className="sec">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">How it works</span>
@@ -2844,7 +2787,7 @@ export default function About() {
         </section>
 
         {/* ============ FRAMEWORKS ============ */}
-        <section className="sec sec--dark" id="frameworks">
+        <section className="sec sec--mint" id="frameworks">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Coverage</span>
@@ -2921,7 +2864,7 @@ export default function About() {
         </section>
 
         {/* ============ TRUST & DEPLOYMENT ============ */}
-        <section className="sec">
+        <section className="sec sec--mint">
           <div className="wrap trust text-left">
             <div>
               <span className="eyebrow mono">Trust &amp; deployment</span>
@@ -2945,7 +2888,7 @@ export default function About() {
         </section>
 
         {/* ============ READINESS SNAPSHOT ============ */}
-        <section className="sec sec--white" id="snapshot">
+        <section className="sec" id="snapshot">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Free · 60 seconds · no login</span>
@@ -3130,107 +3073,10 @@ export default function About() {
           </div>
         </section>
 
-        {/* ============ PRICING ============ */}
-        <section className="sec" id="pricing">
-          <div className="wrap">
-            <div className="head head--center">
-              <span className="eyebrow mono">Pricing</span>
-              <h2>Priced by the size of your AI estate.</h2>
-              <p className="lead">Every plan includes the core AI Inventory and multi-framework control mapping. Upgrade when you need continuous evidence, EU AI Act depth, email support or local deployment.</p>
-            </div>
 
-            <div className="plans text-left">
-              {/* Starter */}
-              <div className="plan">
-                <h3>Starter</h3>
-                <p className="plan-for">For startups and small teams getting AI governance off the ground.</p>
-                <div className="price"><b>$79</b><span>/ month</span></div>
-                <p className="price-note">Cloud-hosted · self-serve</p>
-                <a className="btn btn--ghost btn--wide" href="#snapshot" onClick={() => handleConversionClick("Pricing", "free_scan", "Pricing Starter Scan")}>Start free scan</a>
-                <span className="feat-title mono">Includes</span>
-                <ul className="feats">
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>Up to 5 AI systems in the Inventory</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>Core agents: Discovery, Classification, Control, Evidence (limited runs)</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>ISO/IEC 42001 + NIST AI RMF</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>AI Risk Register (basic)</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Policy library with acknowledgement tracking</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Manual and guided evidence upload</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Basic evidence freshness scoring</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Standard maturity and gap reports</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>In-app help centre and knowledge base</li>
-                </ul>
-                <ul className="limits">
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 7h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>Self-serve support only (no email support)</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 7h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>Cloud only — no local deployment</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 7h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>No EU AI Act deep obligation packs</li>
-                </ul>
-              </div>
-
-              {/* Pro */}
-              <div className="plan plan--best">
-                <span className="plan-flag">Most chosen</span>
-                <h3>Pro</h3>
-                <p className="plan-for">For growing companies with real AI in production and audit pressure on the calendar.</p>
-                <div className="price"><b>$219</b><span>/ month</span></div>
-                <p className="price-note">Everything in Starter, plus:</p>
-                <a className="btn btn--pri btn--wide" href="#snapshot" onClick={() => handleConversionClick("Pricing", "free_scan", "Pricing Pro Scan")}>Start free scan</a>
-                <span className="feat-title mono">Includes</span>
-                <ul className="feats">
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Up to 25 AI systems in the Inventory</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>All seven autonomous agents enabled</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Higher agent run volume</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Full framework set: ISO/IEC 42001, NIST AI RMF, EU AI Act, ISO 23894, ISO 38507</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Continuous monitoring feed</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Autonomous evidence collection via connectors and agents</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Freshness scoring with stale-evidence alerts</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Authority &amp; Reversibility ledger</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Risk remediation Kanban</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Advanced reports: EU AI Act readiness, evidence packs, drift</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Team roles and permissions (Governance Lead, Model Owner, Risk Owner)</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Email support</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Optional local model assist (hybrid)</li>
-                </ul>
-              </div>
-
-              {/* Enterprise */}
-              <div className="plan">
-                <h3>Partner / Enterprise</h3>
-                <p className="plan-for">For regulated organisations, audit firms and multi-team deployments.</p>
-                <div className="price"><b>$349</b><span>/ month</span></div>
-                <p className="price-note">Or custom annual · everything in Pro, plus:</p>
-                <a className="btn btn--dark btn--wide" href="#demo" onClick={() => handleConversionClick("Pricing", "book_a_demo", "Pricing Enterprise Talk")}>Talk to us</a>
-                <span className="feat-title mono">Includes</span>
-                <ul className="feats">
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Higher or unlimited AI systems (fair use / custom)</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Full local, on-premise or air-gapped deployment</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Private inference running on your own infrastructure</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>White-label partner mode for audit and advisory firms</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Custom framework packs and control libraries</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Advanced autonomy controls, from suggest-only to full assist</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>SSO / SAML and advanced audit logs</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Dedicated success and partner support</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Custom report templates and branded evidence packs</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Multi-workspace and multi-entity options</li>
-                  <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.7 4 5.6 10.1 2.3 6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>Contract and security review support</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="plans-note text-center" style={{ textAlign: "center", margin: "22px auto 0", display: "block", width: "100%" }}>Starter gets you a real inventory and your first framework. Pro is where governance becomes continuous. Enterprise is for when the data can't leave the building.</p>
-            <div className="shared">
-              <span>Seat-based access with role permissions</span>
-              <span>Continuous product updates</span>
-              <span>Humans accountable for high-impact approvals</span>
-              <span>No training on customer data by default</span>
-            </div>
-            <div className="btn-row mt-8 text-center" style={{ display: "flex", justifyContent: "center" }}>
-              <a className="btn btn--pri" href="#demo" onClick={() => handleConversionClick("PricingFooter", "book_a_demo", "Pricing Footer Demo")}>Book a demo</a>
-            </div>
-          </div>
-        </section>
 
         {/* ============ COMPETITIVE ============ */}
-        <section className="sec sec--dark">
+        <section className="sec">
           <div className="wrap">
             <div className="head text-left">
               <span className="eyebrow mono">Where we sit</span>
@@ -3408,7 +3254,6 @@ export default function About() {
                 <li><a href="#authority">Authority Engine</a></li>
                 <li><a href="#frameworks">Frameworks</a></li>
                 <li><a href="#snapshot">Readiness snapshot</a></li>
-                <li><a href="#pricing">Pricing</a></li>
               </ul>
             </div>
             <div>
@@ -3418,7 +3263,7 @@ export default function About() {
                 <li><a href="#frameworks">ISO/IEC 42001 readiness</a></li>
                 <li><a href="#frameworks">EU AI Act preparation</a></li>
                 <li><a href="#agents">Continuous evidence</a></li>
-                <li><a href="#pricing">Audit &amp; advisory partners</a></li>
+                <li><a href="#demo">Audit &amp; advisory partners</a></li>
               </ul>
             </div>
             <div>
